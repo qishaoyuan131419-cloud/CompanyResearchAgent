@@ -1,0 +1,7 @@
+{
+  "canonical_name": "Example Biopharma",
+  "website": "https://example.invalid",
+  "country": "United States",
+  "industry": "Biotechnology",
+  "summary": "Optional, unverified input context. The agent treats this only as a hint."
+}
