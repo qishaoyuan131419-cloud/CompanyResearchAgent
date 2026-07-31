@@ -57,6 +57,15 @@ def test_parse_structured_output_rejects_url_shaped_strings(value: str) -> None:
         parse_structured_output(payload, Answer)
 
 
+@pytest.mark.parametrize("hostname", ["pfizer.com", "www.pfizer.com"])
+def test_parse_structured_output_allows_bare_hostnames(hostname: str) -> None:
+    payload = f'{{"statement":"website is {hostname}","count":1,"decision":"keep"}}'
+
+    result = parse_structured_output(payload, Answer)
+
+    assert result.statement == f"website is {hostname}"
+
+
 def test_parse_error_never_echoes_untrusted_provider_text() -> None:
     secret = "SENSITIVE_UNTRUSTED_SOURCE_TEXT"
 

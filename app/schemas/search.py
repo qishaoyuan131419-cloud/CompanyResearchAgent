@@ -48,10 +48,11 @@ class SourceDocument(StrictModel):
     source_id: str
     title: str = Field(max_length=1_000)
     url: AnyHttpUrl
+    publisher: str | None = None
     published_at: datetime | None = None
     retrieved_at: datetime
     source_type: SourceType
-    summary: str = ""
+    summary: str | None = None
     # Raw provider text is retained internally for exact-quote checks, but is
     # never serialized through the public API or trace.
     content: str = Field(default="", exclude=True, repr=False)

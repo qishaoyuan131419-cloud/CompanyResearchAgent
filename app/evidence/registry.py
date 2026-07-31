@@ -2,13 +2,27 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass
 
 from app.core.protocols import Clock
 from app.schemas.search import SearchBatch, SearchResult, SourceDocument
 from app.utils.hashing import stable_hash
 from app.utils.text import normalize_text, normalized_fingerprint_text
-from app.utils.urls import canonicalize_url
+from app.utils.urls import canonicalize_url, source_domain
+
+
+def _normalize_source_content(value: str) -> str:
+    """Normalize source text while retaining line boundaries for quote checks."""
+
+    normalized = value.replace("\r\n", "\n").replace("\r", "\n")
+    # HTML-to-text extraction can concatenate adjacent inline elements
+    # (``EastNew``); restore a boundary before collapsing whitespace so exact
+    # quotes remain verifiable.
+    normalized = re.sub(r"(?<=[a-z])(?=[A-Z])", " ", normalized)
+    normalized = re.sub(r"[ \t\f\v]+", " ", normalized)
+    normalized = re.sub(r"\n{3,}", "\n\n", normalized)
+    return normalized.strip()
 
 
 @dataclass(frozen=True, slots=True)
@@ -89,7 +103,7 @@ class SourceRegistry:
         mutable_roots: set[str] | None = None,
     ) -> tuple[str, bool]:
         canonical_url = canonicalize_url(str(result.url))
-        content = normalize_text(result.text)
+        content = _normalize_source_content(result.text)
         content_hash = stable_hash(normalized_fingerprint_text(content), prefix="cnt_", length=32)
 
         url_match = self._url_index.get(canonical_url)
@@ -109,6 +123,7 @@ class SourceRegistry:
             source_id=candidate_id,
             title=normalize_text(result.title),
             url=canonical_url,
+            publisher=source_domain(canonical_url),
             published_at=result.published_at,
             retrieved_at=self._clock.now(),
             source_type=result.source_type,

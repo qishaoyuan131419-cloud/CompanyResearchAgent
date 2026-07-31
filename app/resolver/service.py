@@ -1,6 +1,7 @@
 import json
 import re
 from collections import defaultdict
+from collections.abc import Sequence
 from typing import ClassVar
 
 from pydantic import AnyHttpUrl
@@ -8,8 +9,15 @@ from pydantic import AnyHttpUrl
 from app.core.enums import EvidenceStatus, IdentityStatus
 from app.core.exceptions import BudgetExceededError, StructuredOutputError
 from app.core.protocols import LLMClient, PromptRepository
+from app.llm.errors import LLMProviderError
 from app.schemas.company import CompanyCandidate, CompanySnapshot, ResolvedCompany
 from app.schemas.evidence import Evidence, EvidenceBundle
+from app.utils.text import (
+    has_organization_legal_suffix,
+    normalize_organization_name,
+    normalized_fingerprint_text,
+    organization_short_name,
+)
 from app.utils.urls import canonicalize_url, source_domain
 
 
@@ -49,7 +57,7 @@ class CompanyResolver:
             proposed = result.value
         except BudgetExceededError:
             proposed = self._unconfirmed(snapshot)
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             proposed = self._unconfirmed(snapshot)
         return self._sanitize_with_evidence(snapshot, proposed, evidence_bundle)
 
@@ -89,6 +97,8 @@ class CompanyResolver:
                 if claim_id in supported_claim_ids and self._is_identity_claim(by_claim[claim_id])
             )
         )
+        if not identity_claim_ids:
+            identity_claim_ids = list(all_identity_claim_ids)
         relationships = []
         for relationship in proposed.relationships:
             valid_relationship_claims = [
@@ -176,7 +186,7 @@ class CompanyResolver:
         candidates = sorted(
             {
                 (
-                    " ".join(candidate.name.casefold().split()),
+                    normalize_organization_name(candidate.name),
                     " ".join((candidate.country or "").casefold().split()),
                     tuple(
                         sorted(
@@ -196,31 +206,38 @@ class CompanyResolver:
 
         reliable_domains_by_claim: dict[str, set[str]] = defaultdict(set)
         verified_name_domains: set[str] = set()
+        verified_name_confidence = 0.0
         proposed_name = proposed.canonical_name.strip()
+        source_by_id = {source.source_id: source for source in bundle.sources}
         for claim_id in identity_claim_ids:
             for item in by_claim[claim_id]:
-                if item.source:
-                    reliable_domains_by_claim[claim_id].add(item.source)
+                item_domains = {
+                    source_domain(str(source_by_id[source_id].url))
+                    for source_id in item.source_ids
+                    if source_id in source_by_id
+                }
+                reliable_domains_by_claim[claim_id].update(item_domains)
                 values = item.value if isinstance(item.value, list) else [item.value]
                 if (
                     proposed_name
                     and item.status == EvidenceStatus.VERIFIED_FACT
                     and self._identity_claim_kind(item.claim) == "name"
-                    and item.source
+                    and item_domains
                     and any(
                         isinstance(value, str)
-                        and " ".join(value.casefold().split())
-                        == " ".join(proposed_name.casefold().split())
+                        and self._organization_names_match(value, proposed_name)
                         for value in values
                     )
                 ):
-                    verified_name_domains.add(item.source)
+                    verified_name_domains.update(item_domains)
+                    verified_name_confidence = max(verified_name_confidence, item.confidence)
 
         source_count = (
             len(set().union(*reliable_domains_by_claim.values())) if identity_claim_ids else 0
         )
         has_ambiguity_conflict = any(
-            any(
+            not self._equivalent_name_conflict(conflict.values)
+            and any(
                 self._identity_claim_kind(item.claim) in {"country", "name", "website"}
                 for claim_id in conflict.claim_ids
                 if claim_id in by_claim
@@ -231,9 +248,9 @@ class CompanyResolver:
         if len(candidates) >= 2 or has_ambiguity_conflict:
             status = IdentityStatus.AMBIGUOUS
             confidence = min(proposed.confidence, 0.70)
-        elif len(verified_name_domains) >= 2:
+        elif verified_name_domains:
             status = IdentityStatus.CONFIRMED
-            confidence = min(proposed.confidence, 0.95)
+            confidence = min(max(proposed.confidence, verified_name_confidence), 0.95)
         elif identity_claim_ids:
             status = IdentityStatus.PARTIALLY_CONFIRMED
             confidence = min(proposed.confidence, 0.70)
@@ -248,28 +265,48 @@ class CompanyResolver:
             bundle,
         )
 
-        canonical_name = (
-            proposed_name
-            if proposed_name
-            and self._has_exact_claim_value(
-                identity_claim_ids,
-                by_claim,
-                proposed_name,
-                claim_kind="name",
-            )
-            else snapshot.canonical_name
+        canonical_name = self._preferred_canonical_name(
+            snapshot.canonical_name,
+            proposed_name,
+            identity_claim_ids,
+            by_claim,
         )
-        aliases = [
+        evidence_name_values = self._identity_name_values(identity_claim_ids, by_claim)
+        alias_candidates = [
             alias
-            for alias in proposed.aliases
+            for alias in [
+                *proposed.aliases,
+                *evidence_name_values,
+                organization_short_name(canonical_name),
+            ]
             if self._has_exact_claim_value(
                 identity_claim_ids,
                 by_claim,
                 alias,
                 claim_kind="name",
             )
-            and alias.casefold() != canonical_name.casefold()
+            and normalized_fingerprint_text(alias) != normalized_fingerprint_text(canonical_name)
+            and self._organization_names_match(alias, canonical_name)
         ]
+        aliases = sorted(
+            {
+                normalized_fingerprint_text(alias): min(
+                    (
+                        candidate
+                        for candidate in alias_candidates
+                        if normalized_fingerprint_text(candidate)
+                        == normalized_fingerprint_text(alias)
+                    ),
+                    key=lambda candidate: (
+                        candidate.isupper(),
+                        candidate.casefold(),
+                        candidate,
+                    ),
+                )
+                for alias in alias_candidates
+            }.values(),
+            key=lambda alias: (alias.casefold(), alias),
+        )
         country = (
             proposed.country
             if proposed.country
@@ -352,10 +389,11 @@ class CompanyResolver:
         bundle: EvidenceBundle,
     ) -> AnyHttpUrl | None:
         identity_source_ids = {
-            item.source_id
+            source_id
             for claim_id in valid_claim_ids
             for item in by_claim[claim_id]
-            if item.source_id is not None and item.status != EvidenceStatus.UNKNOWN
+            if item.status != EvidenceStatus.UNKNOWN
+            for source_id in item.source_ids
         }
         identity_sources = [
             source for source in bundle.sources if source.source_id in identity_source_ids
@@ -411,7 +449,7 @@ class CompanyResolver:
         claim_terms: tuple[str, ...] = (),
         claim_kind: str | None = None,
     ) -> bool:
-        expected = " ".join(proposed_value.casefold().split())
+        expected = normalized_fingerprint_text(proposed_value)
         if not expected:
             return False
         for claim_id in claim_ids:
@@ -426,11 +464,77 @@ class CompanyResolver:
                     continue
                 values = item.value if isinstance(item.value, list) else [item.value]
                 if any(
-                    isinstance(value, str) and " ".join(value.casefold().split()) == expected
+                    isinstance(value, str)
+                    and (
+                        cls._organization_names_match(value, proposed_value)
+                        if claim_kind == "name"
+                        else normalized_fingerprint_text(value) == expected
+                    )
                     for value in values
                 ):
                     return True
         return False
+
+    @staticmethod
+    def _organization_names_match(first: str, second: str) -> bool:
+        first_normalized = normalize_organization_name(first)
+        return bool(first_normalized and first_normalized == normalize_organization_name(second))
+
+    @classmethod
+    def _equivalent_name_conflict(cls, values: Sequence[object]) -> bool:
+        if len(values) < 2 or not all(isinstance(value, str) for value in values):
+            return False
+        return len({normalize_organization_name(str(value)) for value in values}) == 1
+
+    @classmethod
+    def _identity_name_values(
+        cls,
+        claim_ids: list[str],
+        by_claim: dict[str, list[Evidence]],
+    ) -> list[str]:
+        return list(
+            dict.fromkeys(
+                value
+                for claim_id in claim_ids
+                for item in by_claim[claim_id]
+                if cls._identity_claim_kind(item.claim) == "name"
+                for value in (item.value if isinstance(item.value, list) else [item.value])
+                if isinstance(value, str)
+            )
+        )
+
+    @classmethod
+    def _preferred_canonical_name(
+        cls,
+        snapshot_name: str,
+        proposed_name: str,
+        claim_ids: list[str],
+        by_claim: dict[str, list[Evidence]],
+    ) -> str:
+        supported_names = cls._identity_name_values(claim_ids, by_claim)
+        reference_name = proposed_name or snapshot_name
+        equivalent = [
+            value
+            for value in supported_names
+            if cls._organization_names_match(value, reference_name)
+        ]
+        if not equivalent:
+            return snapshot_name
+        equivalent.extend(
+            value
+            for value in (snapshot_name, proposed_name)
+            if value
+            and any(cls._organization_names_match(value, supported) for supported in equivalent)
+        )
+        return max(
+            equivalent,
+            key=lambda value: (
+                has_organization_legal_suffix(value),
+                len(re.findall(r"[a-z0-9]+", value.casefold())),
+                len(value),
+                value,
+            ),
+        )
 
     @classmethod
     def _is_identity_claim(cls, items: list[Evidence]) -> bool:
@@ -502,6 +606,20 @@ class CompanyResolver:
         for kind, patterns in cls._IDENTITY_CLAIM_PATTERNS.items():
             if tokens in patterns:
                 return kind
+        token_set = set(tokens)
+        # LLM extractors often phrase direct identity facts as complete
+        # sentences (for example, "Pfizer Inc. is a biopharmaceutical company")
+        # rather than using the short canonical labels above. Recognize only
+        # strong lexical indicators; values and source lineage remain subject
+        # to the existing evidence-backed sanitization below.
+        if "website" in token_set or "domain" in token_set:
+            return "website"
+        if "incorporated" in token_set and ({"state", "country", "jurisdiction"} & token_set):
+            return "country"
+        if "incorporated" in token_set and "name" in token_set:
+            return "name"
+        if {"industry", "sector", "biopharmaceutical"} & token_set:
+            return "industry"
         return None
 
     @classmethod

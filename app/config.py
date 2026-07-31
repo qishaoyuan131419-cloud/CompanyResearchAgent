@@ -85,7 +85,9 @@ def _secret_is_configured(value: SecretStr | None) -> bool:
 
 class Settings(BaseSettings):
     model_config = SettingsConfigDict(
-        env_file=".env",
+        # Library/test construction is deterministic. The application entrypoint
+        # opts into the local dotenv file explicitly via get_settings().
+        env_file=None,
         env_prefix="CRA_",
         extra="ignore",
         case_sensitive=False,
@@ -198,4 +200,4 @@ class Settings(BaseSettings):
 
 @lru_cache(maxsize=1)
 def get_settings() -> Settings:
-    return Settings()
+    return Settings(_env_file=".env")

@@ -1,0 +1,4535 @@
+{
+  "execution_status": "partial_failure",
+  "company": {
+    "canonical_name": "Pfizer Inc.",
+    "identity_status": "confirmed",
+    "confidence": 0.7,
+    "aliases": [
+      "Pfizer"
+    ],
+    "website": null,
+    "country": null,
+    "industry": null,
+    "is_closed": null,
+    "candidates": [],
+    "relationships": [],
+    "verification_notes": [
+      "Identity resolution retained 1 supported claim(s) from 1 independent source domain(s)."
+    ],
+    "claim_ids": [
+      "clm_90f65303492b1133bd589683"
+    ]
+  },
+  "research": {
+    "overview": {
+      "findings": [
+        {
+          "statement": "Pfizer Inc.'s fiscal year ended December 31, 2025.: December 31, 2025",
+          "claim_ids": [
+            "clm_083e53380c09ec1e7a6a4f6e"
+          ]
+        },
+        {
+          "statement": "Company name: Pfizer Inc.",
+          "claim_ids": [
+            "clm_1c641fe6ad979742c5bfac44"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s fiscal year-end for subsidiaries operating outside the U.S. is as of and for the year ended November 30.: November 30",
+          "claim_ids": [
+            "clm_4d3ffcfd3c5a5c2688795ac4"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc. had 5,686,267,431 shares of common stock outstanding as of February 19, 2026.: 5,686,267,431",
+          "claim_ids": [
+            "clm_5ca9246a7d48087e2b18934f"
+          ]
+        },
+        {
+          "statement": "Shantanu Narayen is Lead Independent Director on the Pfizer Inc. board.: Lead Independent Director",
+          "claim_ids": [
+            "clm_65e4e7e82306b2312ee46267"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc. is incorporated in Delaware.: Delaware",
+          "claim_ids": [
+            "clm_88dc6402f844563401a5c5ae"
+          ]
+        },
+        {
+          "statement": "Company name: PFIZER",
+          "claim_ids": [
+            "clm_90f65303492b1133bd589683"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s common stock has a par value of $0.05 per share.: $0.05",
+          "claim_ids": [
+            "clm_96e42ab9f5707aa65750e8dd"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s telephone number is (212) 733-2323.: (212) 733-2323",
+          "claim_ids": [
+            "clm_a43ff900cec840ed48c5d75b"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s commission file number is 1-3619.: 1-3619",
+          "claim_ids": [
+            "clm_aead14114eb2b1bd510dfd17"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s business address is c/o Pfizer Inc., 66 Hudson Boulevard East, New York, NY 10001.: 66 Hudson Boulevard East, New York, NY 10001",
+          "claim_ids": [
+            "clm_cc6bbbba6f7c62105415c87b"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s I.R.S. Employer Identification Number is 13-5315170.: 13-5315170",
+          "claim_ids": [
+            "clm_db10888b20f9af1feefd6c98"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s common stock trades on the New York Stock Exchange under the symbol PFE.: PFE",
+          "claim_ids": [
+            "clm_f956fd5356117af220d11181"
+          ]
+        }
+      ]
+    },
+    "products": {
+      "findings": [
+        {
+          "statement": "Alexandre de Germay is Chief International Commercial Officer and Executive Vice President of Pfizer Inc.: Chief International Commercial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_00c6f1e7f5c26171203b2ee5"
+          ]
+        },
+        {
+          "statement": "Aamir Malik is Chief U.S. Commercial Officer and Executive Vice President of Pfizer Inc.: Chief U.S. Commercial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_46b270485ef459ee34829e50"
+          ]
+        }
+      ]
+    },
+    "technology": {
+      "findings": [
+        {
+          "statement": "Lidia Fonseca is Chief Digital and Technology Officer and Executive Vice President of Pfizer.: Chief Digital and Technology Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_8bb8ee99cc81ca5a6a49fc99"
+          ]
+        }
+      ]
+    },
+    "pipeline": {
+      "findings": []
+    },
+    "manufacturing": {
+      "findings": []
+    },
+    "recent_news": {
+      "findings": []
+    },
+    "financial_signals": {
+      "findings": [
+        {
+          "statement": "David M. Denton is Chief Financial Officer and Executive Vice President of Pfizer.: Chief Financial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_2fd5d767705f90761df246c6"
+          ]
+        },
+        {
+          "statement": "Dave Denton is Chief Financial Officer and Executive Vice President of Pfizer Inc.: Chief Financial Officer and Executive Vice President",
+          "claim_ids": [
+            "clm_7723af580c2bf3794aacc444"
+          ]
+        }
+      ]
+    },
+    "supply_chain": {
+      "findings": [
+        {
+          "statement": "Michael Mc Dermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer.: Chief Global Supply and Quality Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_415e77d53a8c212973bfbe27"
+          ]
+        },
+        {
+          "statement": "Mike McDermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer Inc.: Chief Global Supply and Quality Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_4d23fae8210a271fcd17a92d"
+          ]
+        }
+      ]
+    },
+    "potential_procurement_signals": {
+      "findings": []
+    },
+    "target_departments": {
+      "findings": [
+        {
+          "statement": "Douglas M. Lankler is Chief Legal Officer and Executive Vice President of Pfizer.: Chief Legal Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_003a8e6f969d90547c362ddc"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s principal executive offices are located at 66 Hudson Boulevard East, New York, New York 10001-2192.: 66 Hudson Boulevard East, New York, New York 10001-2192",
+          "claim_ids": [
+            "clm_27a796c2024289059f50a822"
+          ]
+        },
+        {
+          "statement": "Payal Sahni Becher is Chief People Experience Officer and Executive Vice President of Pfizer Inc.: Chief People Experience Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_287f5007fbb0e6fbd8e958b3"
+          ]
+        },
+        {
+          "statement": "Doug Lankler is Chief Legal Officer and Executive Vice President of Pfizer Inc.: Chief Legal Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_2eb2854e479f0172aad78412"
+          ]
+        },
+        {
+          "statement": "Albert Bourla is Chairman and Chief Executive Officer of Pfizer.: Chairman and Chief Executive Officer",
+          "claim_ids": [
+            "clm_796a2208a0f7e93b1605b09d"
+          ]
+        },
+        {
+          "statement": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer.: Chief Scientific Officer, President, Research & Development",
+          "claim_ids": [
+            "clm_a52f90f74a0010f93f2f0f6d"
+          ]
+        },
+        {
+          "statement": "Sally Susman is Chief Corporate Affairs Officer and Executive Vice President of Pfizer.: Chief Corporate Affairs Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_b0b8d207e61c158b75d02b64"
+          ]
+        },
+        {
+          "statement": "Lindsay Havern is Head of Strategy, Executive Operations, and Counsel to the CEO at Pfizer Inc.: Head of Strategy, Executive Operations, Counsel to the CEO",
+          "claim_ids": [
+            "clm_cc9b494a44ed9423c7226bd2"
+          ]
+        },
+        {
+          "statement": "Dr. Albert Bourla is Chairman and Chief Executive Officer of Pfizer Inc.: Chairman and Chief Executive Officer",
+          "claim_ids": [
+            "clm_d98b6068cc524c5aad2e1f22"
+          ]
+        },
+        {
+          "statement": "Andrew Baum is Chief Strategy and Innovation Officer and Executive Vice President of Pfizer.: Chief Strategy and Innovation Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_dd0075233ef8a37f600f8362"
+          ]
+        },
+        {
+          "statement": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.: Chief Scientific Officer and President, Research & Development",
+          "claim_ids": [
+            "clm_e5a26e448f46a833f17652ad"
+          ]
+        },
+        {
+          "statement": "Dennis Hancock is Chief Information Officer and Executive Vice President of Pfizer Inc.: Chief Information Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_f8fe0175e228900775666a73"
+          ]
+        }
+      ]
+    },
+    "risks": {
+      "findings": [
+        {
+          "statement": "Conflicting evidence: Conflicting supported values were retained for 'Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.'.",
+          "claim_ids": [
+            "clm_a52f90f74a0010f93f2f0f6d",
+            "clm_e5a26e448f46a833f17652ad"
+          ]
+        }
+      ]
+    },
+    "unknowns": {
+      "gaps": [
+        {
+          "gap_id": "gap_41535d1e8a09246cbd252bda",
+          "dimension": "Company Identity",
+          "description": "Additional evidence is required for Company Identity.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_59686e18e8102b33698a8c41",
+            "src_e3a6a0a585b7514efca8c36a"
+          ],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_fa5bfc0ddd2b679f39a37080",
+          "dimension": "Products",
+          "description": "Additional evidence is required for Products.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_25f029245456cb8c4cc73cb3",
+          "dimension": "Technology",
+          "description": "Additional evidence is required for Technology.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab"
+          ],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_43b756a42a78773656cfad32",
+          "dimension": "Pipeline",
+          "description": "Additional evidence is required for Pipeline.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_060c68b5ff55266ed0da13f4",
+          "dimension": "Recent News",
+          "description": "Additional evidence is required for Recent News.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_8299b1ec6ba025c571072171",
+          "dimension": "Financial Signals",
+          "description": "Evidence remains insufficient for Financial Signals.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e"
+          ],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_5c447dff91e8a7971f9dcd6b",
+          "dimension": "Procurement Signals",
+          "description": "Additional evidence is required for Procurement Signals.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_7805a22b0c0a80c981c16b77",
+          "dimension": "Cooperation Signals",
+          "description": "Additional evidence is required for Cooperation Signals.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [],
+          "source_ids": [],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_4be263fca743ef2d349aa168",
+          "dimension": "Evidence Freshness",
+          "description": "Additional evidence is required for Evidence Freshness.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_0cc315a259e35a2da37f0574",
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e",
+            "src_59686e18e8102b33698a8c41",
+            "src_dd064e2dc88f4b113ccc6829",
+            "src_e3a6a0a585b7514efca8c36a",
+            "src_f036a5f91e73327f8bdfb5ee"
+          ],
+          "processing_error_ids": []
+        },
+        {
+          "gap_id": "gap_90727be2ce65659db4712821",
+          "dimension": "Evidence Diversity",
+          "description": "Additional evidence is required for Evidence Diversity.",
+          "reason": "budget_interrupted",
+          "attempted_query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_0cc315a259e35a2da37f0574",
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e",
+            "src_59686e18e8102b33698a8c41",
+            "src_dd064e2dc88f4b113ccc6829",
+            "src_e3a6a0a585b7514efca8c36a",
+            "src_f036a5f91e73327f8bdfb5ee"
+          ],
+          "processing_error_ids": []
+        }
+      ]
+    },
+    "recommendations": {
+      "findings": [
+        {
+          "statement": "Reconcile the conflicting evidence for Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc..",
+          "claim_ids": [
+            "clm_a52f90f74a0010f93f2f0f6d",
+            "clm_e5a26e448f46a833f17652ad"
+          ]
+        },
+        {
+          "statement": "Perform targeted research for the unresolved item: Company name.",
+          "claim_ids": [
+            "clm_1c641fe6ad979742c5bfac44"
+          ]
+        }
+      ]
+    }
+  },
+  "evidence": {
+    "sources": [
+      {
+        "source_id": "src_05bae74574e2d70513409444",
+        "title": "R26.htm",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/R26.htm",
+        "publisher": "sec.gov",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.075474Z",
+        "source_type": "regulatory",
+        "summary": "v3.25.4\n\n| The following table provides selected information by reportable segment: | | | | | | | | | | | | | | | | | | |\n| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |\n| | Total Revenues | | | | | | Earnings(a) | | | | | | Depreciation and Amortization(b) | | | | | |\n| | Year Ended December 31, | | | | | | Year Ended December 31, | | | | | | Year Ended December 31, | | | | | |\n| (MILLIONS) | 2025 | | 2024 | | 2023 | | 2025 | |",
+        "content_hash": "cnt_b923ef6f7f07ad15cd56a6823a497610",
+        "query_ids": [
+          "qry_f6efd948c55f30f5a0bd"
+        ],
+        "supported_claim_ids": [
+          "clm_90f65303492b1133bd589683"
+        ]
+      },
+      {
+        "source_id": "src_0cc315a259e35a2da37f0574",
+        "title": "PFIZER INC.",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000038/pfe-ars2026.pdf",
+        "publisher": "sec.gov",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.078846Z",
+        "source_type": "regulatory",
+        "summary": "UNITED STATES SECURITIES AND EXCHANGE COMMISSION Washington, D.C. 20549\n\nFORM 10-K\n\n(Mark One) \n☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 \nFor the fiscal year ended December 31, 2025 \n☐ TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934 \nFor the transition period from to \nCommission file number 1-3619 \n\n### PFIZER INC.\n\n(Exact name of registrant as specified in its charter) \nDelaware 13-5315170 \n(State or other ju",
+        "content_hash": "cnt_70afff3bc478a86aa5a10b8ac8abfb6f",
+        "query_ids": [
+          "qry_422efb388c1f875a29a3",
+          "qry_f6efd948c55f30f5a0bd"
+        ],
+        "supported_claim_ids": [
+          "clm_083e53380c09ec1e7a6a4f6e",
+          "clm_27a796c2024289059f50a822",
+          "clm_5ca9246a7d48087e2b18934f",
+          "clm_88dc6402f844563401a5c5ae",
+          "clm_96e42ab9f5707aa65750e8dd",
+          "clm_a43ff900cec840ed48c5d75b",
+          "clm_aead14114eb2b1bd510dfd17",
+          "clm_db10888b20f9af1feefd6c98",
+          "clm_f956fd5356117af220d11181"
+        ]
+      },
+      {
+        "source_id": "src_2b24125c4b0baa9da97a87ab",
+        "title": "Document",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800325000005/exhibit991.htm",
+        "publisher": "sec.gov",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.074650Z",
+        "source_type": "regulatory",
+        "summary": "Document\n\nEXHIBIT 99.1\n\nSchedule I\n\nName, business address, present principal occupation or employment and place of citizenship of the directors and executive officers of Pfizer\n\nThe business address of each director and executive officer is c/o Pfizer Inc., 66 Hudson Boulevard East, New York, NY 10001. Unless otherwise indicated, each director and executive officer is a citizen of the United States.\n\n| NAME AND POSITION | PRESENT PRINCIPAL OCCUPATION OR EMPLOYMENT |\n| --- | --- |\n| Albert Bourl",
+        "content_hash": "cnt_f51b26c18745ecfd8aa9875b76b9382b",
+        "query_ids": [
+          "qry_85356c1b295e5b4c940f"
+        ],
+        "supported_claim_ids": [
+          "clm_003a8e6f969d90547c362ddc",
+          "clm_00c6f1e7f5c26171203b2ee5",
+          "clm_287f5007fbb0e6fbd8e958b3",
+          "clm_2fd5d767705f90761df246c6",
+          "clm_415e77d53a8c212973bfbe27",
+          "clm_46b270485ef459ee34829e50",
+          "clm_796a2208a0f7e93b1605b09d",
+          "clm_8bb8ee99cc81ca5a6a49fc99",
+          "clm_a52f90f74a0010f93f2f0f6d",
+          "clm_b0b8d207e61c158b75d02b64",
+          "clm_cc6bbbba6f7c62105415c87b",
+          "clm_dd0075233ef8a37f600f8362"
+        ]
+      },
+      {
+        "source_id": "src_3eff2fa8e5a52b4a20604c5e",
+        "title": "Leadership",
+        "url": "https://www.pfizer.com/about/leadership",
+        "publisher": "pfizer.com",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.074274Z",
+        "source_type": "other",
+        "summary": "Leadership | Pfizer\n\n# Leadership\n\nGo To Section\n\n- Executive Leadership\n- Our Board Members\n- Latest Articles\n\n## Executive Leadership\n\n#### Meet the executive leadership team, our senior-most leadership and decision-making management body who focus on major financial, strategic, and operational decisions for the entire company.\n\n##### Dr. Albert Bourla\n\nChairman and Chief Executive Officer\n\n##### Payal Sahni Becher\n\nChief People Experience Officer, Executive Vice President\n\n##### Chris Boshoff",
+        "content_hash": "cnt_8a3b164911897f1640e0dd048fbeefdc",
+        "query_ids": [
+          "qry_85356c1b295e5b4c940f"
+        ],
+        "supported_claim_ids": [
+          "clm_00c6f1e7f5c26171203b2ee5",
+          "clm_287f5007fbb0e6fbd8e958b3",
+          "clm_2eb2854e479f0172aad78412",
+          "clm_46b270485ef459ee34829e50",
+          "clm_4d23fae8210a271fcd17a92d",
+          "clm_65e4e7e82306b2312ee46267",
+          "clm_7723af580c2bf3794aacc444",
+          "clm_cc9b494a44ed9423c7226bd2",
+          "clm_d98b6068cc524c5aad2e1f22",
+          "clm_e5a26e448f46a833f17652ad",
+          "clm_f8fe0175e228900775666a73"
+        ]
+      },
+      {
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "title": "Pfizer Inc. 2025 Proxy Statement",
+        "url": "https://s206.q4cdn.com/795948973/files/doc_financials/2025/sr/interactive_proxy/HTML1/ceoletter.htm",
+        "publisher": "q4cdn.com",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.073354Z",
+        "source_type": "other",
+        "summary": "Pfizer Inc. 2025 Proxy Statement\n\nWarning: your browser is no longer supported.\n\n- CLICK HERE to download a PDF version of this report to read and/or print.\n- CLICK HERE to review the supported browser list.\n\n2025 Proxy Statement\n\nMenu\n\nZoom In\n\nZoom Out\n\nZoom In\n\nHelp\n\nHelp\n\nTOC\n\nTOC\n\nPDF\n\nPDF\n\nHome\n\nHome\n\nHome\n\nHome\n\nHome\n\n- Single Page View -- Double Page View -- Home Page -- Search --\n- Help\n\nZoom Out\n\n- Help\n- Help\n- Zoom In Zoom In Zoom In --\n- Thumbnails\n- Thumbnails\n- Clickable Index\n- C",
+        "content_hash": "cnt_3b4506a478d78b0b6e7d15af238fa705",
+        "query_ids": [
+          "qry_85356c1b295e5b4c940f"
+        ],
+        "supported_claim_ids": [
+          "clm_1c641fe6ad979742c5bfac44"
+        ]
+      },
+      {
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "title": "pfe-20251231",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000026/pfe-20251231.htm",
+        "publisher": "sec.gov",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.077206Z",
+        "source_type": "regulatory",
+        "summary": "pfe-20251231\n\nUNITED STATES SECURITIES AND EXCHANGE COMMISSION\n\nWashington, D.C. 20549\n\nFORM 10-K\n\n(Mark One)\n\n☒ ANNUAL REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934\n\nFor the fiscal year ended December 31, 2025\n\n☐ TRANSITION REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934\n\nFor the transition period from to\n\nCommission file number 1-3619\n\nPFIZER INC.\n\n(Exact name of registrant as specified in its charter)\n\n| Delaware | 13-5315170 |\n| -",
+        "content_hash": "cnt_ada02d067b8b0e6a1ec0a53d4be9110f",
+        "query_ids": [
+          "qry_422efb388c1f875a29a3"
+        ],
+        "supported_claim_ids": [
+          "clm_4d3ffcfd3c5a5c2688795ac4"
+        ]
+      },
+      {
+        "source_id": "src_e3a6a0a585b7514efca8c36a",
+        "title": "R21.htm",
+        "url": "https://www.sec.gov/Archives/edgar/data/78003/000007800326000054/R21.htm",
+        "publisher": "sec.gov",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.081103Z",
+        "source_type": "regulatory",
+        "summary": "v3.26.1\n\n| The following provides selected information by reportable segment: |\n| --- |\n| Three Months Ended |\n| Total Revenues | Earnings(a) | Depreciation and Amortization(b) |\n| (MILLIONS) | March 29,2026 | March 30,2025 | March 29,2026 | March 30,2025 | March 29,2026 | March 30,2025 |\n| Reportable Segment: |\n| Biopharma(c) | $ | 14,161 | $ | 13,441 | $ | 6,838 | $ | 7,069 | $ | 348 | $ | 331 |\n| Other business activities(d) | 289 | 273 | (1,668) | (1,384) | 78 | 74 |\n| Reconciling Items: |\n|",
+        "content_hash": "cnt_d22360247a7aa7af6f647bb3f7f48234",
+        "query_ids": [
+          "qry_f6efd948c55f30f5a0bd"
+        ],
+        "supported_claim_ids": [
+          "clm_90f65303492b1133bd589683"
+        ]
+      },
+      {
+        "source_id": "src_f036a5f91e73327f8bdfb5ee",
+        "title": "Pfizer Company Fact Sheet | Key Pharma & Consumer Health Products | Pfizer",
+        "url": "https://www.pfizer.com/about/investors/why-invest/fact-sheet",
+        "publisher": "pfizer.com",
+        "published_at": null,
+        "retrieved_at": "2026-07-31T01:42:58.073772Z",
+        "source_type": "other",
+        "summary": "Pfizer Company Fact Sheet | Key Pharma & Consumer Health Products | Pfizer\n\n# Fact Sheet\n\nAt Pfizer, we apply science and our global resources to bring therapies to people that extend and significantly improve their lives. We strive to set the standard for quality, safety, and value in the discovery, development, and manufacture of health care products. Our global portfolio includes medicines and vaccines as well as many of the world's best-known consumer health care products. Every day, Pfizer",
+        "content_hash": "cnt_06d330530c339bb24574fcf46f4d967f",
+        "query_ids": [
+          "qry_422efb388c1f875a29a3"
+        ],
+        "supported_claim_ids": []
+      }
+    ],
+    "evidence": [
+      {
+        "evidence_id": "ev_be7def6c742974827247ed31",
+        "claim_id": "clm_003a8e6f969d90547c362ddc",
+        "claim": "Douglas M. Lankler is Chief Legal Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Legal Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Legal Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_9e7aa0423ea85b00402d17e7",
+        "claim_id": "clm_00c6f1e7f5c26171203b2ee5",
+        "claim": "Alexandre de Germay is Chief International Commercial Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief International Commercial Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab",
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Chief International Commercial Officer, Executive Vice President, Pfizer.",
+          "Alexandre de Germay Chief International Commercial Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_11ba557c5b63677afe3346ac",
+        "claim_id": "clm_083e53380c09ec1e7a6a4f6e",
+        "claim": "Pfizer Inc.'s fiscal year ended December 31, 2025.",
+        "value": "December 31, 2025",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "For the fiscal year ended December 31, 2025"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_2603ecefc7cb2a3f5ac9511e",
+        "claim_id": "clm_1c641fe6ad979742c5bfac44",
+        "claim": "Company name",
+        "value": "Pfizer Inc.",
+        "status": "unknown",
+        "confidence": 0.0,
+        "source_ids": [
+          "src_59686e18e8102b33698a8c41"
+        ],
+        "supporting_quotes": [
+          "Pfizer Inc. 2025 Proxy Statement"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "deterministic_fallback"
+      },
+      {
+        "evidence_id": "ev_40b08236a9a24edce2632e62",
+        "claim_id": "clm_27a796c2024289059f50a822",
+        "claim": "Pfizer Inc.'s principal executive offices are located at 66 Hudson Boulevard East, New York, New York 10001-2192.",
+        "value": "66 Hudson Boulevard East, New York, New York 10001-2192",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "66 Hudson Boulevard East, New York, New York 10001-2192 (Address of principal executive offices) (zip code)"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_c708719f520fc8ad8b21b539",
+        "claim_id": "clm_287f5007fbb0e6fbd8e958b3",
+        "claim": "Payal Sahni Becher is Chief People Experience Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief People Experience Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab",
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Chief People Experience Officer, Executive Vice President, Pfizer.",
+          "Payal Sahni Becher Chief People Experience Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_d1a43e3591ba9d740b7ee06f",
+        "claim_id": "clm_2eb2854e479f0172aad78412",
+        "claim": "Doug Lankler is Chief Legal Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief Legal Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Doug Lankler Chief Legal Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_828dfd060fa0ffb8eccc5a8c",
+        "claim_id": "clm_2fd5d767705f90761df246c6",
+        "claim": "David M. Denton is Chief Financial Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Financial Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Financial Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_4f9f16ac3c195649cf0de265",
+        "claim_id": "clm_415e77d53a8c212973bfbe27",
+        "claim": "Michael Mc Dermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Global Supply and Quality Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Global Supply and Quality Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_b62eab2dbee3f1d3b727157b",
+        "claim_id": "clm_46b270485ef459ee34829e50",
+        "claim": "Aamir Malik is Chief U.S. Commercial Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief U.S. Commercial Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab",
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Chief U.S. Commercial Officer, Executive Vice President, Pfizer.",
+          "Aamir Malik Chief U.S. Commercial Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_c3cf80fe92b3411125be8aa8",
+        "claim_id": "clm_4d23fae8210a271fcd17a92d",
+        "claim": "Mike McDermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief Global Supply and Quality Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Mike Mc Dermott Chief Global Supply and Quality Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_ffde53773e0a2a5323e224ad",
+        "claim_id": "clm_4d3ffcfd3c5a5c2688795ac4",
+        "claim": "Pfizer Inc.'s fiscal year-end for subsidiaries operating outside the U.S. is as of and for the year ended November 30.",
+        "value": "November 30",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_dd064e2dc88f4b113ccc6829"
+        ],
+        "supporting_quotes": [
+          "Pfizer's fiscal year-end for subsidiaries operating outside the U.S. is as of and for the year ended November 30"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_c7eba2d1be7506af7711da5b",
+        "claim_id": "clm_5ca9246a7d48087e2b18934f",
+        "claim": "Pfizer Inc. had 5,686,267,431 shares of common stock outstanding as of February 19, 2026.",
+        "value": "5,686,267,431",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "The number of shares outstanding of the registrant's common stock as of February 19, 2026 was 5,686,267,431 shares of common stock, all of one class."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_61b4f787a2929701b73653e7",
+        "claim_id": "clm_65e4e7e82306b2312ee46267",
+        "claim": "Shantanu Narayen is Lead Independent Director on the Pfizer Inc. board.",
+        "value": "Lead Independent Director",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Shantanu Narayen Lead Independent Director"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_e609e54f2e55eed5c1f09f8d",
+        "claim_id": "clm_7723af580c2bf3794aacc444",
+        "claim": "Dave Denton is Chief Financial Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief Financial Officer and Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Dave Denton Chief Financial Officer and Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_11bdcb2ed6155fb028fb2587",
+        "claim_id": "clm_796a2208a0f7e93b1605b09d",
+        "claim": "Albert Bourla is Chairman and Chief Executive Officer of Pfizer.",
+        "value": "Chairman and Chief Executive Officer",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chairman and Chief Executive Officer, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_61b4efb7c820c7d82e81d0a4",
+        "claim_id": "clm_88dc6402f844563401a5c5ae",
+        "claim": "Pfizer Inc. is incorporated in Delaware.",
+        "value": "Delaware",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "Delaware 13-5315170 (State or other jurisdiction of incorporation or organization)"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_a9af0ba0a3248cc22c57c341",
+        "claim_id": "clm_8bb8ee99cc81ca5a6a49fc99",
+        "claim": "Lidia Fonseca is Chief Digital and Technology Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Digital and Technology Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Digital and Technology Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_632ec2b8ab80107b68dea099",
+        "claim_id": "clm_90f65303492b1133bd589683",
+        "claim": "Company name",
+        "value": "PFIZER",
+        "status": "verified_fact",
+        "confidence": 0.7,
+        "source_ids": [
+          "src_05bae74574e2d70513409444",
+          "src_e3a6a0a585b7514efca8c36a"
+        ],
+        "supporting_quotes": [
+          "| PFIZER CENTREONE(h) | | $ | 1,338 | $ | 1,146 | $ | 1,272 |",
+          "| PFIZER CENTREONE(h) | $ | 289 | $ | 273 |"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "deterministic_fallback"
+      },
+      {
+        "evidence_id": "ev_eecaee7d3a10e8e08359ac51",
+        "claim_id": "clm_96e42ab9f5707aa65750e8dd",
+        "claim": "Pfizer Inc.'s common stock has a par value of $0.05 per share.",
+        "value": "$0.05",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "Common Stock, $0.05 par value PFE New York Stock Exchange"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_df8234b4037679e5965a0ebf",
+        "claim_id": "clm_a43ff900cec840ed48c5d75b",
+        "claim": "Pfizer Inc.'s telephone number is (212) 733-2323.",
+        "value": "(212) 733-2323",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "(212) 733-2323 (Registrant's telephone number, including area code)"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_f21b3594af8e373d441bc38e",
+        "claim_id": "clm_a52f90f74a0010f93f2f0f6d",
+        "claim": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer.",
+        "value": "Chief Scientific Officer, President, Research & Development",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Scientific Officer, President, Research & Development, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_eb4e1ecbe510292a2e21c0ae",
+        "claim_id": "clm_aead14114eb2b1bd510dfd17",
+        "claim": "Pfizer Inc.'s commission file number is 1-3619.",
+        "value": "1-3619",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "Commission file number 1-3619"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_90e46304322f2075fa6ade09",
+        "claim_id": "clm_b0b8d207e61c158b75d02b64",
+        "claim": "Sally Susman is Chief Corporate Affairs Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Corporate Affairs Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Corporate Affairs Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_34210443c3b89bdadd6dbac2",
+        "claim_id": "clm_cc6bbbba6f7c62105415c87b",
+        "claim": "Pfizer Inc.'s business address is c/o Pfizer Inc., 66 Hudson Boulevard East, New York, NY 10001.",
+        "value": "66 Hudson Boulevard East, New York, NY 10001",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "The business address of each director and executive officer is c/o Pfizer Inc., 66 Hudson Boulevard East, New York, NY 10001."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_2e476100d9d640f92740c361",
+        "claim_id": "clm_cc9b494a44ed9423c7226bd2",
+        "claim": "Lindsay Havern is Head of Strategy, Executive Operations, and Counsel to the CEO at Pfizer Inc.",
+        "value": "Head of Strategy, Executive Operations, Counsel to the CEO",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Lindsay Havern Head of Strategy, Executive Operations, Counsel to the CEO"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_ff2321e57535446d3fbc81eb",
+        "claim_id": "clm_d98b6068cc524c5aad2e1f22",
+        "claim": "Dr. Albert Bourla is Chairman and Chief Executive Officer of Pfizer Inc.",
+        "value": "Chairman and Chief Executive Officer",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Dr. Albert Bourla Chairman and Chief Executive Officer"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_21a6626be35124739efb7260",
+        "claim_id": "clm_db10888b20f9af1feefd6c98",
+        "claim": "Pfizer Inc.'s I.R.S. Employer Identification Number is 13-5315170.",
+        "value": "13-5315170",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "Delaware 13-5315170 (State or other jurisdiction of incorporation or organization) (I.R.S. Employer Identification Number)"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_e638b4e9548051819777ddd4",
+        "claim_id": "clm_dd0075233ef8a37f600f8362",
+        "claim": "Andrew Baum is Chief Strategy and Innovation Officer and Executive Vice President of Pfizer.",
+        "value": "Chief Strategy and Innovation Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_2b24125c4b0baa9da97a87ab"
+        ],
+        "supporting_quotes": [
+          "Chief Strategy and Innovation Officer, Executive Vice President, Pfizer."
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_6ee20ced892eb03ebfd9597e",
+        "claim_id": "clm_e5a26e448f46a833f17652ad",
+        "claim": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.",
+        "value": "Chief Scientific Officer and President, Research & Development",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Chris Boshoff, MD, Ph D Chief Scientific Officer and President, Research & Development"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_cad93685a78f563ae70f192d",
+        "claim_id": "clm_f8fe0175e228900775666a73",
+        "claim": "Dennis Hancock is Chief Information Officer and Executive Vice President of Pfizer Inc.",
+        "value": "Chief Information Officer, Executive Vice President",
+        "status": "verified_fact",
+        "confidence": 0.98,
+        "source_ids": [
+          "src_3eff2fa8e5a52b4a20604c5e"
+        ],
+        "supporting_quotes": [
+          "Dennis Hancock Chief Information Officer, Executive Vice President"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      },
+      {
+        "evidence_id": "ev_322961e5631ba904f2a72289",
+        "claim_id": "clm_f956fd5356117af220d11181",
+        "claim": "Pfizer Inc.'s common stock trades on the New York Stock Exchange under the symbol PFE.",
+        "value": "PFE",
+        "status": "verified_fact",
+        "confidence": 0.99,
+        "source_ids": [
+          "src_0cc315a259e35a2da37f0574"
+        ],
+        "supporting_quotes": [
+          "Common Stock, $0.05 par value PFE New York Stock Exchange"
+        ],
+        "derived_from_claim_ids": [],
+        "extraction_method": "structured_llm"
+      }
+    ],
+    "conflicts": [
+      {
+        "claim": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.",
+        "claim_ids": [
+          "clm_a52f90f74a0010f93f2f0f6d",
+          "clm_e5a26e448f46a833f17652ad"
+        ],
+        "values": [
+          "Chief Scientific Officer, President, Research & Development",
+          "Chief Scientific Officer and President, Research & Development"
+        ],
+        "description": "Conflicting supported values were retained for 'Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.'."
+      }
+    ],
+    "rejected_claims": [
+      {
+        "index": 0,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported total revenues of $62,579 million for the year ended December 31, 2025.",
+          "value": "$62,579 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Total revenues(a) $ 62,579"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 1,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported total revenues of $63,627 million for the year ended December 31, 2024.",
+          "value": "$63,627 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Total revenues(a) $ 63,627"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 2,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported total revenues of $59,553 million for the year ended December 31, 2023.",
+          "value": "$59,553 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Total revenues(a) $ 59,553"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 3,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma segment total revenues of $61,199 million for the year ended December 31, 2025.",
+          "value": "$61,199 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma total revenues $ 61,199"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 4,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma segment total revenues of $62,400 million for the year ended December 31, 2024.",
+          "value": "$62,400 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma total revenues $ 62,400"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 5,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma segment total revenues of $58,237 million for the year ended December 31, 2023.",
+          "value": "$58,237 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma total revenues $ 58,237"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 6,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Comirnaty revenues of $4,367 million for the year ended December 31, 2025.",
+          "value": "$4,367 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Comirnaty $ 4,367"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 7,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Comirnaty revenues of $5,353 million for the year ended December 31, 2024.",
+          "value": "$5,353 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Comirnaty $ 5,353"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 8,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Comirnaty revenues of $11,220 million for the year ended December 31, 2023.",
+          "value": "$11,220 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Comirnaty $ 11,220"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 9,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Paxlovid revenues of $2,362 million for the year ended December 31, 2025.",
+          "value": "$2,362 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Paxlovid $ 2,362"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 10,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Paxlovid revenues of $5,716 million for the year ended December 31, 2024.",
+          "value": "$5,716 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Paxlovid $ 5,716"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 11,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Paxlovid revenues of $1,279 million for the year ended December 31, 2023.",
+          "value": "$1,279 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Revenues - Paxlovid $ 1,279"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 12,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported United States revenues of $37,078 million for the year ended December 31, 2025.",
+          "value": "$37,078 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "United States $ 37,078"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 13,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported United States revenues of $38,691 million for the year ended December 31, 2024.",
+          "value": "$38,691 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "United States $ 38,691"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 14,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported United States revenues of $28,145 million for the year ended December 31, 2023.",
+          "value": "$28,145 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "United States $ 28,145"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 15,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Eliquis revenues of $7,961 million for the year ended December 31, 2025.",
+          "value": "$7,961 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Eliquis(a) Nonvalvular atrial fibrillation, deep vein thrombosis, pulmonary embolism 7,961"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 16,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Prevnar family revenues of $6,494 million for the year ended December 31, 2025.",
+          "value": "$6,494 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Prevnar family Active immunization to prevent pneumonia, invasive disease and otitis media caused by Streptococcus pneumoniae 6,494"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 17,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Vyndaqel family revenues of $6,380 million for the year ended December 31, 2025.",
+          "value": "$6,380 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Vyndaqel family ATTR-CM and polyneuropathy 6,380"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 18,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Ibrance revenues of $4,122 million for the year ended December 31, 2025.",
+          "value": "$4,122 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Ibrance HR-positive/HER2-negative metastatic breast cancer 4,122"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 19,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma earnings of $29,342 million for the year ended December 31, 2025.",
+          "value": "$29,342 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma earnings(a) $ 29,342"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 20,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma earnings of $27,969 million for the year ended December 31, 2024.",
+          "value": "$27,969 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma earnings(a) $ 27,969"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 21,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported Biopharma earnings of $15,767 million for the year ended December 31, 2023.",
+          "value": "$15,767 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Biopharma earnings(a) $ 15,767"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 22,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported that McKesson, Inc. accounted for 25% of total revenues from its three largest U.S. wholesaler customers for the year ended December 31, 2025.",
+          "value": "25%",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Mc Kesson, Inc. 25 %"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 23,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported that Cencora, Inc. accounted for 16% of total revenues from its three largest U.S. wholesaler customers for the year ended December 31, 2025.",
+          "value": "16%",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Cencora, Inc. 16 %"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 24,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported that Cardinal Health, Inc. accounted for 13% of total revenues from its three largest U.S. wholesaler customers for the year ended December 31, 2025.",
+          "value": "13%",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_05bae74574e2d70513409444"
+          ],
+          "supporting_quotes": [
+            "Cardinal Health, Inc. 13 %"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 3,
+        "reason": "prohibited_url_in_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s website is www.pfizer.com.",
+          "value": "www.pfizer.com",
+          "status": "verified_fact",
+          "confidence": 0.99,
+          "source_ids": [
+            "src_0cc315a259e35a2da37f0574"
+          ],
+          "supporting_quotes": [
+            "Our website is www.pfizer.com."
+          ]
+        }
+      },
+      {
+        "index": 8,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is a large accelerated filer.",
+          "value": "large accelerated filer",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_0cc315a259e35a2da37f0574"
+          ],
+          "supporting_quotes": [
+            "Large Accelerated filer ☒ Accelerated filer ☐ Non-accelerated filer ☐ Smaller reporting company ☐ Emerging growth company ☐"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.99
+        }
+      },
+      {
+        "index": 9,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is not a shell company.",
+          "value": "not a shell company",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_0cc315a259e35a2da37f0574"
+          ],
+          "supporting_quotes": [
+            "Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes ☐ No ☒"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.99
+        }
+      },
+      {
+        "index": 12,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "James Quincey is a citizen of the United Kingdom.",
+          "value": "United Kingdom",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab"
+          ],
+          "supporting_quotes": [
+            "Country of citizenship United Kingdom."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 13,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Andrew Baum is a citizen of the United Kingdom.",
+          "value": "United Kingdom",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab"
+          ],
+          "supporting_quotes": [
+            "Country of citizenship United Kingdom"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 14,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Alexandre de Germay is a citizen of France.",
+          "value": "France",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab"
+          ],
+          "supporting_quotes": [
+            "Country of citizenship France."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 0,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. reported total revenues of $63.6 billion for full-year 2024.",
+          "value": "$63.6 billion",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "For full-year 2024, we reported total revenues of $63.6 billion, reflecting 7% year-over-year operational growth."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 1,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. returned $9.5 billion to shareholders via its quarterly dividend in 2024.",
+          "value": "$9.5 billion",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "In 2024, we returned $9.5 billion to shareholders via our quarterly dividend, invested $10.8 billion in internal R&D and paid down approximately $7.8 billion in debt."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 2,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. invested $10.8 billion in internal R&D in 2024.",
+          "value": "$10.8 billion",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "In 2024, we returned $9.5 billion to shareholders via our quarterly dividend, invested $10.8 billion in internal R&D and paid down approximately $7.8 billion in debt."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 3,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. paid down approximately $7.8 billion in debt in 2024.",
+          "value": "$7.8 billion",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "In 2024, we returned $9.5 billion to shareholders via our quarterly dividend, invested $10.8 billion in internal R&D and paid down approximately $7.8 billion in debt."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 4,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. was founded in 1849 by Charles Pfizer and Charles Erhart in Brooklyn, New York.",
+          "value": "1849",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Since 1849, when Charles Pfizer and Charles Erhart founded Pfizer in Brooklyn, New York, we've demonstrated a relentless commitment to innovation"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 5,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is the third largest biopharmaceutical company in oncology in the U.S. by revenue as of December 31, 2024.",
+          "value": "third largest",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Pfizer is the third largest biopharmaceutical company in oncology in the U.S. by revenue as of December 31, 2024"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 6,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. received 14 approvals in 2024 from the U.S. Food and Drug Administration or the European Medicines Agency.",
+          "value": "14",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "With 14 approvals received in 2024 from the U.S. Food and Drug Administration or the European Medicines Agency, we advanced new treatment and vaccine options addressing significant areas of patient need."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 7,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s medicines and vaccines reached more than 414 million patients around the world in 2024.",
+          "value": "414 million",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "In 2024, our medicines and vaccines reached more than 414 million patients around the world(1)."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 8,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. has more than 80,000 global colleagues.",
+          "value": "80,000",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Our more than 80,000 global colleagues showed tremendous dedication as they worked to improve lives around the world"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 9,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s cost realignment program is expected to deliver total net cost savings of approximately $4.5 billion by the end of 2025.",
+          "value": "$4.5 billion",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Our cost realignment program is expected to deliver total net cost savings of approximately $4.5 billion by the end of 2025, most of which was achieved by year-end 2024."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 10,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. achieved the milestone delivery of the one billionth dose of its pneumococcal conjugate vaccine for children in lower-income countries through Gavi, the Vaccine Alliance.",
+          "value": "one billionth dose",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Last year we achieved the milestone delivery of the one billionth dose of our pneumococcal conjugate vaccine for children in lower-income countries through Gavi, the Vaccine Alliance."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 11,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. ranked No. 4 in the 2024 Access to Medicine Index.",
+          "value": "No. 4",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "We ranked No. 4 in the 2024 Access to Medicine Index for our efforts to expand access to our products in low- and middle-income countries."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 12,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. has been listed for three consecutive years among the top 10 companies on Fortune World's Most Admired Companies All-Stars.",
+          "value": "three consecutive years",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "We're proud to be recognized for our progress, including being listed for three consecutive years among the top 10 companies on Fortune World's Most Admired Companies All-Stars."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 13,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. completed a successful integration with Seagen in 2024.",
+          "value": "Seagen",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "We drove a very successful integration with Seagen, a transformational deal and our largest acquisition in many years."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 14,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Chris Boshoff, MD, Ph.D., has been appointed as Pfizer Inc.'s new Chief Scientific Officer.",
+          "value": "Chris Boshoff",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Chris Boshoff, MD, Ph.D., has been appointed as our new Chief Scientific Officer."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 15,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Andrew Baum, MA, BM Ch B, was added as Pfizer Inc.'s new Chief Strategy and Innovation Officer.",
+          "value": "Andrew Baum",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "along with the addition last year of Andrew Baum, MA, BM Ch B, as our new Chief Strategy and Innovation Officer"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 16,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Dr. Albert Bourla is Chairman & Chief Executive Officer of Pfizer Inc.",
+          "value": "Dr. Albert Bourla",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "Dr. Albert Bourla\n\nChairman & Chief Executive Officer"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 17,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. refreshed its Board of Directors in 2024 with the addition of Mortimer (Tim) J. Buckley and Cyrus Taraporevala.",
+          "value": "Mortimer (Tim) J. Buckley and Cyrus Taraporevala",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "We reinforced our commitment to strong governance in 2024 by refreshing our Board of Directors with the addition of Mortimer (Tim) J. Buckley and Cyrus Taraporevala, two new members who bring extensive expertise in financial markets and shareholder value creation."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 18,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Dr. Helen Hobbs will retire from the Pfizer Inc. Board and will not stand for re-election in 2025.",
+          "value": "Dr. Helen Hobbs",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "After many years of dedicated service, Dr. Helen Hobbs will retire from the Board and will not stand for re-election in 2025."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 19,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. had 7 pivotal study starts and 8 key Phase 3 readouts in 2024.",
+          "value": "7 pivotal study starts and 8 key Phase 3 readouts",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_59686e18e8102b33698a8c41"
+          ],
+          "supporting_quotes": [
+            "In addition to more than a dozen major market approvals, we had 7 pivotal study starts and 8 key Phase 3 readouts."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 3,
+        "reason": "prohibited_url_in_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s website is www.pfizer.com.",
+          "value": "www.pfizer.com",
+          "status": "verified_fact",
+          "confidence": 0.98,
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Our website is www.pfizer.com."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": []
+        }
+      },
+      {
+        "index": 0,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is incorporated in Delaware.",
+          "value": "Delaware",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Delaware (State or other jurisdiction of incorporation or organization)"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 1,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s principal executive offices are located at 66 Hudson Boulevard East, New York, New York 10001-2192.",
+          "value": "66 Hudson Boulevard East, New York, New York 10001-2192",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "66 Hudson Boulevard East, New York, New York 10001-2192 (Address of principal executive offices) (zip code)"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 2,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s common stock trades on the New York Stock Exchange under the symbol PFE.",
+          "value": "PFE",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Common Stock, $0.05 par value | PFE | New York Stock Exchange"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 4,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s fiscal year ended December 31, 2025.",
+          "value": "December 31, 2025",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "For the fiscal year ended December 31, 2025"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 5,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s common stock has a par value of $0.05 per share.",
+          "value": "$0.05",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Common Stock, $0.05 par value"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 6,
+        "reason": "supporting_quote_not_found_in_source",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s I.R.S. Employer Identification Number is 13-5315170.",
+          "value": "13-5315170",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "13-5315170 (I.R.S. Employer Identification Number)"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 7,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s Commission file number is 1-3619.",
+          "value": "1-3619",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Commission file number 1-3619"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 8,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s telephone number is (212) 733-2323.",
+          "value": "(212) 733-2323",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "(212) 733-2323 (Registrant's telephone number, including area code)"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 9,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is a large accelerated filer.",
+          "value": "large accelerated filer",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Large Accelerated filer ☒"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 10,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. is not a shell company.",
+          "value": "No",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "Indicate by check mark whether the registrant is a shell company (as defined in Rule 12b-2 of the Exchange Act). Yes ☐ No ☒"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 11,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc. had 5,686,267,431 shares of common stock outstanding as of February 19, 2026.",
+          "value": "5,686,267,431",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "The number of shares outstanding of the registrant's common stock as of February 19, 2026 was 5,686,267,431 shares of common stock, all of one class."
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      },
+      {
+        "index": 13,
+        "reason": "supporting_quote_does_not_support_claim",
+        "sanitized_payload": {
+          "claim": "Pfizer Inc.'s fiscal year-end for U.S. subsidiaries is as of and for the year ended December 31.",
+          "value": "December 31",
+          "status": "verified_fact",
+          "source_ids": [
+            "src_dd064e2dc88f4b113ccc6829"
+          ],
+          "supporting_quotes": [
+            "for U.S. subsidiaries is as of and for the year ended December 31"
+          ],
+          "is_inference": false,
+          "derived_from_claim_ids": [],
+          "confidence": 0.98
+        }
+      }
+    ],
+    "processing_errors": [
+      {
+        "error_id": "err_0f9e67e5bc7cc6e089a5d399",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 0 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 0
+      },
+      {
+        "error_id": "err_1d300a09783a5b7716e056d4",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 1 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 1
+      },
+      {
+        "error_id": "err_d346ff1ce7225021f6f90a58",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 2 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 2
+      },
+      {
+        "error_id": "err_fece586741d3b23a40676a39",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 3 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 3
+      },
+      {
+        "error_id": "err_f7858a24cccc06e45fc5d876",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 4 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 4
+      },
+      {
+        "error_id": "err_1c2fd67294b305c8405a34ee",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 5 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 5
+      },
+      {
+        "error_id": "err_661f7e0b6d6f113c1aea8b29",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 6 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 6
+      },
+      {
+        "error_id": "err_3b51b47193061165ca73b96c",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 7 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 7
+      },
+      {
+        "error_id": "err_dbe4146f1323a38286916f7e",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 8 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 8
+      },
+      {
+        "error_id": "err_edd118a4177ee903b59ae4bc",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 9
+      },
+      {
+        "error_id": "err_56156e4a88d0cc6ff76796ef",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 10 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 10
+      },
+      {
+        "error_id": "err_0fead4919d5e7995f90ce11b",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 11 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 11
+      },
+      {
+        "error_id": "err_77ed6d18601ba1a4511fd7e2",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 12
+      },
+      {
+        "error_id": "err_fad38f947ae2c60f35d8fbe7",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 13 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 13
+      },
+      {
+        "error_id": "err_25a8ed7240583684ad5488db",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 14 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 14
+      },
+      {
+        "error_id": "err_2b726b3523f950c93126edf9",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 15 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 15
+      },
+      {
+        "error_id": "err_35164df0114e3d86efb3ac04",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 16 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 16
+      },
+      {
+        "error_id": "err_e5148f380f2b271b1fb75c78",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 17 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 17
+      },
+      {
+        "error_id": "err_80383db957810f632f348631",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 18 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 18
+      },
+      {
+        "error_id": "err_b8eb140b780533a44c41ec49",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 19 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 19
+      },
+      {
+        "error_id": "err_7b4abefccf990c2a3dcdc639",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 20 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 20
+      },
+      {
+        "error_id": "err_1f8d2036b18e06c6db84afda",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 21 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 21
+      },
+      {
+        "error_id": "err_1209ee2a2d67cd0c6d66cb1b",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 22 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 22
+      },
+      {
+        "error_id": "err_09d62bb3281f4676186e4118",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 23 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 23
+      },
+      {
+        "error_id": "err_be70b1bc133e89280c291705",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 24 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_05bae74574e2d70513409444",
+        "query_id": null,
+        "claim_index": 24
+      },
+      {
+        "error_id": "err_e2699bc7841e521d00429d88",
+        "stage": "validation",
+        "code": "prohibited_url_in_claim",
+        "message": "Claim at index 3 was rejected: prohibited_url_in_claim.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": 3
+      },
+      {
+        "error_id": "err_c7c963351d07417a7f5c1227",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 8 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_0cc315a259e35a2da37f0574",
+        "query_id": null,
+        "claim_index": 8
+      },
+      {
+        "error_id": "err_84cde777331ea1617057d6a2",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_0cc315a259e35a2da37f0574",
+        "query_id": null,
+        "claim_index": 9
+      },
+      {
+        "error_id": "err_5ed7fb538d96b6ea58d5125d",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_2b24125c4b0baa9da97a87ab",
+        "query_id": null,
+        "claim_index": 12
+      },
+      {
+        "error_id": "err_cccf006812ef690b9b0fec69",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_2b24125c4b0baa9da97a87ab",
+        "query_id": null,
+        "claim_index": 13
+      },
+      {
+        "error_id": "err_11711788faf9acf0d885b432",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 14 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_2b24125c4b0baa9da97a87ab",
+        "query_id": null,
+        "claim_index": 14
+      },
+      {
+        "error_id": "err_4f6155df3dec0a7dbddf8fbe",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 0 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 0
+      },
+      {
+        "error_id": "err_0776b63461a16a48c5712e41",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 1 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 1
+      },
+      {
+        "error_id": "err_79b8bbb06921a7056fe09f49",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 2 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 2
+      },
+      {
+        "error_id": "err_88e9d0dccfd227ee856c4b59",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 3 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 3
+      },
+      {
+        "error_id": "err_adad6543cfecd5be72c73ef1",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 4 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 4
+      },
+      {
+        "error_id": "err_58cb5e880bdee4d64787f1f4",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 5 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 5
+      },
+      {
+        "error_id": "err_f734f89b0b1f535cf414f6e4",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 6 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 6
+      },
+      {
+        "error_id": "err_41e0b35c8ec0d35e91f71739",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 7 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 7
+      },
+      {
+        "error_id": "err_be0f7279ec0b75df63a12355",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 8 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 8
+      },
+      {
+        "error_id": "err_f99f9565011b0de1cb3b343e",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 9
+      },
+      {
+        "error_id": "err_68c778095898e7339fceafad",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 10 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 10
+      },
+      {
+        "error_id": "err_2f37b3de9d0493cd8dd06c6c",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 11 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 11
+      },
+      {
+        "error_id": "err_971f54a4cf06c12547feaa7b",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 12
+      },
+      {
+        "error_id": "err_e8c2e3f7cd4611fd46803a8f",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 13
+      },
+      {
+        "error_id": "err_44cacead944f4180a02ac13b",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 14 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 14
+      },
+      {
+        "error_id": "err_c0684ce160bd4e4dd32ed616",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 15 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 15
+      },
+      {
+        "error_id": "err_b8571a94cd2805d0f313aa80",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 16 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 16
+      },
+      {
+        "error_id": "err_6af063c8ae5b6a90ec778de1",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 17 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 17
+      },
+      {
+        "error_id": "err_d6936bdc5a4c4620f1052ea4",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 18 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 18
+      },
+      {
+        "error_id": "err_07858f7d31096481d6c1f059",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 19 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_59686e18e8102b33698a8c41",
+        "query_id": null,
+        "claim_index": 19
+      },
+      {
+        "error_id": "err_e2699bc7841e521d00429d88",
+        "stage": "validation",
+        "code": "prohibited_url_in_claim",
+        "message": "Claim at index 3 was rejected: prohibited_url_in_claim.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": 3
+      },
+      {
+        "error_id": "err_ac4ab2667693d6300c975961",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 0 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 0
+      },
+      {
+        "error_id": "err_7d41400d51e04192cd29b593",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 1 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 1
+      },
+      {
+        "error_id": "err_e8c5276fe25b08558b999a7c",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 2 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 2
+      },
+      {
+        "error_id": "err_bf261c32bdc07ae6a718b08e",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 4 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 4
+      },
+      {
+        "error_id": "err_abbc2560bb0f97e6987d7979",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 5 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 5
+      },
+      {
+        "error_id": "err_133e2676770bbcb5bdee3610",
+        "stage": "validation",
+        "code": "supporting_quote_not_found_in_source",
+        "message": "Claim at index 6 was rejected: supporting_quote_not_found_in_source.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 6
+      },
+      {
+        "error_id": "err_eebcf465b4d78702b6e82f55",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 7 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 7
+      },
+      {
+        "error_id": "err_b61d5d73915ef2fbda2fdc64",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 8 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 8
+      },
+      {
+        "error_id": "err_f5e560e865a32237da0f4aa8",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 9
+      },
+      {
+        "error_id": "err_7f7e74be5d40aa4d0bdb44d4",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 10 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 10
+      },
+      {
+        "error_id": "err_4ddc391fac8d493f14bbd3eb",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 11 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 11
+      },
+      {
+        "error_id": "err_eea0b41e75e656eaff80fa94",
+        "stage": "validation",
+        "code": "supporting_quote_does_not_support_claim",
+        "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+        "recoverable": true,
+        "source_id": "src_dd064e2dc88f4b113ccc6829",
+        "query_id": null,
+        "claim_index": 13
+      },
+      {
+        "error_id": "err_7063266a8cc456ee7165536d",
+        "stage": "extraction",
+        "code": "structured_output_invalid",
+        "message": "Structured evidence output was unavailable or invalid (LLMProviderResponseError).",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      },
+      {
+        "error_id": "err_19d8085a77939980235bc194",
+        "stage": "extraction",
+        "code": "extraction_unavailable",
+        "message": "Structured extraction returned claims, but none survived claim-level validation; deterministic fallback was applied.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      },
+      {
+        "error_id": "err_2249d384da7bf726eb662010",
+        "stage": "extraction",
+        "code": "extraction_unavailable",
+        "message": "Structured extraction returned claims, but none survived claim-level validation; deterministic fallback was applied.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      },
+      {
+        "error_id": "err_1ffe817f2268be593ed274ff",
+        "stage": "extraction",
+        "code": "structured_output_invalid",
+        "message": "Structured evidence output was unavailable or invalid (LLMProviderResponseError).",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      },
+      {
+        "error_id": "err_3f289ecd6ba2335bdaa85e84",
+        "stage": "extraction",
+        "code": "extraction_unavailable",
+        "message": "Structured evidence extraction and its single repair attempt were unavailable: LLMProviderResponseError.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      },
+      {
+        "error_id": "err_08663a44339655643673b0f0",
+        "stage": "extraction",
+        "code": "budget_interrupted",
+        "message": "Evidence extraction stopped because the LLM budget was exhausted.",
+        "recoverable": true,
+        "source_id": null,
+        "query_id": null,
+        "claim_index": null
+      }
+    ],
+    "source_count": 8,
+    "supported_claim_count": 32,
+    "verified_fact_count": 31,
+    "single_source_count": 0,
+    "inference_count": 0,
+    "research_gap_count": 10,
+    "rejected_claim_count": 64,
+    "processing_error_count": 70
+  },
+  "run_trace": {
+    "run_id": "run_6a6c5c4df99a4c03b50a037597f47dbf",
+    "started_at": "2026-07-31T01:42:16.124262Z",
+    "completed_at": "2026-07-31T01:44:40.229472Z",
+    "rounds": [
+      {
+        "round": 1,
+        "planner_output": [
+          {
+            "topic": "Company Identity",
+            "priority": 5,
+            "reason": "Disambiguate the legal and operating entity.",
+            "expected_output": "Evidence-backed findings for Company Identity; Unknown if unavailable.",
+            "estimated_value": 1.0
+          },
+          {
+            "topic": "Pfizer approved products and therapeutic portfolio",
+            "priority": 5,
+            "reason": "Core to understanding revenue base and market position; identifies key commercial assets and therapeutic areas.",
+            "expected_output": "List of major approved products, therapeutic areas, blockbuster drugs, recent launches, and patent/LOE exposure for key products.",
+            "estimated_value": 0.95
+          },
+          {
+            "topic": "Pfizer corporate identity verification and business overview",
+            "priority": 5,
+            "reason": "Identity is unconfirmed; must establish canonical facts about Pfizer Inc. before deeper research to avoid misattribution.",
+            "expected_output": "Confirmed corporate identity: legal name, headquarters, incorporation, primary stock exchange/ticker, key executives, business segments, and overall company description.",
+            "estimated_value": 1.0
+          },
+          {
+            "topic": "Pfizer R&D pipeline and clinical-stage assets",
+            "priority": 5,
+            "reason": "Pipeline determines future growth and competitive positioning; critical for assessing innovation trajectory.",
+            "expected_output": "Phase 1-3 pipeline assets, key therapeutic areas, notable readouts, regulatory submissions, and expected catalysts.",
+            "estimated_value": 0.95
+          },
+          {
+            "topic": "Pfizer financial performance and outlook",
+            "priority": 4,
+            "reason": "Financial health, revenue mix, margins, and guidance inform commercial viability and investment attractiveness.",
+            "expected_output": "Recent revenue, profitability, cash flow, balance sheet metrics, segment performance, and forward guidance.",
+            "estimated_value": 0.85
+          },
+          {
+            "topic": "Pfizer manufacturing and supply chain footprint",
+            "priority": 4,
+            "reason": "Manufacturing capacity, site network, and supply chain resilience are material to operational risk and procurement signals.",
+            "expected_output": "Manufacturing site locations, key production capabilities, supply chain dependencies, and any recent capacity investments or disruptions.",
+            "estimated_value": 0.8
+          },
+          {
+            "topic": "Pfizer partnerships, collaborations, and licensing deals",
+            "priority": 4,
+            "reason": "External collaborations reveal innovation sourcing strategy and potential procurement/partnership opportunities.",
+            "expected_output": "Key partnerships, licensing agreements, co-development deals, and their strategic significance.",
+            "estimated_value": 0.8
+          },
+          {
+            "topic": "Pfizer recent news, strategic moves, and corporate developments",
+            "priority": 4,
+            "reason": "Recent events (M&A, divestitures, restructuring, leadership changes) shape current strategy and near-term outlook.",
+            "expected_output": "Timeline of significant recent corporate actions, announcements, and strategic pivots over the past 12-24 months.",
+            "estimated_value": 0.85
+          },
+          {
+            "topic": "Pfizer technology platforms and drug discovery capabilities",
+            "priority": 4,
+            "reason": "Understanding proprietary platforms (mRNA, antibody-drug conjugates, small molecules) informs differentiation and partnership value.",
+            "expected_output": "Description of core technology platforms, R&D infrastructure, and any proprietary tools or capabilities.",
+            "estimated_value": 0.85
+          },
+          {
+            "topic": "Pfizer competitive landscape and market positioning",
+            "priority": 3,
+            "reason": "Understanding competitors and market share across key therapeutic areas contextualizes Pfizer's strengths and threats.",
+            "expected_output": "Primary competitors by therapeutic area, market share dynamics, and competitive advantages or vulnerabilities.",
+            "estimated_value": 0.75
+          },
+          {
+            "topic": "Pfizer procurement signals and supplier/vendor relationships",
+            "priority": 3,
+            "reason": "Procurement activity, vendor contracts, and supply agreements reveal operational needs and potential commercial engagement points.",
+            "expected_output": "Evidence of supplier contracts, procurement tenders, vendor relationships, and supply chain sourcing patterns.",
+            "estimated_value": 0.7
+          },
+          {
+            "topic": "Pfizer regulatory, legal, and reputational risks",
+            "priority": 3,
+            "reason": "Litigation, regulatory actions, pricing pressures, and reputational issues are material risk factors affecting the company.",
+            "expected_output": "Ongoing litigation, regulatory scrutiny, pricing policy exposure, and any reputational or compliance concerns.",
+            "estimated_value": 0.7
+          },
+          {
+            "topic": "Pfizer target departments and organizational structure",
+            "priority": 3,
+            "reason": "Identifying relevant internal stakeholders (R&D, procurement, corporate development, manufacturing) enables targeted outreach.",
+            "expected_output": "Key departments, functional leadership, and organizational structure relevant to partnership or sales engagement.",
+            "estimated_value": 0.7
+          }
+        ],
+        "queries": [
+          {
+            "query_id": "qry_422efb388c1f875a29a3",
+            "query": "Pfizer Inc. corporate profile headquarters legal name stock exchange NYSE ticker PFE",
+            "topic": "Pfizer corporate identity verification and business overview",
+            "priority": 5,
+            "expected_evidence": "Confirmation of Pfizer Inc. as legal entity, headquarters location, incorporation state, primary stock exchange and ticker symbol, key executives, and business segments.",
+            "language": "en",
+            "source_preference": [
+              "company filings",
+              "official corporate website",
+              "financial news"
+            ],
+            "addresses_missing_items": [
+              "Identity unconfirmed",
+              "Headquarters",
+              "Legal name",
+              "Ticker"
+            ],
+            "round": 1
+          },
+          {
+            "query_id": "qry_85356c1b295e5b4c940f",
+            "query": "Pfizer Inc. CEO leadership team executive officers 2024 2025",
+            "topic": "Pfizer corporate identity verification and business overview",
+            "priority": 4,
+            "expected_evidence": "Names and roles of current CEO, CFO, and other key C-suite executives at Pfizer.",
+            "language": "en",
+            "source_preference": [
+              "company filings",
+              "official corporate website",
+              "business press"
+            ],
+            "addresses_missing_items": [
+              "Key executives",
+              "Leadership"
+            ],
+            "round": 1
+          },
+          {
+            "query_id": "qry_f6efd948c55f30f5a0bd",
+            "query": "Pfizer business segments operating divisions oncology vaccines hospital primary care",
+            "topic": "Pfizer corporate identity verification and business overview",
+            "priority": 4,
+            "expected_evidence": "Description of Pfizer's operating segments and how the company organizes its business units.",
+            "language": "en",
+            "source_preference": [
+              "company filings",
+              "annual report",
+              "official corporate website"
+            ],
+            "addresses_missing_items": [
+              "Business segments",
+              "Company description"
+            ],
+            "round": 1
+          }
+        ],
+        "search_statistics": {
+          "query_count": 3,
+          "successful_queries": 3,
+          "failed_queries": 0,
+          "cache_hits": 0,
+          "total_results": 9,
+          "deduplicated_results": 1,
+          "total_duration_ms": 12788.570599979721,
+          "retries": 0
+        },
+        "retrieved_source_ids": [
+          "src_05bae74574e2d70513409444",
+          "src_0cc315a259e35a2da37f0574",
+          "src_2b24125c4b0baa9da97a87ab",
+          "src_3eff2fa8e5a52b4a20604c5e",
+          "src_59686e18e8102b33698a8c41",
+          "src_dd064e2dc88f4b113ccc6829",
+          "src_e3a6a0a585b7514efca8c36a",
+          "src_f036a5f91e73327f8bdfb5ee"
+        ],
+        "research_summary": null,
+        "assessment": null,
+        "followup": null,
+        "new_evidence_count": 31,
+        "evidence_processing_errors": [
+          {
+            "error_id": "err_0f9e67e5bc7cc6e089a5d399",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 0 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 0
+          },
+          {
+            "error_id": "err_1d300a09783a5b7716e056d4",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 1 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 1
+          },
+          {
+            "error_id": "err_d346ff1ce7225021f6f90a58",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 2 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 2
+          },
+          {
+            "error_id": "err_fece586741d3b23a40676a39",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 3 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 3
+          },
+          {
+            "error_id": "err_f7858a24cccc06e45fc5d876",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 4 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 4
+          },
+          {
+            "error_id": "err_1c2fd67294b305c8405a34ee",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 5 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 5
+          },
+          {
+            "error_id": "err_661f7e0b6d6f113c1aea8b29",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 6 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 6
+          },
+          {
+            "error_id": "err_3b51b47193061165ca73b96c",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 7 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 7
+          },
+          {
+            "error_id": "err_dbe4146f1323a38286916f7e",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 8 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 8
+          },
+          {
+            "error_id": "err_edd118a4177ee903b59ae4bc",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 9
+          },
+          {
+            "error_id": "err_56156e4a88d0cc6ff76796ef",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 10 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 10
+          },
+          {
+            "error_id": "err_0fead4919d5e7995f90ce11b",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 11 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 11
+          },
+          {
+            "error_id": "err_77ed6d18601ba1a4511fd7e2",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 12
+          },
+          {
+            "error_id": "err_fad38f947ae2c60f35d8fbe7",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 13 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 13
+          },
+          {
+            "error_id": "err_25a8ed7240583684ad5488db",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 14 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 14
+          },
+          {
+            "error_id": "err_2b726b3523f950c93126edf9",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 15 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 15
+          },
+          {
+            "error_id": "err_35164df0114e3d86efb3ac04",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 16 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 16
+          },
+          {
+            "error_id": "err_e5148f380f2b271b1fb75c78",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 17 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 17
+          },
+          {
+            "error_id": "err_80383db957810f632f348631",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 18 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 18
+          },
+          {
+            "error_id": "err_b8eb140b780533a44c41ec49",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 19 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 19
+          },
+          {
+            "error_id": "err_7b4abefccf990c2a3dcdc639",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 20 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 20
+          },
+          {
+            "error_id": "err_1f8d2036b18e06c6db84afda",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 21 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 21
+          },
+          {
+            "error_id": "err_1209ee2a2d67cd0c6d66cb1b",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 22 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 22
+          },
+          {
+            "error_id": "err_09d62bb3281f4676186e4118",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 23 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 23
+          },
+          {
+            "error_id": "err_be70b1bc133e89280c291705",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 24 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_05bae74574e2d70513409444",
+            "query_id": null,
+            "claim_index": 24
+          },
+          {
+            "error_id": "err_e2699bc7841e521d00429d88",
+            "stage": "validation",
+            "code": "prohibited_url_in_claim",
+            "message": "Claim at index 3 was rejected: prohibited_url_in_claim.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": 3
+          },
+          {
+            "error_id": "err_c7c963351d07417a7f5c1227",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 8 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_0cc315a259e35a2da37f0574",
+            "query_id": null,
+            "claim_index": 8
+          },
+          {
+            "error_id": "err_84cde777331ea1617057d6a2",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_0cc315a259e35a2da37f0574",
+            "query_id": null,
+            "claim_index": 9
+          },
+          {
+            "error_id": "err_5ed7fb538d96b6ea58d5125d",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_2b24125c4b0baa9da97a87ab",
+            "query_id": null,
+            "claim_index": 12
+          },
+          {
+            "error_id": "err_cccf006812ef690b9b0fec69",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_2b24125c4b0baa9da97a87ab",
+            "query_id": null,
+            "claim_index": 13
+          },
+          {
+            "error_id": "err_11711788faf9acf0d885b432",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 14 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_2b24125c4b0baa9da97a87ab",
+            "query_id": null,
+            "claim_index": 14
+          },
+          {
+            "error_id": "err_4f6155df3dec0a7dbddf8fbe",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 0 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 0
+          },
+          {
+            "error_id": "err_0776b63461a16a48c5712e41",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 1 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 1
+          },
+          {
+            "error_id": "err_79b8bbb06921a7056fe09f49",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 2 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 2
+          },
+          {
+            "error_id": "err_88e9d0dccfd227ee856c4b59",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 3 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 3
+          },
+          {
+            "error_id": "err_adad6543cfecd5be72c73ef1",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 4 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 4
+          },
+          {
+            "error_id": "err_58cb5e880bdee4d64787f1f4",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 5 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 5
+          },
+          {
+            "error_id": "err_f734f89b0b1f535cf414f6e4",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 6 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 6
+          },
+          {
+            "error_id": "err_41e0b35c8ec0d35e91f71739",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 7 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 7
+          },
+          {
+            "error_id": "err_be0f7279ec0b75df63a12355",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 8 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 8
+          },
+          {
+            "error_id": "err_f99f9565011b0de1cb3b343e",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 9
+          },
+          {
+            "error_id": "err_68c778095898e7339fceafad",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 10 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 10
+          },
+          {
+            "error_id": "err_2f37b3de9d0493cd8dd06c6c",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 11 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 11
+          },
+          {
+            "error_id": "err_971f54a4cf06c12547feaa7b",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 12 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 12
+          },
+          {
+            "error_id": "err_e8c2e3f7cd4611fd46803a8f",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 13
+          },
+          {
+            "error_id": "err_44cacead944f4180a02ac13b",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 14 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 14
+          },
+          {
+            "error_id": "err_c0684ce160bd4e4dd32ed616",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 15 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 15
+          },
+          {
+            "error_id": "err_b8571a94cd2805d0f313aa80",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 16 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 16
+          },
+          {
+            "error_id": "err_6af063c8ae5b6a90ec778de1",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 17 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 17
+          },
+          {
+            "error_id": "err_d6936bdc5a4c4620f1052ea4",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 18 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 18
+          },
+          {
+            "error_id": "err_07858f7d31096481d6c1f059",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 19 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_59686e18e8102b33698a8c41",
+            "query_id": null,
+            "claim_index": 19
+          },
+          {
+            "error_id": "err_e2699bc7841e521d00429d88",
+            "stage": "validation",
+            "code": "prohibited_url_in_claim",
+            "message": "Claim at index 3 was rejected: prohibited_url_in_claim.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": 3
+          },
+          {
+            "error_id": "err_ac4ab2667693d6300c975961",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 0 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 0
+          },
+          {
+            "error_id": "err_7d41400d51e04192cd29b593",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 1 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 1
+          },
+          {
+            "error_id": "err_e8c5276fe25b08558b999a7c",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 2 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 2
+          },
+          {
+            "error_id": "err_bf261c32bdc07ae6a718b08e",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 4 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 4
+          },
+          {
+            "error_id": "err_abbc2560bb0f97e6987d7979",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 5 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 5
+          },
+          {
+            "error_id": "err_133e2676770bbcb5bdee3610",
+            "stage": "validation",
+            "code": "supporting_quote_not_found_in_source",
+            "message": "Claim at index 6 was rejected: supporting_quote_not_found_in_source.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 6
+          },
+          {
+            "error_id": "err_eebcf465b4d78702b6e82f55",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 7 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 7
+          },
+          {
+            "error_id": "err_b61d5d73915ef2fbda2fdc64",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 8 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 8
+          },
+          {
+            "error_id": "err_f5e560e865a32237da0f4aa8",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 9 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 9
+          },
+          {
+            "error_id": "err_7f7e74be5d40aa4d0bdb44d4",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 10 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 10
+          },
+          {
+            "error_id": "err_4ddc391fac8d493f14bbd3eb",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 11 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 11
+          },
+          {
+            "error_id": "err_eea0b41e75e656eaff80fa94",
+            "stage": "validation",
+            "code": "supporting_quote_does_not_support_claim",
+            "message": "Claim at index 13 was rejected: supporting_quote_does_not_support_claim.",
+            "recoverable": true,
+            "source_id": "src_dd064e2dc88f4b113ccc6829",
+            "query_id": null,
+            "claim_index": 13
+          },
+          {
+            "error_id": "err_7063266a8cc456ee7165536d",
+            "stage": "extraction",
+            "code": "structured_output_invalid",
+            "message": "Structured evidence output was unavailable or invalid (LLMProviderResponseError).",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          },
+          {
+            "error_id": "err_19d8085a77939980235bc194",
+            "stage": "extraction",
+            "code": "extraction_unavailable",
+            "message": "Structured extraction returned claims, but none survived claim-level validation; deterministic fallback was applied.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          },
+          {
+            "error_id": "err_2249d384da7bf726eb662010",
+            "stage": "extraction",
+            "code": "extraction_unavailable",
+            "message": "Structured extraction returned claims, but none survived claim-level validation; deterministic fallback was applied.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          },
+          {
+            "error_id": "err_1ffe817f2268be593ed274ff",
+            "stage": "extraction",
+            "code": "structured_output_invalid",
+            "message": "Structured evidence output was unavailable or invalid (LLMProviderResponseError).",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          },
+          {
+            "error_id": "err_3f289ecd6ba2335bdaa85e84",
+            "stage": "extraction",
+            "code": "extraction_unavailable",
+            "message": "Structured evidence extraction and its single repair attempt were unavailable: LLMProviderResponseError.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          },
+          {
+            "error_id": "err_08663a44339655643673b0f0",
+            "stage": "extraction",
+            "code": "budget_interrupted",
+            "message": "Evidence extraction stopped because the LLM budget was exhausted.",
+            "recoverable": true,
+            "source_id": null,
+            "query_id": null,
+            "claim_index": null
+          }
+        ],
+        "stop_reason": "query_budget_reached"
+      }
+    ],
+    "transitions": [
+      {
+        "sequence": 1,
+        "from_state": null,
+        "to_state": "resolve_company",
+        "started_at": "2026-07-31T01:42:16.124351Z",
+        "completed_at": "2026-07-31T01:42:16.124402Z",
+        "duration_ms": 0.04950002767145634,
+        "round": 0,
+        "details": {
+          "input_fields": [
+            "canonical_name",
+            "country",
+            "industry"
+          ]
+        },
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 2,
+        "from_state": "resolve_company",
+        "to_state": "plan_research",
+        "started_at": "2026-07-31T01:42:16.124704Z",
+        "completed_at": "2026-07-31T01:42:24.012164Z",
+        "duration_ms": 7887.462700018659,
+        "round": 0,
+        "details": {},
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 3,
+        "from_state": "plan_research",
+        "to_state": "generate_search_queries",
+        "started_at": "2026-07-31T01:42:24.012424Z",
+        "completed_at": "2026-07-31T01:42:45.280102Z",
+        "duration_ms": 21267.680800054222,
+        "round": 0,
+        "details": {},
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 4,
+        "from_state": "generate_search_queries",
+        "to_state": "parallel_search",
+        "started_at": "2026-07-31T01:42:45.280433Z",
+        "completed_at": "2026-07-31T01:42:58.069197Z",
+        "duration_ms": 12788.754499983042,
+        "round": 1,
+        "details": {
+          "query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ]
+        },
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 5,
+        "from_state": "parallel_search",
+        "to_state": "process_evidence",
+        "started_at": "2026-07-31T01:42:58.069371Z",
+        "completed_at": "2026-07-31T01:44:40.218923Z",
+        "duration_ms": 102149.5570000261,
+        "round": 1,
+        "details": {
+          "raw_results": 9,
+          "failed_queries": 0
+        },
+        "outcome": "partial_failure",
+        "error": null
+      },
+      {
+        "sequence": 6,
+        "from_state": "process_evidence",
+        "to_state": "refine_company_identity",
+        "started_at": "2026-07-31T01:44:40.219229Z",
+        "completed_at": "2026-07-31T01:44:40.222710Z",
+        "duration_ms": 3.48319998010993,
+        "round": 1,
+        "details": {
+          "evidence_count": 32
+        },
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 7,
+        "from_state": "refine_company_identity",
+        "to_state": "finalize",
+        "started_at": "2026-07-31T01:44:40.224919Z",
+        "completed_at": "2026-07-31T01:44:40.228740Z",
+        "duration_ms": 3.8223000010475516,
+        "round": 1,
+        "details": {
+          "stop_reason": "query_budget_reached"
+        },
+        "outcome": "succeeded",
+        "error": null
+      },
+      {
+        "sequence": 8,
+        "from_state": "finalize",
+        "to_state": "return_result",
+        "started_at": "2026-07-31T01:44:40.228983Z",
+        "completed_at": "2026-07-31T01:44:40.229297Z",
+        "duration_ms": 0.3182999789714813,
+        "round": 1,
+        "details": {
+          "evidence_count": 32
+        },
+        "outcome": "succeeded",
+        "error": null
+      }
+    ],
+    "final_research_summary": {
+      "known_facts": [
+        {
+          "statement": "Douglas M. Lankler is Chief Legal Officer and Executive Vice President of Pfizer.: Chief Legal Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_003a8e6f969d90547c362ddc"
+          ]
+        },
+        {
+          "statement": "Alexandre de Germay is Chief International Commercial Officer and Executive Vice President of Pfizer Inc.: Chief International Commercial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_00c6f1e7f5c26171203b2ee5"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s fiscal year ended December 31, 2025.: December 31, 2025",
+          "claim_ids": [
+            "clm_083e53380c09ec1e7a6a4f6e"
+          ]
+        },
+        {
+          "statement": "Unknown: Company name",
+          "claim_ids": [
+            "clm_1c641fe6ad979742c5bfac44"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s principal executive offices are located at 66 Hudson Boulevard East, New York, New York 10001-2192.: 66 Hudson Boulevard East, New York, New York 10001-2192",
+          "claim_ids": [
+            "clm_27a796c2024289059f50a822"
+          ]
+        },
+        {
+          "statement": "Payal Sahni Becher is Chief People Experience Officer and Executive Vice President of Pfizer Inc.: Chief People Experience Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_287f5007fbb0e6fbd8e958b3"
+          ]
+        },
+        {
+          "statement": "Doug Lankler is Chief Legal Officer and Executive Vice President of Pfizer Inc.: Chief Legal Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_2eb2854e479f0172aad78412"
+          ]
+        },
+        {
+          "statement": "David M. Denton is Chief Financial Officer and Executive Vice President of Pfizer.: Chief Financial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_2fd5d767705f90761df246c6"
+          ]
+        },
+        {
+          "statement": "Michael Mc Dermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer.: Chief Global Supply and Quality Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_415e77d53a8c212973bfbe27"
+          ]
+        },
+        {
+          "statement": "Aamir Malik is Chief U.S. Commercial Officer and Executive Vice President of Pfizer Inc.: Chief U.S. Commercial Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_46b270485ef459ee34829e50"
+          ]
+        },
+        {
+          "statement": "Mike McDermott is Chief Global Supply and Quality Officer and Executive Vice President of Pfizer Inc.: Chief Global Supply and Quality Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_4d23fae8210a271fcd17a92d"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s fiscal year-end for subsidiaries operating outside the U.S. is as of and for the year ended November 30.: November 30",
+          "claim_ids": [
+            "clm_4d3ffcfd3c5a5c2688795ac4"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc. had 5,686,267,431 shares of common stock outstanding as of February 19, 2026.: 5,686,267,431",
+          "claim_ids": [
+            "clm_5ca9246a7d48087e2b18934f"
+          ]
+        },
+        {
+          "statement": "Shantanu Narayen is Lead Independent Director on the Pfizer Inc. board.: Lead Independent Director",
+          "claim_ids": [
+            "clm_65e4e7e82306b2312ee46267"
+          ]
+        },
+        {
+          "statement": "Dave Denton is Chief Financial Officer and Executive Vice President of Pfizer Inc.: Chief Financial Officer and Executive Vice President",
+          "claim_ids": [
+            "clm_7723af580c2bf3794aacc444"
+          ]
+        },
+        {
+          "statement": "Albert Bourla is Chairman and Chief Executive Officer of Pfizer.: Chairman and Chief Executive Officer",
+          "claim_ids": [
+            "clm_796a2208a0f7e93b1605b09d"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc. is incorporated in Delaware.: Delaware",
+          "claim_ids": [
+            "clm_88dc6402f844563401a5c5ae"
+          ]
+        },
+        {
+          "statement": "Lidia Fonseca is Chief Digital and Technology Officer and Executive Vice President of Pfizer.: Chief Digital and Technology Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_8bb8ee99cc81ca5a6a49fc99"
+          ]
+        },
+        {
+          "statement": "Company name: PFIZER",
+          "claim_ids": [
+            "clm_90f65303492b1133bd589683"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s common stock has a par value of $0.05 per share.: $0.05",
+          "claim_ids": [
+            "clm_96e42ab9f5707aa65750e8dd"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s telephone number is (212) 733-2323.: (212) 733-2323",
+          "claim_ids": [
+            "clm_a43ff900cec840ed48c5d75b"
+          ]
+        },
+        {
+          "statement": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer.: Chief Scientific Officer, President, Research & Development",
+          "claim_ids": [
+            "clm_a52f90f74a0010f93f2f0f6d"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s commission file number is 1-3619.: 1-3619",
+          "claim_ids": [
+            "clm_aead14114eb2b1bd510dfd17"
+          ]
+        },
+        {
+          "statement": "Sally Susman is Chief Corporate Affairs Officer and Executive Vice President of Pfizer.: Chief Corporate Affairs Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_b0b8d207e61c158b75d02b64"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s business address is c/o Pfizer Inc., 66 Hudson Boulevard East, New York, NY 10001.: 66 Hudson Boulevard East, New York, NY 10001",
+          "claim_ids": [
+            "clm_cc6bbbba6f7c62105415c87b"
+          ]
+        },
+        {
+          "statement": "Lindsay Havern is Head of Strategy, Executive Operations, and Counsel to the CEO at Pfizer Inc.: Head of Strategy, Executive Operations, Counsel to the CEO",
+          "claim_ids": [
+            "clm_cc9b494a44ed9423c7226bd2"
+          ]
+        },
+        {
+          "statement": "Dr. Albert Bourla is Chairman and Chief Executive Officer of Pfizer Inc.: Chairman and Chief Executive Officer",
+          "claim_ids": [
+            "clm_d98b6068cc524c5aad2e1f22"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s I.R.S. Employer Identification Number is 13-5315170.: 13-5315170",
+          "claim_ids": [
+            "clm_db10888b20f9af1feefd6c98"
+          ]
+        },
+        {
+          "statement": "Andrew Baum is Chief Strategy and Innovation Officer and Executive Vice President of Pfizer.: Chief Strategy and Innovation Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_dd0075233ef8a37f600f8362"
+          ]
+        },
+        {
+          "statement": "Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.: Chief Scientific Officer and President, Research & Development",
+          "claim_ids": [
+            "clm_e5a26e448f46a833f17652ad"
+          ]
+        },
+        {
+          "statement": "Dennis Hancock is Chief Information Officer and Executive Vice President of Pfizer Inc.: Chief Information Officer, Executive Vice President",
+          "claim_ids": [
+            "clm_f8fe0175e228900775666a73"
+          ]
+        },
+        {
+          "statement": "Pfizer Inc.'s common stock trades on the New York Stock Exchange under the symbol PFE.: PFE",
+          "claim_ids": [
+            "clm_f956fd5356117af220d11181"
+          ]
+        }
+      ],
+      "missing_information": [
+        "Additional evidence is required for Company Identity.",
+        "Additional evidence is required for Products.",
+        "Additional evidence is required for Technology.",
+        "Additional evidence is required for Pipeline.",
+        "Additional evidence is required for Recent News.",
+        "Additional evidence is required for Procurement Signals.",
+        "Additional evidence is required for Cooperation Signals.",
+        "Additional evidence is required for Evidence Freshness.",
+        "Additional evidence is required for Evidence Diversity."
+      ],
+      "conflicts": [
+        "Conflicting supported values were retained for 'Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.'."
+      ],
+      "weak_evidence": [],
+      "unknowns": []
+    },
+    "final_assessment": {
+      "dimensions": [
+        {
+          "dimension": "Company Identity",
+          "status": "evidence_available",
+          "coverage_score": 0.7,
+          "confidence": 0.8999999999999999,
+          "searched_query_ids": [],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_59686e18e8102b33698a8c41",
+            "src_e3a6a0a585b7514efca8c36a"
+          ],
+          "claim_ids": [
+            "clm_1c641fe6ad979742c5bfac44",
+            "clm_90f65303492b1133bd589683"
+          ],
+          "missing_items": [
+            "Additional evidence is required for Company Identity."
+          ]
+        },
+        {
+          "dimension": "Products",
+          "status": "not_searched",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [],
+          "source_ids": [],
+          "claim_ids": [],
+          "missing_items": [
+            "Additional evidence is required for Products."
+          ]
+        },
+        {
+          "dimension": "Technology",
+          "status": "evidence_available",
+          "coverage_score": 0.7,
+          "confidence": 0.75,
+          "searched_query_ids": [],
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab"
+          ],
+          "claim_ids": [
+            "clm_8bb8ee99cc81ca5a6a49fc99"
+          ],
+          "missing_items": [
+            "Additional evidence is required for Technology."
+          ]
+        },
+        {
+          "dimension": "Pipeline",
+          "status": "not_searched",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [],
+          "source_ids": [],
+          "claim_ids": [],
+          "missing_items": [
+            "Additional evidence is required for Pipeline."
+          ]
+        },
+        {
+          "dimension": "Recent News",
+          "status": "not_searched",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [],
+          "source_ids": [],
+          "claim_ids": [],
+          "missing_items": [
+            "Additional evidence is required for Recent News."
+          ]
+        },
+        {
+          "dimension": "Financial Signals",
+          "status": "evidence_available",
+          "coverage_score": 0.8499999999999999,
+          "confidence": 0.8999999999999999,
+          "searched_query_ids": [],
+          "source_ids": [
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e"
+          ],
+          "claim_ids": [
+            "clm_2fd5d767705f90761df246c6",
+            "clm_7723af580c2bf3794aacc444"
+          ],
+          "missing_items": []
+        },
+        {
+          "dimension": "Procurement Signals",
+          "status": "not_searched",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [],
+          "source_ids": [],
+          "claim_ids": [],
+          "missing_items": [
+            "Additional evidence is required for Procurement Signals."
+          ]
+        },
+        {
+          "dimension": "Cooperation Signals",
+          "status": "not_searched",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [],
+          "source_ids": [],
+          "claim_ids": [],
+          "missing_items": [
+            "Additional evidence is required for Cooperation Signals."
+          ]
+        },
+        {
+          "dimension": "Evidence Quality",
+          "status": "evidence_available",
+          "coverage_score": 1.0,
+          "confidence": 0.95,
+          "searched_query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_0cc315a259e35a2da37f0574",
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e",
+            "src_59686e18e8102b33698a8c41",
+            "src_dd064e2dc88f4b113ccc6829",
+            "src_e3a6a0a585b7514efca8c36a",
+            "src_f036a5f91e73327f8bdfb5ee"
+          ],
+          "claim_ids": [
+            "clm_003a8e6f969d90547c362ddc",
+            "clm_00c6f1e7f5c26171203b2ee5",
+            "clm_083e53380c09ec1e7a6a4f6e",
+            "clm_1c641fe6ad979742c5bfac44",
+            "clm_27a796c2024289059f50a822",
+            "clm_287f5007fbb0e6fbd8e958b3",
+            "clm_2eb2854e479f0172aad78412",
+            "clm_2fd5d767705f90761df246c6",
+            "clm_415e77d53a8c212973bfbe27",
+            "clm_46b270485ef459ee34829e50",
+            "clm_4d23fae8210a271fcd17a92d",
+            "clm_4d3ffcfd3c5a5c2688795ac4",
+            "clm_5ca9246a7d48087e2b18934f",
+            "clm_65e4e7e82306b2312ee46267",
+            "clm_7723af580c2bf3794aacc444",
+            "clm_796a2208a0f7e93b1605b09d",
+            "clm_88dc6402f844563401a5c5ae",
+            "clm_8bb8ee99cc81ca5a6a49fc99",
+            "clm_90f65303492b1133bd589683",
+            "clm_96e42ab9f5707aa65750e8dd",
+            "clm_a43ff900cec840ed48c5d75b",
+            "clm_a52f90f74a0010f93f2f0f6d",
+            "clm_aead14114eb2b1bd510dfd17",
+            "clm_b0b8d207e61c158b75d02b64",
+            "clm_cc6bbbba6f7c62105415c87b",
+            "clm_cc9b494a44ed9423c7226bd2",
+            "clm_d98b6068cc524c5aad2e1f22",
+            "clm_db10888b20f9af1feefd6c98",
+            "clm_dd0075233ef8a37f600f8362",
+            "clm_e5a26e448f46a833f17652ad",
+            "clm_f8fe0175e228900775666a73",
+            "clm_f956fd5356117af220d11181"
+          ],
+          "missing_items": []
+        },
+        {
+          "dimension": "Evidence Freshness",
+          "status": "evidence_available",
+          "coverage_score": 0.0,
+          "confidence": 0.0,
+          "searched_query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_0cc315a259e35a2da37f0574",
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e",
+            "src_59686e18e8102b33698a8c41",
+            "src_dd064e2dc88f4b113ccc6829",
+            "src_e3a6a0a585b7514efca8c36a",
+            "src_f036a5f91e73327f8bdfb5ee"
+          ],
+          "claim_ids": [
+            "clm_003a8e6f969d90547c362ddc",
+            "clm_00c6f1e7f5c26171203b2ee5",
+            "clm_083e53380c09ec1e7a6a4f6e",
+            "clm_1c641fe6ad979742c5bfac44",
+            "clm_27a796c2024289059f50a822",
+            "clm_287f5007fbb0e6fbd8e958b3",
+            "clm_2eb2854e479f0172aad78412",
+            "clm_2fd5d767705f90761df246c6",
+            "clm_415e77d53a8c212973bfbe27",
+            "clm_46b270485ef459ee34829e50",
+            "clm_4d23fae8210a271fcd17a92d",
+            "clm_4d3ffcfd3c5a5c2688795ac4",
+            "clm_5ca9246a7d48087e2b18934f",
+            "clm_65e4e7e82306b2312ee46267",
+            "clm_7723af580c2bf3794aacc444",
+            "clm_796a2208a0f7e93b1605b09d",
+            "clm_88dc6402f844563401a5c5ae",
+            "clm_8bb8ee99cc81ca5a6a49fc99",
+            "clm_90f65303492b1133bd589683",
+            "clm_96e42ab9f5707aa65750e8dd",
+            "clm_a43ff900cec840ed48c5d75b",
+            "clm_a52f90f74a0010f93f2f0f6d",
+            "clm_aead14114eb2b1bd510dfd17",
+            "clm_b0b8d207e61c158b75d02b64",
+            "clm_cc6bbbba6f7c62105415c87b",
+            "clm_cc9b494a44ed9423c7226bd2",
+            "clm_d98b6068cc524c5aad2e1f22",
+            "clm_db10888b20f9af1feefd6c98",
+            "clm_dd0075233ef8a37f600f8362",
+            "clm_e5a26e448f46a833f17652ad",
+            "clm_f8fe0175e228900775666a73",
+            "clm_f956fd5356117af220d11181"
+          ],
+          "missing_items": [
+            "Additional evidence is required for Evidence Freshness."
+          ]
+        },
+        {
+          "dimension": "Evidence Diversity",
+          "status": "evidence_available",
+          "coverage_score": 0.5,
+          "confidence": 0.5,
+          "searched_query_ids": [
+            "qry_422efb388c1f875a29a3",
+            "qry_85356c1b295e5b4c940f",
+            "qry_f6efd948c55f30f5a0bd"
+          ],
+          "source_ids": [
+            "src_05bae74574e2d70513409444",
+            "src_0cc315a259e35a2da37f0574",
+            "src_2b24125c4b0baa9da97a87ab",
+            "src_3eff2fa8e5a52b4a20604c5e",
+            "src_59686e18e8102b33698a8c41",
+            "src_dd064e2dc88f4b113ccc6829",
+            "src_e3a6a0a585b7514efca8c36a",
+            "src_f036a5f91e73327f8bdfb5ee"
+          ],
+          "claim_ids": [
+            "clm_003a8e6f969d90547c362ddc",
+            "clm_00c6f1e7f5c26171203b2ee5",
+            "clm_083e53380c09ec1e7a6a4f6e",
+            "clm_1c641fe6ad979742c5bfac44",
+            "clm_27a796c2024289059f50a822",
+            "clm_287f5007fbb0e6fbd8e958b3",
+            "clm_2eb2854e479f0172aad78412",
+            "clm_2fd5d767705f90761df246c6",
+            "clm_415e77d53a8c212973bfbe27",
+            "clm_46b270485ef459ee34829e50",
+            "clm_4d23fae8210a271fcd17a92d",
+            "clm_4d3ffcfd3c5a5c2688795ac4",
+            "clm_5ca9246a7d48087e2b18934f",
+            "clm_65e4e7e82306b2312ee46267",
+            "clm_7723af580c2bf3794aacc444",
+            "clm_796a2208a0f7e93b1605b09d",
+            "clm_88dc6402f844563401a5c5ae",
+            "clm_8bb8ee99cc81ca5a6a49fc99",
+            "clm_90f65303492b1133bd589683",
+            "clm_96e42ab9f5707aa65750e8dd",
+            "clm_a43ff900cec840ed48c5d75b",
+            "clm_a52f90f74a0010f93f2f0f6d",
+            "clm_aead14114eb2b1bd510dfd17",
+            "clm_b0b8d207e61c158b75d02b64",
+            "clm_cc6bbbba6f7c62105415c87b",
+            "clm_cc9b494a44ed9423c7226bd2",
+            "clm_d98b6068cc524c5aad2e1f22",
+            "clm_db10888b20f9af1feefd6c98",
+            "clm_dd0075233ef8a37f600f8362",
+            "clm_e5a26e448f46a833f17652ad",
+            "clm_f8fe0175e228900775666a73",
+            "clm_f956fd5356117af220d11181"
+          ],
+          "missing_items": [
+            "Additional evidence is required for Evidence Diversity."
+          ]
+        }
+      ],
+      "evidence_coverage": 0.3409090909090909,
+      "weak_evidence": [],
+      "conflicts": [
+        "Conflicting supported values were retained for 'Chris Boshoff is Chief Scientific Officer and President of Research & Development at Pfizer Inc.'."
+      ],
+      "missing_information": [
+        "Additional evidence is required for Company Identity.",
+        "Additional evidence is required for Products.",
+        "Additional evidence is required for Technology.",
+        "Additional evidence is required for Pipeline.",
+        "Additional evidence is required for Recent News.",
+        "Additional evidence is required for Procurement Signals.",
+        "Additional evidence is required for Cooperation Signals.",
+        "Additional evidence is required for Evidence Freshness.",
+        "Additional evidence is required for Evidence Diversity."
+      ],
+      "recommended_followup_queries": [],
+      "decision": "continue_search",
+      "decision_reason": "One or more deterministic evidence coverage thresholds were not met."
+    },
+    "stop_reason": "query_budget_reached",
+    "total_tokens": 89987,
+    "estimated_cost_usd": 0.016575160000000002,
+    "source_count": 8,
+    "supported_claim_count": 32,
+    "verified_fact_count": 31,
+    "single_source_count": 0,
+    "inference_count": 0,
+    "research_gap_count": 10,
+    "rejected_claim_count": 64,
+    "processing_error_count": 70,
+    "budget_status": [
+      {
+        "budget_type": "queries",
+        "configured_limit": 3,
+        "used": 3,
+        "remaining": 0,
+        "reached_at_stage": "finalize"
+      },
+      {
+        "budget_type": "tokens",
+        "configured_limit": 100000,
+        "used": 89987,
+        "remaining": 10013,
+        "reached_at_stage": null
+      },
+      {
+        "budget_type": "cost_usd",
+        "configured_limit": 2.0,
+        "used": 0.016575160000000002,
+        "remaining": 1.98342484,
+        "reached_at_stage": null
+      }
+    ]
+  }
+}

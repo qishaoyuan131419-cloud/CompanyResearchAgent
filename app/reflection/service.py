@@ -5,9 +5,10 @@ from datetime import timedelta
 
 from app.config import Settings
 from app.core.clock import SystemClock
-from app.core.enums import AssessmentDecision, EvidenceStatus
+from app.core.enums import AssessmentDecision, DimensionStatus, EvidenceStatus, ProcessingStage
 from app.core.exceptions import BudgetExceededError, StructuredOutputError
 from app.core.protocols import Clock, LLMClient, PromptRepository
+from app.llm.errors import LLMProviderError
 from app.planner.service import ResearchPlanner
 from app.schemas.company import ResolvedCompany
 from app.schemas.evidence import Evidence, EvidenceBundle
@@ -20,6 +21,7 @@ from app.schemas.reflection import (
     ResearchSummary,
 )
 from app.utils.text import normalized_fingerprint_text
+from app.utils.urls import source_domain
 
 ASSESSMENT_DIMENSIONS = (
     "Company Identity",
@@ -68,6 +70,7 @@ def empty_assessment(reason: str) -> InformationAssessment:
         dimensions=[
             DimensionAssessment(
                 dimension=name,
+                status=DimensionStatus.NOT_SEARCHED,
                 coverage_score=0.0,
                 confidence=0.0,
                 missing_items=[f"No assessment evidence is available for {name}."],
@@ -225,7 +228,7 @@ class ReflectionService:
             proposed = result.value
         except BudgetExceededError:
             proposed = self._fallback_summary(bundle)
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             proposed = self._fallback_summary(bundle)
         return self._sanitize_summary(proposed, bundle)
 
@@ -261,7 +264,7 @@ class ReflectionService:
             proposed = result.value
         except BudgetExceededError:
             proposed = self._fallback_assessment(summary)
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             proposed = self._fallback_assessment(summary)
         return self._enforce_assessment_policy(proposed, bundle, summary)
 
@@ -276,6 +279,7 @@ class ReflectionService:
             dimensions=[
                 DimensionAssessment(
                     dimension=dimension,
+                    status=DimensionStatus.EVIDENCE_AVAILABLE,
                     coverage_score=1.0,
                     confidence=1.0,
                     missing_items=[],
@@ -319,7 +323,7 @@ class ReflectionService:
             proposed = result.value
         except BudgetExceededError:
             return FollowupPlan(queries=[], addressed_missing_items=[])
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             proposed = FollowupPlan()
 
         missing = set(assessment.missing_information)
@@ -461,8 +465,12 @@ class ReflectionService:
             dimensions.append(
                 DimensionAssessment(
                     dimension=name,
+                    status=self._dimension_status(name, bundle, candidate),
                     coverage_score=coverage,
                     confidence=confidence,
+                    searched_query_ids=candidate.searched_query_ids,
+                    source_ids=self._dimension_source_ids(name, bundle),
+                    claim_ids=self._dimension_claim_ids(name, bundle),
                     missing_items=missing_items,
                 )
             )
@@ -502,6 +510,7 @@ class ReflectionService:
 
     def _observed_score(self, dimension: str, bundle: EvidenceBundle) -> tuple[float, float]:
         supported = [item for item in bundle.evidence if item.status != EvidenceStatus.UNKNOWN]
+        source_by_id = {source.source_id: source for source in bundle.sources}
         if dimension == "Evidence Quality":
             if not supported:
                 return 0.0, 0.0
@@ -509,12 +518,23 @@ class ReflectionService:
             ratio = verified / len(supported)
             return min(1.0, 0.35 + ratio * 0.65), min(0.95, 0.5 + ratio * 0.45)
         if dimension == "Evidence Diversity":
-            domains = {item.source for item in supported if item.source}
+            domains = {
+                source_domain(str(source_by_id[source_id].url))
+                for item in supported
+                for source_id in item.source_ids
+                if source_id in source_by_id
+            }
             score = min(1.0, len(domains) / 4)
             return score, score
         if dimension == "Evidence Freshness":
             cutoff = self._clock.now() - timedelta(days=730)
-            dated = [item for item in supported if item.published_at is not None]
+            dated = [
+                source
+                for item in supported
+                for source_id in item.source_ids
+                if (source := source_by_id.get(source_id)) is not None
+                and source.published_at is not None
+            ]
             if not dated:
                 return 0.0, 0.0
             recent = sum(item.published_at >= cutoff for item in dated if item.published_at)
@@ -531,10 +551,56 @@ class ReflectionService:
             return 0.0, 0.0
         claim_ids = {item.claim_id for item in matches}
         verified = any(item.status == EvidenceStatus.VERIFIED_FACT for item in matches)
-        sources = {item.source for item in matches if item.source}
+        sources = {source_id for item in matches for source_id in item.source_ids}
         coverage = min(1.0, 0.35 + 0.15 * len(claim_ids) + (0.2 if verified else 0.0))
         confidence = min(0.95, 0.4 + 0.15 * len(sources) + (0.2 if verified else 0.0))
         return coverage, confidence
+
+    def _dimension_claim_ids(self, dimension: str, bundle: EvidenceBundle) -> list[str]:
+        if dimension.startswith("Evidence "):
+            return sorted({item.claim_id for item in bundle.evidence})
+        keywords = _DIMENSION_KEYWORDS[dimension]
+        return sorted(
+            {
+                item.claim_id
+                for item in bundle.evidence
+                if any(keyword in f"{item.claim} {item.value}".casefold() for keyword in keywords)
+            }
+        )
+
+    def _dimension_source_ids(self, dimension: str, bundle: EvidenceBundle) -> list[str]:
+        claim_ids = set(self._dimension_claim_ids(dimension, bundle))
+        if not claim_ids and dimension.startswith("Evidence "):
+            return sorted({source.source_id for source in bundle.sources})
+        return sorted(
+            {
+                source_id
+                for item in bundle.evidence
+                if item.claim_id in claim_ids
+                for source_id in item.source_ids
+            }
+        )
+
+    def _dimension_status(
+        self,
+        dimension: str,
+        bundle: EvidenceBundle,
+        candidate: DimensionAssessment,
+    ) -> DimensionStatus:
+        claim_ids = set(self._dimension_claim_ids(dimension, bundle))
+        if claim_ids:
+            if any(claim_ids.intersection(conflict.claim_ids) for conflict in bundle.conflicts):
+                return DimensionStatus.CONFLICTING_EVIDENCE
+            return DimensionStatus.EVIDENCE_AVAILABLE
+        if any(error.stage == ProcessingStage.EXTRACTION for error in bundle.processing_errors):
+            return DimensionStatus.EXTRACTION_FAILED
+        if bundle.sources:
+            return DimensionStatus.INSUFFICIENT_EVIDENCE
+        if any(error.stage == ProcessingStage.SEARCH for error in bundle.processing_errors):
+            return DimensionStatus.SEARCH_FAILED
+        if candidate.status == DimensionStatus.SEARCHED_NO_RESULTS:
+            return DimensionStatus.SEARCHED_NO_RESULTS
+        return DimensionStatus.NOT_SEARCHED
 
     def _sanitize_summary(
         self,
@@ -570,9 +636,7 @@ class ReflectionService:
                 )
         represented_claim_ids = {claim_id for fact in known for claim_id in fact.claim_ids}
         for claim_id in sorted(evidence_by_id):
-            if claim_id in represented_claim_ids or any(
-                item.status == EvidenceStatus.UNKNOWN for item in evidence_by_id[claim_id]
-            ):
+            if claim_id in represented_claim_ids:
                 continue
             known.append(
                 KnownFact(
@@ -589,13 +653,7 @@ class ReflectionService:
                 "missing_information": self._deterministic_missing_information(bundle),
                 "conflicts": [conflict.description for conflict in bundle.conflicts],
                 "weak_evidence": self._deterministic_weak_evidence(bundle),
-                "unknowns": sorted(
-                    {
-                        item.claim
-                        for item in bundle.evidence
-                        if item.status == EvidenceStatus.UNKNOWN
-                    }
-                ),
+                "unknowns": [],
             }
         )
 

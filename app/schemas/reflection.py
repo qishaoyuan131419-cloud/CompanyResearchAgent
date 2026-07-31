@@ -1,6 +1,6 @@
 from pydantic import Field
 
-from app.core.enums import AssessmentDecision
+from app.core.enums import AssessmentDecision, DimensionStatus
 from app.schemas.base import StrictModel
 from app.schemas.planning import SearchQuery
 
@@ -20,8 +20,12 @@ class ResearchSummary(StrictModel):
 
 class DimensionAssessment(StrictModel):
     dimension: str
+    status: DimensionStatus = DimensionStatus.NOT_SEARCHED
     coverage_score: float = Field(ge=0.0, le=1.0)
     confidence: float = Field(ge=0.0, le=1.0)
+    searched_query_ids: list[str] = Field(default_factory=list)
+    source_ids: list[str] = Field(default_factory=list)
+    claim_ids: list[str] = Field(default_factory=list)
     missing_items: list[str] = Field(default_factory=list)
 
 

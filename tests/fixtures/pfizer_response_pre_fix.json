@@ -1,0 +1,27 @@
+{
+  "execution_status": "partial_failure",
+  "company": {
+    "canonical_name": "Pfizer Inc.",
+    "identity_status": "unconfirmed",
+    "confidence": 0
+  },
+  "research": {},
+  "evidence": {},
+  "run_trace": {
+    "run_id": "fixture_pfizer_pre_fix",
+    "started_at": "2026-07-31T01:24:46Z",
+    "completed_at": "2026-07-31T01:26:31Z",
+    "transitions": [
+      {
+        "sequence": 1,
+        "to_state": "resolve_company",
+        "started_at": "2026-07-31T01:24:46Z",
+        "completed_at": "2026-07-31T01:24:46Z",
+        "duration_ms": 0,
+        "round": 0,
+        "outcome": "succeeded"
+      }
+    ],
+    "stop_reason": "extraction_failure"
+  }
+}

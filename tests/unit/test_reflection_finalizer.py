@@ -4,7 +4,13 @@ from typing import Any
 import pytest
 
 from app.config import Settings
-from app.core.enums import AssessmentDecision, EvidenceStatus, IdentityStatus, SourceType
+from app.core.enums import (
+    AssessmentDecision,
+    DimensionStatus,
+    EvidenceStatus,
+    IdentityStatus,
+    SourceType,
+)
 from app.core.protocols import LLMUsage, StructuredLLMResult
 from app.reflection.service import ASSESSMENT_DIMENSIONS, ReflectionService
 from app.schemas.company import ResolvedCompany
@@ -61,6 +67,7 @@ def supported_evidence(
         retrieved_at=NOW,
         source_type=SourceType.OFFICIAL,
         supporting_quote=f"{claim}: {value}",
+        derived_from_claim_ids=(["clm_stage"] if status == EvidenceStatus.INFERENCE else []),
     )
 
 
@@ -91,11 +98,6 @@ async def test_reflection_rebuilds_known_fact_prose_from_cited_evidence() -> Non
         value="Likely expansion",
         status=EvidenceStatus.INFERENCE,
     )
-    unknown = unknown_evidence(
-        evidence_id="ev_revenue",
-        claim_id="clm_revenue",
-        claim="Revenue",
-    )
     proposed = ResearchSummary(
         known_facts=[
             KnownFact(
@@ -118,7 +120,7 @@ async def test_reflection_rebuilds_known_fact_prose_from_cited_evidence() -> Non
 
     summary = await service.summarize(
         ResolvedCompany(canonical_name="Acme"),
-        EvidenceBundle(evidence=[direct, inference, unknown]),
+        EvidenceBundle(evidence=[direct, inference]),
     )
 
     assert summary.known_facts == [
@@ -534,11 +536,6 @@ async def test_finalizer_replaces_all_model_prose_and_labels_each_status() -> No
         value="Likely expansion",
         status=EvidenceStatus.INFERENCE,
     )
-    unknown = unknown_evidence(
-        evidence_id="ev_revenue",
-        claim_id="clm_revenue",
-        claim="Revenue",
-    )
     proposed = ResearchReport(
         overview=ResearchSection(
             findings=[
@@ -552,25 +549,21 @@ async def test_finalizer_replaces_all_model_prose_and_labels_each_status() -> No
                 ),
             ]
         ),
-        unknowns=ResearchSection(
-            findings=[
-                ResearchFinding(
-                    statement="Inference: revenue is secretly known.",
-                    claim_ids=["clm_revenue"],
-                ),
-                ResearchFinding(
-                    statement="A supported fact was mislabeled unknown.",
-                    claim_ids=["clm_stage"],
-                ),
-            ]
-        ),
         recommendations=ResearchSection(
             findings=[ResearchFinding(statement="Buy immediately.", claim_ids=["clm_stage"])]
         ),
     )
     finalizer = ResearchFinalizer(llm=StaticLLM(proposed), prompts=StaticPrompts())
     assessment = InformationAssessment(
-        dimensions=[],
+        dimensions=[
+            DimensionAssessment(
+                dimension="Financial Signals",
+                status=DimensionStatus.INSUFFICIENT_EVIDENCE,
+                coverage_score=0.0,
+                confidence=0.0,
+                missing_items=["Revenue information remains unsupported."],
+            )
+        ],
         evidence_coverage=0.0,
         decision=AssessmentDecision.CONTINUE_SEARCH,
         decision_reason="More evidence is required.",
@@ -578,7 +571,7 @@ async def test_finalizer_replaces_all_model_prose_and_labels_each_status() -> No
 
     finalized = await finalizer.finalize(
         ResolvedCompany(canonical_name="Acme"),
-        EvidenceBundle(evidence=[direct, inference, unknown]),
+        EvidenceBundle(evidence=[direct, inference]),
         assessment,
     )
 
@@ -594,15 +587,12 @@ async def test_finalizer_replaces_all_model_prose_and_labels_each_status() -> No
             claim_ids=["clm_signal"],
         )
     ]
-    assert finalized.report.unknowns.findings == [
-        ResearchFinding(statement="Unknown: Revenue", claim_ids=["clm_revenue"])
-    ]
-    assert finalized.report.recommendations.findings == [
-        ResearchFinding(
-            statement="Perform targeted research for the unresolved item: Revenue.",
-            claim_ids=["clm_revenue"],
-        )
-    ]
+    assert len(finalized.report.unknowns.gaps) == 1
+    assert finalized.report.unknowns.gaps[0].dimension == "Financial Signals"
+    assert finalized.report.unknowns.gaps[0].description == (
+        "Revenue information remains unsupported."
+    )
+    assert finalized.report.recommendations.findings == []
     serialized = finalized.report.model_dump_json().casefold()
     assert "fabricated" not in serialized
     assert "unsupported statement" not in serialized

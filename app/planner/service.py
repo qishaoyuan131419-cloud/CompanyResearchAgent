@@ -3,6 +3,7 @@ from typing import Any
 
 from app.core.exceptions import BudgetExceededError, StructuredOutputError
 from app.core.protocols import LLMClient, PromptRepository
+from app.llm.errors import LLMProviderError
 from app.schemas.company import CompanySnapshot, ResolvedCompany
 from app.schemas.planning import QueryPlan, ResearchPlan, ResearchTopic, SearchQuery
 from app.utils.hashing import stable_hash
@@ -66,7 +67,7 @@ class ResearchPlanner:
             plan = result.value
         except BudgetExceededError:
             plan = self._default_plan()
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             plan = self._default_plan()
         topics = self._deduplicate_topics(plan.topics)
         if not any(topic.topic.casefold() == "company identity" for topic in topics):
@@ -104,7 +105,7 @@ class ResearchPlanner:
             candidates = result.value.queries
         except BudgetExceededError:
             candidates = self._fallback_queries(company, plan)
-        except StructuredOutputError:
+        except (LLMProviderError, StructuredOutputError):
             candidates = self._fallback_queries(company, plan)
         candidates = self._ensure_multiple_queries_per_topic(company, plan, candidates)
         return QueryPlan(

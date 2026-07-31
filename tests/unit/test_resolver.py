@@ -50,6 +50,82 @@ class ProposedResolverLLM:
 
 
 @pytest.mark.asyncio
+async def test_pfizer_legal_name_and_short_name_resolve_as_one_confirmed_identity() -> None:
+    sources = [
+        SourceDocument(
+            source_id="src_sec",
+            title="PFIZER INC.",
+            url="https://www.sec.gov/Archives/edgar/data/78003/pfe.htm",
+            retrieved_at=NOW,
+            source_type=SourceType.REGULATORY,
+            content_hash="cnt_sec",
+            supported_claim_ids=["clm_legal_name"],
+        ),
+        SourceDocument(
+            source_id="src_pfizer",
+            title="Pfizer Company Profile",
+            url="https://www.pfizer.com/about",
+            retrieved_at=NOW,
+            source_type=SourceType.OFFICIAL,
+            content_hash="cnt_pfizer",
+            supported_claim_ids=["clm_short_name"],
+        ),
+    ]
+    evidence = [
+        Evidence(
+            evidence_id="ev_legal_name",
+            claim_id="clm_legal_name",
+            claim="Company name",
+            value="PFIZER INC.",
+            status=EvidenceStatus.VERIFIED_FACT,
+            confidence=0.99,
+            source_ids=["src_sec"],
+            supporting_quotes=["Company name: PFIZER INC."],
+        ),
+        Evidence(
+            evidence_id="ev_short_name",
+            claim_id="clm_short_name",
+            claim="Company name",
+            value="Pfizer",
+            status=EvidenceStatus.VERIFIED_FACT,
+            confidence=0.99,
+            source_ids=["src_pfizer"],
+            supporting_quotes=["Company name: Pfizer."],
+        ),
+    ]
+    resolver = CompanyResolver(
+        llm=ProposedResolverLLM(
+            ResolvedCompany(
+                canonical_name="Pfizer",
+                identity_status=IdentityStatus.AMBIGUOUS,
+                confidence=0.9,
+            )
+        ),
+        prompts=StaticPrompts(),
+    )
+    false_conflict = EvidenceConflict(
+        claim="Company name",
+        claim_ids=["clm_legal_name", "clm_short_name"],
+        values=["PFIZER INC.", "Pfizer"],
+        description="Legacy false-positive name conflict.",
+    )
+
+    resolved = await resolver.resolve(
+        CompanySnapshot(canonical_name="Pfizer Inc."),
+        EvidenceBundle(
+            sources=sources,
+            evidence=evidence,
+            conflicts=[false_conflict],
+        ),
+    )
+
+    assert resolved.canonical_name == "Pfizer Inc."
+    assert resolved.identity_status == IdentityStatus.CONFIRMED
+    assert resolved.aliases == ["Pfizer"]
+    assert set(resolved.claim_ids) == {"clm_legal_name", "clm_short_name"}
+
+
+@pytest.mark.asyncio
 async def test_resolver_joins_website_only_from_provider_owned_source_lineage() -> None:
     source = SourceDocument(
         source_id="src_official",

@@ -368,7 +368,11 @@ async def test_full_followup_workflow_is_traced_and_truthful() -> None:
     assert (
         response.run_trace.final_research_summary == response.run_trace.rounds[-1].research_summary
     )
-    assert response.run_trace.final_assessment == response.run_trace.rounds[-1].assessment
+    assert response.run_trace.final_assessment is not None
+    assert all(
+        dimension.status.value != "searched_no_results" or dimension.searched_query_ids
+        for dimension in response.run_trace.final_assessment.dimensions
+    )
     final_source_ids = {source.source_id for source in response.evidence.sources}
     assert all(
         source_id in final_source_ids
@@ -452,14 +456,16 @@ async def test_tiny_token_budget_returns_partial_unknown_without_network_calls()
     finally:
         await container.close()
 
-    assert response.run_trace.stop_reason == StopReason.BUDGET_REACHED
+    assert response.run_trace.stop_reason == StopReason.TOKEN_BUDGET_REACHED
     assert response.company.identity_status.value == "unconfirmed"
     assert len(response.run_trace.rounds) == 1
     assert response.run_trace.rounds[0].planner_output
     assert response.run_trace.rounds[0].queries == []
     assert response.run_trace.rounds[0].search_statistics is None
-    assert response.run_trace.rounds[0].stop_reason == StopReason.BUDGET_REACHED
-    assert any("Products" in finding.statement for finding in response.research.unknowns.findings)
+    assert response.run_trace.rounds[0].stop_reason == StopReason.TOKEN_BUDGET_REACHED
+    assert any(gap.dimension == "Products" for gap in response.research.unknowns.gaps)
+    assert response.execution_status.value == "failed"
+    assert response.evidence.evidence == []
     assert [transition.to_state for transition in response.run_trace.transitions] == [
         AgentState.RESOLVE_COMPANY,
         AgentState.PLAN_RESEARCH,

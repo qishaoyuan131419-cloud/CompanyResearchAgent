@@ -3,15 +3,21 @@ from collections import defaultdict
 from dataclasses import dataclass
 from typing import Any
 
-from app.core.clock import SystemClock
-from app.core.enums import EvidenceStatus
+from app.core.enums import DimensionStatus, EvidenceStatus, GapReason, StopReason
 from app.core.exceptions import BudgetExceededError, StructuredOutputError
 from app.core.protocols import Clock, LLMClient, PromptRepository
+from app.llm.errors import LLMProviderError
 from app.reflection.service import evidence_statement_for_claim_ids
 from app.schemas.company import ResolvedCompany
 from app.schemas.evidence import Evidence, EvidenceBundle
 from app.schemas.reflection import InformationAssessment
-from app.schemas.research import ResearchFinding, ResearchReport, ResearchSection
+from app.schemas.research import (
+    ResearchFinding,
+    ResearchGap,
+    ResearchGapSection,
+    ResearchReport,
+    ResearchSection,
+)
 from app.utils.hashing import stable_hash
 
 
@@ -31,15 +37,16 @@ class ResearchFinalizer:
     ) -> None:
         self._llm = llm
         self._prompts = prompts
-        self._clock = clock or SystemClock()
+        self._clock = clock
 
     async def finalize(
         self,
         company: ResolvedCompany,
         bundle: EvidenceBundle,
         assessment: InformationAssessment,
+        stop_reason: StopReason | None = None,
     ) -> FinalizedResearch:
-        bundle_with_unknowns = self._add_unknown_evidence(bundle, assessment)
+        evidence_bundle = bundle
         prompt = self._prompts.render(
             "research",
             {
@@ -50,7 +57,7 @@ class ResearchFinalizer:
         )
         payload = {
             "resolved_company": company.model_dump(mode="json"),
-            "evidence_bundle": bundle_with_unknowns.model_dump(mode="json"),
+            "evidence_bundle": evidence_bundle.model_dump(mode="json"),
             "assessment": assessment.model_dump(mode="json"),
         }
         try:
@@ -60,42 +67,17 @@ class ResearchFinalizer:
                 response_model=ResearchReport,
                 cache_namespace="final-research",
             )
-            report = self._sanitize_report(result.value, bundle_with_unknowns)
-        except (BudgetExceededError, StructuredOutputError):
-            report = self._fallback_report(bundle_with_unknowns, assessment)
-        report = self._ensure_supported_findings(report, bundle_with_unknowns)
-        report = self._ensure_unknown_section(report, bundle_with_unknowns)
-        report = self._ensure_conflicts(report, bundle_with_unknowns)
-        report = self._ensure_recommendations(report, bundle_with_unknowns)
-        return FinalizedResearch(report=report, evidence_bundle=bundle_with_unknowns)
-
-    def _add_unknown_evidence(
-        self,
-        bundle: EvidenceBundle,
-        assessment: InformationAssessment,
-    ) -> EvidenceBundle:
-        existing_claim_ids = {item.claim_id for item in bundle.evidence}
-        missing_items: list[str] = list(assessment.missing_information)
-        for dimension in assessment.dimensions:
-            missing_items.extend(dimension.missing_items)
-        additions: list[Evidence] = []
-        for missing in dict.fromkeys(item.strip() for item in missing_items if item.strip()):
-            claim_id = stable_hash({"unknown": missing.casefold()}, prefix="clm_")
-            if claim_id in existing_claim_ids:
-                continue
-            existing_claim_ids.add(claim_id)
-            additions.append(
-                Evidence(
-                    evidence_id=stable_hash({"claim_id": claim_id, "source": None}, prefix="evd_"),
-                    claim_id=claim_id,
-                    claim=missing,
-                    value="Unknown",
-                    status=EvidenceStatus.UNKNOWN,
-                    confidence=0.0,
-                    retrieved_at=self._clock.now(),
-                )
-            )
-        return bundle.model_copy(update={"evidence": [*bundle.evidence, *additions]})
+            report = self._sanitize_report(result.value, evidence_bundle)
+        except (BudgetExceededError, LLMProviderError, StructuredOutputError):
+            report = self._fallback_report(evidence_bundle, assessment)
+        report = self._ensure_supported_findings(report, evidence_bundle)
+        report = self._ensure_unknown_section(report, evidence_bundle, assessment, stop_reason)
+        report = self._ensure_conflicts(report, evidence_bundle)
+        report = self._ensure_recommendations(report, evidence_bundle)
+        evidence_bundle = evidence_bundle.model_copy(
+            update={"research_gap_count": len(report.unknowns.gaps)}
+        )
+        return FinalizedResearch(report=report, evidence_bundle=evidence_bundle)
 
     @staticmethod
     def _sanitize_report(report: ResearchReport, bundle: EvidenceBundle) -> ResearchReport:
@@ -107,14 +89,14 @@ class ResearchFinalizer:
         routed_findings: dict[str, list[ResearchFinding]] = defaultdict(list)
         seen_claim_ids: set[str] = set()
         for section_name in type(report).model_fields:
+            if section_name == "unknowns":
+                continue
             for finding in getattr(report, section_name).findings:
                 for claim_id in finding.claim_ids:
                     if claim_id in seen_claim_ids or claim_id not in statuses_by_id:
                         continue
                     statuses = statuses_by_id[claim_id]
-                    if statuses == {EvidenceStatus.UNKNOWN}:
-                        target_section = "unknowns"
-                    elif EvidenceStatus.UNKNOWN not in statuses:
+                    if EvidenceStatus.UNKNOWN not in statuses:
                         representative = min(
                             evidence_by_id[claim_id],
                             key=lambda item: item.evidence_id,
@@ -134,7 +116,11 @@ class ResearchFinalizer:
                     )
         return ResearchReport(
             **{
-                section_name: ResearchSection(findings=routed_findings[section_name])
+                section_name: (
+                    ResearchGapSection()
+                    if section_name == "unknowns"
+                    else ResearchSection(findings=routed_findings[section_name])
+                )
                 for section_name in type(report).model_fields
             }
         )
@@ -158,19 +144,15 @@ class ResearchFinalizer:
             if item.claim_id in seen:
                 continue
             seen.add(item.claim_id)
-            if item.status == EvidenceStatus.UNKNOWN:
-                section = "unknowns"
-                statement = f"Unknown: {item.claim}"
-            else:
-                section = ResearchFinalizer._section_for_claim(item.claim)
-                value = str(item.value)
-                statement = (
-                    item.claim
-                    if "http://" in value.casefold() or "https://" in value.casefold()
-                    else f"{item.claim}: {value}"
-                )
-                if item.status == EvidenceStatus.INFERENCE:
-                    statement = f"Inference: {statement}"
+            section = ResearchFinalizer._section_for_claim(item.claim)
+            value = str(item.value)
+            statement = (
+                item.claim
+                if "http://" in value.casefold() or "https://" in value.casefold()
+                else f"{item.claim}: {value}"
+            )
+            if item.status == EvidenceStatus.INFERENCE:
+                statement = f"Inference: {statement}"
             sections[section].append(
                 ResearchFinding(statement=statement, claim_ids=[item.claim_id])
             )
@@ -183,7 +165,11 @@ class ResearchFinalizer:
                 )
             )
         payload: dict[str, Any] = {
-            field: ResearchSection(findings=sections[field])
+            field: (
+                ResearchGapSection()
+                if field == "unknowns"
+                else ResearchSection(findings=sections[field])
+            )
             for field in ResearchReport.model_fields
         }
         return ResearchReport(**payload)
@@ -212,30 +198,72 @@ class ResearchFinalizer:
     def _ensure_unknown_section(
         report: ResearchReport,
         bundle: EvidenceBundle,
+        assessment: InformationAssessment,
+        stop_reason: StopReason | None,
     ) -> ResearchReport:
-        represented = {
-            claim_id for finding in report.unknowns.findings for claim_id in finding.claim_ids
+        reason_by_status = {
+            DimensionStatus.NOT_SEARCHED: GapReason.NOT_SEARCHED,
+            DimensionStatus.SEARCH_FAILED: GapReason.SEARCH_FAILED,
+            DimensionStatus.SEARCHED_NO_RESULTS: GapReason.SEARCHED_NO_RESULTS,
+            DimensionStatus.CONTENT_RETRIEVAL_FAILED: GapReason.CONTENT_RETRIEVAL_FAILED,
+            DimensionStatus.EXTRACTION_FAILED: GapReason.EXTRACTION_FAILED,
+            DimensionStatus.CONFLICTING_EVIDENCE: GapReason.SOURCE_CONFLICT,
         }
-        additions: list[ResearchFinding] = []
-        seen: set[str] = set()
-        for item in bundle.evidence:
-            if (
-                item.status == EvidenceStatus.UNKNOWN
-                and item.claim_id not in represented
-                and item.claim_id not in seen
-            ):
-                seen.add(item.claim_id)
-                additions.append(
-                    ResearchFinding(
-                        statement=f"Unknown: {item.claim}",
-                        claim_ids=[item.claim_id],
+        gaps: list[ResearchGap] = []
+        seen: set[tuple[str, str]] = set()
+        for dimension in assessment.dimensions:
+            descriptions = dimension.missing_items or (
+                [f"Evidence remains insufficient for {dimension.dimension}."]
+                if dimension.coverage_score < 1.0
+                else []
+            )
+            for description in descriptions:
+                key = (dimension.dimension, description)
+                if key in seen:
+                    continue
+                seen.add(key)
+                budget_reasons = {
+                    StopReason.QUERY_BUDGET_REACHED,
+                    StopReason.TOKEN_BUDGET_REACHED,
+                    StopReason.COST_BUDGET_REACHED,
+                    StopReason.TIME_BUDGET_REACHED,
+                    StopReason.SOURCE_BUDGET_REACHED,
+                }
+                reason = (
+                    GapReason.BUDGET_INTERRUPTED
+                    if stop_reason in budget_reasons
+                    else reason_by_status.get(
+                        dimension.status,
+                        GapReason.INSUFFICIENT_EVIDENCE,
                     )
                 )
-        if not additions:
-            return report
-        return report.model_copy(
-            update={"unknowns": ResearchSection(findings=[*report.unknowns.findings, *additions])}
-        )
+                gaps.append(
+                    ResearchGap(
+                        gap_id=stable_hash(
+                            {"dimension": dimension.dimension, "description": description},
+                            prefix="gap_",
+                            length=24,
+                        ),
+                        dimension=dimension.dimension,
+                        description=description,
+                        reason=reason,
+                        attempted_query_ids=dimension.searched_query_ids,
+                        source_ids=dimension.source_ids,
+                        processing_error_ids=[
+                            error.error_id
+                            for error in bundle.processing_errors
+                            if (
+                                dimension.status == DimensionStatus.EXTRACTION_FAILED
+                                and error.stage.value in {"extraction", "validation"}
+                            )
+                            or (
+                                dimension.status == DimensionStatus.SEARCH_FAILED
+                                and error.stage.value == "search"
+                            )
+                        ],
+                    )
+                )
+        return report.model_copy(update={"unknowns": ResearchGapSection(gaps=gaps)})
 
     @staticmethod
     def _ensure_supported_findings(

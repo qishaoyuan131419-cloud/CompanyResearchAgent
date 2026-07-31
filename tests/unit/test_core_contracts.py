@@ -65,7 +65,7 @@ def test_minimum_company_input_is_strict() -> None:
 
 
 def test_supported_evidence_requires_complete_retrieved_lineage() -> None:
-    with pytest.raises(ValidationError, match="complete source lineage"):
+    with pytest.raises(ValidationError, match="at least one source ID"):
         Evidence(
             evidence_id="evd_1",
             claim_id="clm_1",
@@ -75,16 +75,16 @@ def test_supported_evidence_requires_complete_retrieved_lineage() -> None:
             confidence=0.5,
             retrieved_at=datetime.now(UTC),
         )
-    unknown = Evidence(
-        evidence_id="evd_2",
-        claim_id="clm_2",
-        claim="Acme pipeline stage",
-        value="Unknown",
-        status=EvidenceStatus.UNKNOWN,
-        confidence=0.0,
-        retrieved_at=datetime.now(UTC),
-    )
-    assert unknown.url is None
+    with pytest.raises(ValidationError, match="research gaps"):
+        Evidence(
+            evidence_id="evd_2",
+            claim_id="clm_2",
+            claim="Acme pipeline stage",
+            value="Unknown",
+            status=EvidenceStatus.UNKNOWN,
+            confidence=0.0,
+            retrieved_at=datetime.now(UTC),
+        )
 
 
 def test_research_references_claims_and_rejects_urls() -> None:

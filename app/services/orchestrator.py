@@ -5,7 +5,15 @@ from uuid import uuid4
 from app.config import Settings
 from app.core.budget import BudgetLedger
 from app.core.clock import SystemClock
-from app.core.enums import AgentState, IdentityStatus, StopReason
+from app.core.enums import (
+    AgentState,
+    DimensionStatus,
+    ExecutionStatus,
+    IdentityStatus,
+    ProcessingStage,
+    StopReason,
+    TransitionOutcome,
+)
 from app.core.exceptions import BudgetExceededError
 from app.core.protocols import Clock, EventLogger
 from app.core.state_machine import ObservableStateMachine
@@ -24,7 +32,7 @@ from app.schemas.reflection import (
     ResearchSummary,
 )
 from app.schemas.search import SearchBatch
-from app.schemas.trace import RoundTrace, RunTrace
+from app.schemas.trace import BudgetStatus, RoundTrace, RunTrace
 from app.search.executor import SearchExecutor
 from app.services.finalizer import FinalizedResearch, ResearchFinalizer
 from app.utils.text import normalized_fingerprint_text
@@ -91,7 +99,7 @@ class ResearchOrchestrator:
             details={"input_fields": sorted(request.model_fields_set)},
         )
         if await self._llm_budget_exhausted():
-            return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+            return await self._finish(machine, trace, context, await self._budget_stop_reason())
 
         context.plan = await machine.execute(
             AgentState.PLAN_RESEARCH,
@@ -101,8 +109,9 @@ class ResearchOrchestrator:
             ),
         )
         if await self._llm_budget_exhausted():
-            self._record_unsearched_plan(context, trace, StopReason.BUDGET_REACHED)
-            return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+            reason = await self._budget_stop_reason()
+            self._record_unsearched_plan(context, trace, reason)
+            return await self._finish(machine, trace, context, reason)
 
         query_plan: QueryPlan = await machine.execute(
             AgentState.GENERATE_SEARCH_QUERIES,
@@ -118,10 +127,10 @@ class ResearchOrchestrator:
             self._record_unsearched_plan(
                 context,
                 trace,
-                StopReason.BUDGET_REACHED,
+                await self._budget_stop_reason(),
                 queries=query_plan.queries,
             )
-            return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+            return await self._finish(machine, trace, context, await self._budget_stop_reason())
 
         pending_queries = await self._reserve_and_record_queries(
             query_plan.queries,
@@ -130,7 +139,7 @@ class ResearchOrchestrator:
         )
         if not pending_queries:
             reason = (
-                StopReason.BUDGET_REACHED
+                StopReason.QUERY_BUDGET_REACHED
                 if (await self._budget.snapshot()).query_exhausted
                 else StopReason.NO_NEW_EVIDENCE
             )
@@ -175,7 +184,7 @@ class ResearchOrchestrator:
                 and context.consecutive_failed_rounds
                 >= self._settings.max_consecutive_failed_rounds
             ):
-                round_trace.stop_reason = StopReason.CONTINUOUS_SEARCH_FAILURE
+                round_trace.stop_reason = StopReason.SEARCH_UNAVAILABLE
                 context.assessment = empty_assessment(
                     "Research stopped after the configured number of consecutive "
                     "fully failed search rounds."
@@ -184,7 +193,7 @@ class ResearchOrchestrator:
                     machine,
                     trace,
                     context,
-                    StopReason.CONTINUOUS_SEARCH_FAILURE,
+                    StopReason.SEARCH_UNAVAILABLE,
                 )
 
             previous_evidence_ids = {item.evidence_id for item in context.evidence_bundle.evidence}
@@ -224,6 +233,22 @@ class ResearchOrchestrator:
                     }
                 )
 
+            if (
+                processing.transition_outcome == TransitionOutcome.PARTIAL_FAILURE
+                and not processing.bundle.evidence
+            ):
+                round_trace.stop_reason = StopReason.EXTRACTION_FAILURE
+                context.assessment = empty_assessment(
+                    "Research stopped because structured evidence extraction produced no "
+                    "supported claims. Retrieved sources were retained."
+                )
+                return await self._finish(
+                    machine,
+                    trace,
+                    context,
+                    StopReason.EXTRACTION_FAILURE,
+                )
+
             if all_failed:
                 context.consecutive_no_new_evidence_rounds = 0
             elif new_evidence_count == 0:
@@ -232,7 +257,7 @@ class ResearchOrchestrator:
                 context.consecutive_no_new_evidence_rounds = 0
 
             if await self._llm_budget_exhausted():
-                return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+                return await self._finish(machine, trace, context, await self._budget_stop_reason())
 
             context.summary = await machine.execute(
                 AgentState.SUMMARIZE,
@@ -243,7 +268,7 @@ class ResearchOrchestrator:
             )
             round_trace.research_summary = context.summary
             if await self._llm_budget_exhausted():
-                return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+                return await self._finish(machine, trace, context, await self._budget_stop_reason())
 
             context.assessment = await machine.execute(
                 AgentState.ASSESS_INFORMATION,
@@ -254,6 +279,12 @@ class ResearchOrchestrator:
                     self._require_summary(context),
                     context.prior_queries,
                 ),
+            )
+            context.assessment = self._annotate_dimension_search_status(
+                self._require_assessment(context),
+                batch,
+                context.evidence_bundle,
+                pending_queries,
             )
             round_trace.assessment = context.assessment
 
@@ -277,6 +308,12 @@ class ResearchOrchestrator:
                 context.summary, context.assessment = (
                     self._reflection.reconcile_after_identity_constraint(decision_bundle)
                 )
+                context.assessment = self._annotate_dimension_search_status(
+                    context.assessment,
+                    batch,
+                    decision_bundle,
+                    pending_queries,
+                )
                 round_trace.research_summary = context.summary
                 round_trace.assessment = context.assessment
 
@@ -286,7 +323,7 @@ class ResearchOrchestrator:
                     assessment=self._require_assessment(context),
                     current_round=context.round_number,
                     max_rounds=self._settings.max_search_rounds,
-                    budget_exhausted=budget_snapshot.exhausted,
+                    budget_stop_reason=self._budget_reason_from_snapshot(budget_snapshot),
                     consecutive_no_new_evidence_rounds=(context.consecutive_no_new_evidence_rounds),
                     no_new_evidence_limit=self._settings.no_new_evidence_rounds,
                     consecutive_failed_rounds=context.consecutive_failed_rounds,
@@ -309,8 +346,9 @@ class ResearchOrchestrator:
             )
             round_trace.followup = followup
             if await self._llm_budget_exhausted():
-                round_trace.stop_reason = StopReason.BUDGET_REACHED
-                return await self._finish(machine, trace, context, StopReason.BUDGET_REACHED)
+                reason = await self._budget_stop_reason()
+                round_trace.stop_reason = reason
+                return await self._finish(machine, trace, context, reason)
             pending_queries = await self._reserve_and_record_queries(
                 followup.queries,
                 context,
@@ -319,7 +357,9 @@ class ResearchOrchestrator:
             if not pending_queries:
                 budget_exhausted = (await self._budget.snapshot()).query_exhausted
                 stop_reason = (
-                    StopReason.BUDGET_REACHED if budget_exhausted else StopReason.NO_NEW_EVIDENCE
+                    StopReason.QUERY_BUDGET_REACHED
+                    if budget_exhausted
+                    else StopReason.NO_NEW_EVIDENCE
                 )
                 round_trace.stop_reason = stop_reason
                 return await self._finish(machine, trace, context, stop_reason)
@@ -362,6 +402,11 @@ class ResearchOrchestrator:
                 self._reflection.reconcile_after_identity_constraint(constrained_bundle)
             )
         trace.final_research_summary = context.summary
+        context.assessment = self._annotate_final_dimension_search_status(
+            self._require_assessment(context),
+            trace,
+            constrained_bundle,
+        )
         trace.final_assessment = context.assessment
         context.evidence_bundle = constrained_bundle
 
@@ -370,6 +415,7 @@ class ResearchOrchestrator:
                 company,
                 context.evidence_bundle,
                 self._require_assessment(context),
+                stop_reason,
             )
 
         finalized: FinalizedResearch = await machine.execute(
@@ -385,7 +431,50 @@ class ResearchOrchestrator:
             usage = await self._budget.snapshot()
             trace.total_tokens = usage.total_tokens
             trace.estimated_cost_usd = usage.estimated_cost_usd
+            reached_stage = machine.state.value if machine.state is not None else None
+            trace.budget_status = [
+                BudgetStatus(
+                    budget_type="queries",
+                    configured_limit=usage.query_limit,
+                    used=usage.queries_used,
+                    remaining=max(0, usage.query_limit - usage.queries_used),
+                    reached_at_stage=(
+                        reached_stage if stop_reason == StopReason.QUERY_BUDGET_REACHED else None
+                    ),
+                ),
+                BudgetStatus(
+                    budget_type="tokens",
+                    configured_limit=usage.token_limit,
+                    used=usage.total_tokens,
+                    remaining=max(0, usage.token_limit - usage.total_tokens),
+                    reached_at_stage=(
+                        reached_stage if stop_reason == StopReason.TOKEN_BUDGET_REACHED else None
+                    ),
+                ),
+                BudgetStatus(
+                    budget_type="cost_usd",
+                    configured_limit=usage.cost_limit_usd,
+                    used=usage.estimated_cost_usd,
+                    remaining=max(0.0, usage.cost_limit_usd - usage.estimated_cost_usd),
+                    reached_at_stage=(
+                        reached_stage if stop_reason == StopReason.COST_BUDGET_REACHED else None
+                    ),
+                ),
+            ]
+            trace.source_count = finalized.evidence_bundle.source_count
+            trace.supported_claim_count = finalized.evidence_bundle.supported_claim_count
+            trace.verified_fact_count = finalized.evidence_bundle.verified_fact_count
+            trace.single_source_count = finalized.evidence_bundle.single_source_count
+            trace.inference_count = finalized.evidence_bundle.inference_count
+            trace.research_gap_count = finalized.evidence_bundle.research_gap_count
+            trace.rejected_claim_count = finalized.evidence_bundle.rejected_claim_count
+            trace.processing_error_count = finalized.evidence_bundle.processing_error_count
             return ResearchResponse(
+                execution_status=self._execution_status(
+                    stop_reason=stop_reason,
+                    bundle=finalized.evidence_bundle,
+                    trace=trace,
+                ),
                 company=company,
                 research=finalized.report,
                 evidence=finalized.evidence_bundle,
@@ -465,7 +554,6 @@ class ResearchOrchestrator:
             ),
         }
         evidence = [item for item in bundle.evidence if item.claim_id in allowed_claim_ids]
-        retained_source_ids = {item.source_id for item in evidence if item.source_id is not None}
         sources = [
             source.model_copy(
                 update={
@@ -475,19 +563,19 @@ class ResearchOrchestrator:
                 }
             )
             for source in bundle.sources
-            if source.source_id in retained_source_ids
         ]
         conflicts = [
             conflict
             for conflict in bundle.conflicts
             if set(conflict.claim_ids).issubset(allowed_claim_ids)
         ]
-        return bundle.model_copy(
-            update={
-                "sources": sources,
-                "evidence": evidence,
-                "conflicts": conflicts,
-            }
+        return EvidenceBundle(
+            sources=sources,
+            evidence=evidence,
+            conflicts=conflicts,
+            rejected_claims=bundle.rejected_claims,
+            processing_errors=bundle.processing_errors,
+            research_gap_count=bundle.research_gap_count,
         )
 
     async def _reserve_and_record_queries(
@@ -508,6 +596,175 @@ class ResearchOrchestrator:
 
     async def _llm_budget_exhausted(self) -> bool:
         return (await self._budget.snapshot()).llm_exhausted
+
+    async def _budget_stop_reason(self) -> StopReason:
+        return self._budget_reason_from_snapshot(await self._budget.snapshot()) or (
+            StopReason.TOKEN_BUDGET_REACHED
+        )
+
+    @staticmethod
+    def _budget_reason_from_snapshot(snapshot: object) -> StopReason | None:
+        if getattr(snapshot, "query_exhausted", False):
+            return StopReason.QUERY_BUDGET_REACHED
+        cost_limit = float(getattr(snapshot, "cost_limit_usd", 0.0))
+        cost = float(getattr(snapshot, "estimated_cost_usd", 0.0))
+        if cost_limit > 0 and cost >= cost_limit:
+            return StopReason.COST_BUDGET_REACHED
+        if getattr(snapshot, "llm_exhausted", False):
+            return StopReason.TOKEN_BUDGET_REACHED
+        return None
+
+    @staticmethod
+    def _execution_status(
+        *,
+        stop_reason: StopReason,
+        bundle: EvidenceBundle,
+        trace: RunTrace,
+    ) -> ExecutionStatus:
+        technical_stop = stop_reason in {
+            StopReason.QUERY_BUDGET_REACHED,
+            StopReason.TOKEN_BUDGET_REACHED,
+            StopReason.COST_BUDGET_REACHED,
+            StopReason.TIME_BUDGET_REACHED,
+            StopReason.SOURCE_BUDGET_REACHED,
+            StopReason.SEARCH_UNAVAILABLE,
+            StopReason.EXTRACTION_FAILURE,
+        }
+        partial_search = any(
+            round_trace.search_statistics is not None
+            and round_trace.search_statistics.failed_queries > 0
+            for round_trace in trace.rounds
+        )
+        material_processing_failure = any(
+            not error.recoverable or error.stage != ProcessingStage.VALIDATION
+            for error in bundle.processing_errors
+        )
+        if (
+            not bundle.evidence
+            and not bundle.sources
+            and (technical_stop or material_processing_failure)
+        ):
+            return ExecutionStatus.FAILED
+        if technical_stop or partial_search or material_processing_failure:
+            return ExecutionStatus.PARTIAL_FAILURE
+        if stop_reason == StopReason.SUFFICIENT_INFORMATION:
+            return ExecutionStatus.COMPLETED
+        return ExecutionStatus.COMPLETED_WITH_GAPS
+
+    @staticmethod
+    def _annotate_dimension_search_status(
+        assessment: InformationAssessment,
+        batch: SearchBatch,
+        bundle: EvidenceBundle,
+        queries: list[SearchQuery],
+    ) -> InformationAssessment:
+        executions = {execution.query_id: execution for execution in batch.executions}
+        source_by_id = {source.source_id: source for source in bundle.sources}
+        meta_dimensions = {"Evidence Quality", "Evidence Freshness", "Evidence Diversity"}
+        dimensions = []
+        for dimension in assessment.dimensions:
+            # SearchBatch does not retain topic labels. If a dimension already has
+            # evidence, preserve that stronger state; otherwise round-level search
+            # statistics still distinguish attempted-empty from never searched.
+            searched_ids = [
+                query.query_id
+                for query in queries
+                if query.query_id in executions
+                and (
+                    dimension.dimension in meta_dimensions
+                    or query.topic.casefold() == dimension.dimension.casefold()
+                )
+            ]
+            source_ids = sorted(
+                {
+                    source.source_id
+                    for source in source_by_id.values()
+                    if set(source.query_ids).intersection(searched_ids)
+                }
+            )
+            status = dimension.status
+            if dimension.claim_ids:
+                status = DimensionStatus.EVIDENCE_AVAILABLE
+            elif searched_ids and all(executions[item].error for item in searched_ids):
+                status = DimensionStatus.SEARCH_FAILED
+            elif source_ids and any(
+                error.stage in {ProcessingStage.EXTRACTION, ProcessingStage.VALIDATION}
+                for error in bundle.processing_errors
+            ):
+                status = DimensionStatus.EXTRACTION_FAILED
+            elif source_ids:
+                status = DimensionStatus.INSUFFICIENT_EVIDENCE
+            elif searched_ids:
+                status = DimensionStatus.SEARCHED_NO_RESULTS
+            dimensions.append(
+                dimension.model_copy(
+                    update={
+                        "status": status,
+                        "searched_query_ids": searched_ids,
+                        "source_ids": sorted(set(dimension.source_ids) | set(source_ids)),
+                    }
+                )
+            )
+        return assessment.model_copy(update={"dimensions": dimensions})
+
+    @staticmethod
+    def _annotate_final_dimension_search_status(
+        assessment: InformationAssessment,
+        trace: RunTrace,
+        bundle: EvidenceBundle,
+    ) -> InformationAssessment:
+        all_queries = [query for round_trace in trace.rounds for query in round_trace.queries]
+        if not all_queries:
+            return assessment
+        has_failed_search = any(
+            round_trace.search_statistics is not None
+            and round_trace.search_statistics.successful_queries == 0
+            and round_trace.search_statistics.failed_queries > 0
+            for round_trace in trace.rounds
+        )
+        has_extraction_error = any(
+            error.stage in {ProcessingStage.EXTRACTION, ProcessingStage.VALIDATION}
+            for error in bundle.processing_errors
+        )
+        dimensions = []
+        meta_dimensions = {"Evidence Quality", "Evidence Freshness", "Evidence Diversity"}
+        for dimension in assessment.dimensions:
+            attempted_query_ids = [
+                query.query_id
+                for query in all_queries
+                if dimension.dimension in meta_dimensions
+                or query.topic.casefold() == dimension.dimension.casefold()
+            ]
+            related_source_ids = sorted(
+                {
+                    source.source_id
+                    for source in bundle.sources
+                    if set(source.query_ids).intersection(attempted_query_ids)
+                }
+            )
+            status = dimension.status
+            if dimension.claim_ids:
+                status = DimensionStatus.EVIDENCE_AVAILABLE
+            elif not attempted_query_ids:
+                status = DimensionStatus.NOT_SEARCHED
+            elif related_source_ids and has_extraction_error:
+                status = DimensionStatus.EXTRACTION_FAILED
+            elif related_source_ids:
+                status = DimensionStatus.INSUFFICIENT_EVIDENCE
+            elif has_failed_search:
+                status = DimensionStatus.SEARCH_FAILED
+            else:
+                status = DimensionStatus.SEARCHED_NO_RESULTS
+            dimensions.append(
+                dimension.model_copy(
+                    update={
+                        "status": status,
+                        "searched_query_ids": attempted_query_ids,
+                        "source_ids": sorted(set(dimension.source_ids) | set(related_source_ids)),
+                    }
+                )
+            )
+        return assessment.model_copy(update={"dimensions": dimensions})
 
     @staticmethod
     def _require_company(context: _RunContext) -> ResolvedCompany:

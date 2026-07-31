@@ -17,6 +17,12 @@ _DEFAULT_RELIABLE_SOURCE_TYPES = frozenset(
         SourceType.INDUSTRY,
     }
 )
+_AUTHORITATIVE_SINGLE_SOURCE_TYPES = frozenset(
+    {
+        SourceType.OFFICIAL,
+        SourceType.REGULATORY,
+    }
+)
 
 
 @dataclass(frozen=True, slots=True)
@@ -47,6 +53,8 @@ class EvidencePolicy:
             return EvidenceStatus.UNKNOWN
         if is_inference:
             return EvidenceStatus.INFERENCE
+        if any(source.source_type in _AUTHORITATIVE_SINGLE_SOURCE_TYPES for source in sources):
+            return EvidenceStatus.VERIFIED_FACT
         reliable_domains = {
             source_domain(str(source.url)) for source in sources if self.is_reliable(source)
         }

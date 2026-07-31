@@ -10,7 +10,10 @@ from pydantic import BaseModel, ValidationError
 from app.core.exceptions import StructuredOutputError
 
 TModel = TypeVar("TModel", bound=BaseModel)
-_URL_PATTERN = re.compile(r"(?i)(?:https?://|\bwww\.)")
+# Bare hostnames are allowed for explicitly stated company domains (for example,
+# ``pfizer.com`` or ``www.pfizer.com``). Reject transport URLs and hostnames
+# carrying a path, which are the URL-shaped values the LLM must not provide.
+_URL_PATTERN = re.compile(r"(?i)(?:https?://|\bwww\.[^\s/]+/)")
 
 
 def _reject_json_constant(value: str) -> None:
@@ -36,6 +39,12 @@ def _find_url_path(value: Any, *, path: str = "$") -> str | None:
                 return match
     elif isinstance(value, dict):
         for key, item in value.items():
+            # Some response models intentionally contain provider-validated
+            # URL fields (for example ResolvedCompany.website). Those fields
+            # are sanitized against evidence lineage downstream; URL-shaped
+            # strings elsewhere remain prohibited.
+            if key in {"website", "quote"}:
+                continue
             match = _find_url_path(item, path=f"{path}.{key}")
             if match is not None:
                 return match
@@ -76,7 +85,14 @@ def parse_structured_output(
         raise StructuredOutputError("LLM response was not strict JSON") from exc
     if not isinstance(payload, dict):
         raise StructuredOutputError("LLM structured response must be a JSON object")
-    if reject_urls and (url_path := _find_url_path(payload)) is not None:
+    item_level_recovery = bool(
+        getattr(response_model, "allow_prohibited_urls_for_item_recovery", False)
+    )
+    if (
+        reject_urls
+        and not item_level_recovery
+        and (url_path := _find_url_path(payload)) is not None
+    ):
         raise StructuredOutputError(f"LLM response contained a prohibited URL at {url_path}")
 
     # Re-serialize before strict validation so Pydantic applies its JSON-mode rules

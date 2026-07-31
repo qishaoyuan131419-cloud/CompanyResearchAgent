@@ -235,3 +235,41 @@ async def test_anthropic_compatible_provider_forces_one_structured_tool_call() -
     assert payload["tools"][0]["input_schema"]["type"] == "object"
     assert json.loads(result.json_text) == {"fact": "supported", "source_ids": ["src_1"]}
     assert result.usage.total_tokens == 26
+
+
+@pytest.mark.asyncio
+async def test_anthropic_compatible_provider_unwraps_provider_envelope() -> None:
+    async def handler(request: httpx.Request) -> httpx.Response:
+        return httpx.Response(
+            200,
+            request=request,
+            json={
+                "model": "deepseek-v4-flash",
+                "stop_reason": "tool_use",
+                "content": [
+                    {
+                        "type": "tool_use",
+                        "name": "return_structured_output",
+                        "id": "tool_1",
+                        "input": {"output": {"fact": "supported"}},
+                    }
+                ],
+                "usage": {"input_tokens": 3, "output_tokens": 2},
+            },
+        )
+
+    async with httpx.AsyncClient(transport=httpx.MockTransport(handler)) as http_client:
+        provider = AnthropicCompatibleProvider(
+            api_key="secret",
+            model="deepseek-v4-flash",
+            base_url="https://anthropic-compatible.test/v1",
+            http_client=http_client,
+        )
+        result = await provider.generate_json(
+            system_prompt="system",
+            user_prompt="user",
+            json_schema={"type": "object", "properties": {"fact": {"type": "string"}}},
+            schema_name="Output",
+        )
+
+    assert json.loads(result.json_text) == {"fact": "supported"}

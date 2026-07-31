@@ -1,290 +1,345 @@
-# Company Research Agent
+# Company Research Agent（公司研究智能体）
 
-An evidence-first, independently deployable research service for pharmaceutical companies. It
-resolves an entity conservatively, plans research, searches Exa through MCP, extracts only
-quote-supported claims, reflects on information quality, performs targeted follow-up rounds, and
-returns a structured report with evidence and a complete state-transition trace.
+一个以“证据优先”为核心的公司研究服务，目前重点面向医药与生命科学企业。
 
-The service is designed to fail closed: input fields are hints, model output is untrusted, URLs and
-source metadata come only from the search provider, unsupported claims are discarded, conflicting
-facts remain visible, and absent information is returned as `Unknown`.
+它会依次完成公司身份确认、研究规划、Exa 搜索、逐条事实提取、引用校验、信息缺口评估和结构化报告生成。系统不会直接相信大模型输出：每条事实必须能够追溯到已登记的来源和原文引用；无效 Claim 会被单独拒绝，不会拖垮同批次中的其他有效事实。
 
-## Quick start
+## 主要能力
 
-Prerequisites: Python 3.11+ for local development, or Docker with Compose.
+- 使用 FastAPI 提供独立的研究 API。
+- 支持 OpenAI-compatible 与 Anthropic-compatible LLM 接口。
+- 通过 Exa MCP 搜索公司公开资料。
+- 对公司名称、别名、法律后缀和同名实体进行保守解析。
+- 集中保存 Source 元数据，Evidence 只通过 `source_ids` 引用来源。
+- 支持 SEC、公司官网、监管机构等权威来源的表格型引用。
+- 将未知信息表示为独立的 Research Gap，而不是伪造 Evidence。
+- 单条 Claim 校验失败不会清空整个证据批次。
+- 返回完整状态转换、预算使用、停止原因和处理错误。
+- 内置查询、Token、成本、轮次、并发和运行时长限制。
 
-```bash
+## 工作流程
+
+```text
+ResolveCompany
+  -> PlanResearch
+  -> GenerateSearchQueries
+  -> ParallelSearch
+  -> ProcessEvidence
+  -> Summarize
+  -> AssessInformation
+  -> RefineCompanyIdentity
+  -> GenerateFollowupQueries（需要时）
+  -> Finalize
+  -> ReturnResult
+```
+
+每次运行都有独立的预算、Source Registry、Evidence Processor 和 Run Trace，不会在不同请求之间共享研究证据。
+
+## 环境要求
+
+- Windows、macOS 或 Linux
+- Python 3.11 或更高版本
+- DeepSeek、OpenAI 或其他兼容 LLM 的 API Key
+- Exa API Key 及可用的 Exa MCP 地址
+- 可选：Docker 与 Docker Compose
+
+## Windows PowerShell 快速开始
+
+先进入项目目录。不要在 `C:\Users\你的用户名` 下直接执行安装命令。
+
+```powershell
+cd C:\你的路径\CompanyResearchAgent
+```
+
+确认 Python 版本：
+
+```powershell
+python --version
+```
+
+创建并激活虚拟环境：
+
+```powershell
 python -m venv .venv
-# PowerShell: .venv\Scripts\Activate.ps1
-# POSIX: source .venv/bin/activate
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+.\.venv\Scripts\Activate.ps1
+```
+
+安装项目和开发依赖：
+
+```powershell
+python -m pip install --upgrade pip
 python -m pip install -e ".[dev]"
-copy .env.example .env  # POSIX: cp .env.example .env
-uvicorn app.main:app --reload
 ```
 
-For a containerized start:
+复制环境变量模板：
 
-```bash
-docker compose up --build
+```powershell
+Copy-Item .env.example .env
 ```
 
-The API listens on `http://localhost:8000`. Liveness is at `/health/live`, configuration readiness
-at `/health/ready`, and OpenAPI documentation at `/docs`.
+编辑 `.env`，填入自己的密钥和提供商地址。`.env` 已被 Git 忽略，禁止把真实 API Key 提交到仓库。
 
-## Configuration
+## 核心配置
 
-All settings use the `CRA_` prefix and may be supplied through the environment or `.env`. Start from
-`.env.example`; never commit real credentials.
-
-Required provider settings:
-
-| Variable | Purpose |
-| --- | --- |
-| `CRA_LLM_PROVIDER` | `openai` or `anthropic` compatible request format. |
-| `CRA_LLM_API_KEY` | LLM credential. |
-| `CRA_LLM_BASE_URL` | Explicit provider base URL; no provider URL is hardcoded. |
-| `CRA_LLM_MODEL` | Provider model identifier. |
-| `CRA_EXA_MCP_URL` | Exa MCP Streamable HTTP endpoint. |
-| `CRA_EXA_API_KEY` | Optional Exa key, sent in the `x-api-key` header. |
-| `CRA_SERVICE_API_KEY` | Required in production; callers send it as `X-API-Key`. |
-
-The default Exa tool is `web_search_advanced_exa`. The client adds it to the endpoint's `tools`
-parameter, negotiates MCP, verifies the exposed tool schema, requests bounded page text, and accepts
-only structured/JSON results containing provider-owned HTTP(S) URLs. See the
-[Exa MCP reference](https://exa.ai/docs/reference/exa-mcp) and
-[MCP Python transport documentation](https://py.sdk.modelcontextprotocol.io/client/transports/).
-
-Important controls include:
-
-| Variable | Default | Meaning |
-| --- | ---: | --- |
-| `CRA_MAX_SEARCH_ROUNDS` | `3` | Maximum research/follow-up rounds. |
-| `CRA_MAX_TOTAL_QUERIES` | `50` | Per-run logical query budget. |
-| `CRA_SEARCH_MAX_CONCURRENCY` | `8` | Concurrent Exa calls per process. |
-| `CRA_SEARCH_TIMEOUT_SECONDS` | `315` | Timeout for one search attempt. |
-| `CRA_SEARCH_MAX_RETRIES` | `1` | Application retries after the initial attempt. |
-| `CRA_MAX_CONCURRENT_RUNS` | `4` | Concurrent API research runs per process. |
-| `CRA_RUN_TIMEOUT_SECONDS` | `900` | End-to-end deadline, including queue time. |
-| `CRA_TOKEN_BUDGET` | `100000` | Per-run LLM token ceiling. |
-| `CRA_COST_BUDGET_USD` | `25` | Per-run estimated LLM cost ceiling. |
-| `CRA_EVIDENCE_LIMIT` | `500` | Maximum returned evidence records. |
-| `CRA_EXA_MAX_TEXT_CHARACTERS` | `20000` | Maximum text requested and retained per result. |
-| `CRA_EXTRACTION_MAX_PROMPT_BYTES` | `80000` | Aggregate source-payload limit per extraction call. |
-| `CRA_SOURCE_TYPE_DOMAIN_RULES` | `{}` | JSON mapping of publisher domains to source classes. |
-
-Set the LLM input/output prices for the configured model. Production configuration rejects a
-positive cost budget with zero prices. For newer OpenAI-compatible APIs the default output field is
-`max_completion_tokens`; set `CRA_LLM_OPENAI_MAX_TOKENS_FIELD=max_tokens` for older compatible
-servers. Both provider URLs must use HTTPS in production. Development and test permit HTTP only on
-loopback. URL credentials, fragments, secret query parameters, and LLM query strings are rejected.
-
-Source authority is application-owned. Provider-supplied labels cannot mark a result as official or
-reliable. Configure publisher rules explicitly, for example:
+最少需要配置：
 
 ```dotenv
-CRA_SOURCE_TYPE_DOMAIN_RULES={"acmepharma.com":"official","fda.gov":"regulatory","reuters.com":"news"}
+CRA_ENVIRONMENT=development
+
+# 服务自身的访问密码，由你自行生成，不是 DeepSeek 或 Exa 的 Key
+CRA_SERVICE_API_KEY=replace-with-a-long-random-value
+
+# LLM
+CRA_LLM_PROVIDER=openai
+CRA_LLM_API_KEY=replace-with-your-llm-key
+CRA_LLM_BASE_URL=https://your-openai-compatible-endpoint.example/v1
+CRA_LLM_MODEL=replace-with-your-model-name
+
+# Exa MCP
+CRA_EXA_MCP_URL=https://your-exa-mcp-endpoint.example/mcp?tools=web_search_advanced_exa
+CRA_EXA_API_KEY=replace-with-your-exa-key
 ```
 
-Public suffixes such as `com` or `co.uk` are rejected because they would trust unrelated publishers.
-Unclassified domains remain `other`; `.gov` and `.edu` receive conservative built-in regulatory and
-academic classifications.
+如果使用 DeepSeek 的 OpenAI-compatible API，通常保持：
 
-## API
-
-Only `canonical_name` is required. `website`, `linkedin`, `country`, `industry`, and `summary` are
-accepted strictly as unverified search/disambiguation hints.
-
-```bash
-curl -X POST http://localhost:8000/v1/research \
-  -H "Content-Type: application/json" \
-  -H "X-API-Key: $CRA_SERVICE_API_KEY" \
-  -d '{
-    "canonical_name": "Example Pharma",
-    "website": "https://example-pharma.com",
-    "country": "US",
-    "industry": "Pharmaceuticals"
-  }'
+```dotenv
+CRA_LLM_PROVIDER=openai
+CRA_LLM_MODEL=deepseek-chat
 ```
 
-The response has four top-level parts:
+`CRA_LLM_BASE_URL` 请填写 DeepSeek 当前文档给出的兼容接口地址。不要把 API Key 放入 URL 查询参数。
+
+常用运行限制：
+
+| 环境变量 | 默认值 | 含义 |
+| --- | ---: | --- |
+| `CRA_MAX_SEARCH_ROUNDS` | `3` | 最大研究轮数 |
+| `CRA_MAX_TOTAL_QUERIES` | `50` | 单次运行查询预算 |
+| `CRA_MAX_QUERIES_PER_ROUND` | `30` | 每轮最大查询数 |
+| `CRA_TOKEN_BUDGET` | `100000` | 单次运行 Token 上限 |
+| `CRA_COST_BUDGET_USD` | `25` | 估算 LLM 成本上限 |
+| `CRA_EVIDENCE_LIMIT` | `500` | 最大 Evidence 数量 |
+| `CRA_RUN_TIMEOUT_SECONDS` | `900` | 端到端超时时间 |
+| `CRA_SEARCH_MAX_CONCURRENCY` | `8` | Exa 并发搜索数 |
+| `CRA_CACHE_ENABLED` | `true` | 是否启用本地缓存 |
+
+来源可信度由应用控制。可在 `.env` 中配置可信域名：
+
+```dotenv
+CRA_SOURCE_TYPE_DOMAIN_RULES={"pfizer.com":"official","fda.gov":"regulatory","sec.gov":"regulatory","reuters.com":"news"}
+```
+
+不要把 `com`、`org` 或 `co.uk` 这种公共后缀配置为可信来源。
+
+## 启动服务
+
+```powershell
+python -m uvicorn app.main:app --reload
+```
+
+启动后可访问：
+
+- Swagger API 文档：<http://127.0.0.1:8000/docs>
+- 存活检查：<http://127.0.0.1:8000/health/live>
+- 配置就绪检查：<http://127.0.0.1:8000/health/ready>
+
+直接访问 `http://127.0.0.1:8000/` 返回 `404 Not Found` 是正常的，因为项目没有定义根路径。
+
+## 调用研究 API
+
+PowerShell 示例：
+
+```powershell
+$headers = @{
+    "X-API-Key" = "你在 CRA_SERVICE_API_KEY 中设置的值"
+}
+
+$body = @{
+    canonical_name = "Pfizer Inc."
+    country = "United States"
+    industry = "Pharmaceuticals"
+} | ConvertTo-Json
+
+Invoke-RestMethod `
+    -Uri "http://127.0.0.1:8000/v1/research" `
+    -Method Post `
+    -Headers $headers `
+    -ContentType "application/json" `
+    -Body $body
+```
+
+只有 `canonical_name` 是必填字段。`website`、`linkedin`、`country`、`industry` 和 `summary` 都只是待验证提示，不能直接成为研究事实。
+
+响应的主要结构：
 
 ```json
 {
+  "execution_status": "completed_with_gaps",
   "company": {
-    "canonical_name": "Example Pharma",
-    "identity_status": "partially_confirmed",
-    "confidence": 0.7,
+    "canonical_name": "Pfizer Inc.",
+    "identity_status": "confirmed",
+    "aliases": ["Pfizer"],
     "claim_ids": ["clm_..."]
   },
   "research": {
-    "overview": {"findings": [{"statement": "...", "claim_ids": ["clm_..."]}]},
-    "products": {"findings": []},
-    "unknowns": {"findings": [{"statement": "Unknown: ...", "claim_ids": ["clm_..."]}]}
+    "overview": {"findings": []},
+    "unknowns": {"gaps": []}
   },
   "evidence": {
-    "sources": [{"source_id": "src_...", "url": "https://...", "content_hash": "cnt_..."}],
-    "evidence": [{
-      "claim_id": "clm_...",
-      "claim": "Clinical stage",
-      "value": "Phase 2",
-      "status": "single_source",
-      "source_id": "src_...",
-      "supporting_quote": "The trial is Phase 2."
-    }],
-    "conflicts": []
+    "sources": [],
+    "evidence": [],
+    "conflicts": [],
+    "rejected_claims": [],
+    "processing_errors": []
   },
   "run_trace": {
-    "run_id": "run_...",
     "rounds": [],
     "transitions": [],
-    "stop_reason": "max_rounds_reached"
+    "stop_reason": "sufficient_information"
   }
 }
 ```
 
-Research prose contains claim IDs, never URLs. Evidence contains the retrieved source lineage and a
-short exact quote. Raw page bodies are deliberately excluded from API serialization.
+## Evidence 语义
 
-Expected operational errors use a stable envelope:
+- `verified_fact`：由官方、监管或明确匹配目标公司的权威来源直接支持，或者得到多个可靠独立来源支持。
+- `single_source`：只有一个可靠但非权威来源支持。
+- `inference`：保留给可复现的确定性推导；自由文本模型推理不会直接升级为 Evidence。
+- `unknown`：仅用于来源本身明确说明某事实尚未确定的少数场景。
+- 普通的信息缺失使用 `research.unknowns.gaps` 表示。
 
-```json
-{"error":{"code":"research_provider_error","message":"..."}}
-```
+每条 Evidence：
 
-Missing configuration returns 503, end-to-end timeout returns 504, invalid service authentication
-returns 401, and permanent provider/authentication errors return 502 rather than silently producing a
-successful empty report.
+- 必须包含可解析的 `source_ids`；
+- 必须包含能够在来源正文中定位的 `supporting_quotes`；
+- 不允许把 URL、引用编号或 Source ID 写进 Claim 文本；
+- 不重复保存 URL、标题、发布日期和来源类型；
+- 可以由多个独立 Source 共同支持。
 
-## Truth and evidence model
+LLM 返回的一条 Claim 含 URL 或格式错误时，系统只拒绝该条记录，并在 `rejected_claims` 和 `processing_errors` 中保留具体原因。
 
-- `verified_fact`: the same controlled claim/value is supported by at least two reliable,
-  registrably independent publisher domains.
-- `single_source`: exactly one application-classified reliable publisher domain supports the claim.
-- `inference`: reserved for future deterministic, typed derivation rules. Free-form model-generated
-  inferences are rejected and are never promoted into evidence.
-- `unknown`: available evidence is insufficient or only untrusted publishers agree.
+## 执行状态和停止原因
 
-Extraction responses cannot supply titles or URLs. For a direct fact, every referenced source must be
-in the current allowlist, every short quote must exist exactly in normalized retrieved content, the
-value must match at token boundaries, the quote must link the target company to the predicate, and it must directly
-express a non-negated controlled predicate/value relationship rather than mere co-occurrence.
-Validation happens before a claim record is created, so rejected model text is not echoed as an
-`Unknown` fact. Scalar predicate disagreements become explicit conflicts; set-valued facts such as
-different products coexist. Identity fields use a conservative allowlist of company-scoped claim
-labels. Ambiguous, partially confirmed, or unconfirmed entity resolution suppresses non-identity
-facts from the final bundle so same-name candidates cannot be blended; summaries, assessments, and
-explicit `Unknown` items are then recomputed against that constrained bundle.
-The company website is returned only when an exact company-domain claim corroborates the hinted
-domain and a source classified as official was actually retrieved from that domain; an official
-article on an acquirer or partner domain is not treated as the target's website.
+顶层 `execution_status` 可能为：
 
-Evidence is deduplicated first by canonical URL and then by normalized content hash across rounds.
-A URL's first retrieved body is an immutable evidence snapshot; a later changed body cannot rewrite
-its citation lineage or bridge unrelated sources. Exact-content duplicates under distinct URLs are
-deduplicated deterministically, historical IDs are reconciled in the final trace, and research
-statements are rebuilt from validated evidence rather than trusting model-authored prose.
+- `completed`
+- `completed_with_gaps`
+- `partial_failure`
+- `failed`
 
-Follow-up query labels and model-declared gap mappings are advisory only. A query must independently
-target the resolved company and contain multiple terms from exactly one missing research dimension;
-model output can prioritize dimensions, but executable text is synthesized from deterministic
-pharmaceutical-domain templates. Any still-unaddressed content, quality, freshness, or diversity gap
-also receives a safe template query before search execution.
+常见停止原因包括：
 
-## Workflow and architecture
+- `sufficient_information`
+- `max_rounds`
+- `query_budget_reached`
+- `token_budget_reached`
+- `cost_budget_reached`
+- `time_budget_reached`
+- `no_new_evidence`
+- `search_unavailable`
+- `extraction_failure`
 
-The orchestration is an explicit legal-transition state machine:
+`partial_failure` 不代表整个响应无效。它通常表示部分来源、Claim 或提供商调用失败，但仍然保留了可验证结果。
 
-```text
-ResolveCompany -> PlanResearch -> GenerateSearchQueries -> ParallelSearch
-  -> ProcessEvidence -> Summarize -> AssessInformation -> RefineCompanyIdentity
-  -> GenerateFollowupQueries -> ParallelSearch ...
-  -> RefineCompanyIdentity -> Finalize -> ReturnResult
-```
+## 测试
 
-Each transition records timestamps, duration, round, outcome, safe error details, and the run ID.
-Search events additionally record query ID/text, results, retries, cache outcomes, duration, and run
-correlation. Identity is refined before every sufficiency decision; unresolved rounds are assessed
-against an identity-constrained view without destroying the accumulated internal search evidence.
-Historical round assessments remain immutable, while `final_research_summary` and
-`final_assessment` record the separately reconciled final view. Stop precedence is deterministic:
-sufficient information, continuous search failure, budget, maximum rounds, then no new evidence.
+测试不需要真实 API Key，网络依赖均使用 Fake 或 Mock。
 
-Main modules:
-
-```text
-app/api/          FastAPI routes, dependency wiring, error envelopes
-app/core/         state machine, budgets, stop policy, protocols, enums
-app/resolver/     evidence-constrained company identity resolution
-app/planner/      topic planning and non-duplicate query generation
-app/search/       Exa MCP adapter and bounded parallel executor
-app/evidence/     source registry, claim validation, status/conflict policy
-app/reflection/   evidence summary, dimension scoring, follow-up planning
-app/llm/          OpenAI/Anthropic-compatible structured-output adapters
-app/prompts/      six versionable prompt templates
-app/cache/        typed memory/SQLite TTL caches and split page cache
-app/services/     per-run composition, orchestration, final report sanitizer
-app/schemas/      strict Pydantic v2 API/domain contracts
-```
-
-Shared infrastructure is constructed once. Every request receives a new budget ledger, LLM client,
-source registry, evidence processor, and orchestrator, preventing evidence or trace leakage between
-runs. Business modules depend on protocols and injected implementations, so fake providers exercise
-the same workflow in tests.
-
-## Caching
-
-Search metadata, page contents, and validated LLM outputs use separate TTL namespaces. Search cache
-identity includes the endpoint, tool, parser version, page-text limit, and authority rules. Page bodies
-are stored separately so a stale/missing body makes the whole typed search entry a miss. Extraction
-cache payloads omit volatile retrieval timestamps and query IDs. Set `CRA_CACHE_ENABLED=false` to use
-the no-op cache.
-
-SQLite is the default single-host store at `CRA_CACHE_PATH`; Docker Compose persists `/data` in a
-named volume.
-
-## Testing and quality gates
-
-All network-dependent code is tested with fakes or `httpx` transports; tests do not require provider
-credentials.
-
-```bash
-pytest -q
-ruff format --check app tests
-ruff check app tests
-mypy app
+```powershell
+python -m pytest -q
+python -m ruff format --check app tests
+python -m ruff check app tests
+python -m mypy app
 python -m compileall -q app tests
 ```
 
-The suite covers strict schemas, company hint handling, identity provenance, explicit transitions,
-parallelism, timeout/retry/partial failure, run log correlation, Exa MCP parsing and authentication,
-URL/content deduplication, split caches, quote and semantic adversarial cases, conflicts, inference
-rejection,
-reflection, follow-up deduplication, stop precedence, budgets, API authentication, provider response
-validation, and the full multi-round workflow.
+当前自动化测试覆盖：
 
-## Deployment notes
+- API 认证和完整响应 Schema；
+- 状态机合法转换；
+- Exa MCP 解析和错误处理；
+- Source URL/内容去重；
+- Claim 逐条校验和部分失败；
+- SEC 表格、总部、注册地和 ticker；
+- Pfizer Pipeline 引用；
+- 公司法律名称和简称归一化；
+- Evidence 双向引用和计数一致性；
+- Research Gap、预算和停止原因；
+- 多轮 Orchestrator 集成流程。
 
-The image runs as a non-root user, exposes a liveness health check, and persists only the configured
-cache volume. Terminate TLS at a trusted ingress, keep the service key in a secret manager, restrict
-outbound traffic to configured providers, and set current model pricing before production use. Scale
-carefully: `CRA_MAX_CONCURRENT_RUNS` and SQLite are process-local; multiple replicas need a shared
-rate-limit/queue policy and a shared cache implementation if cross-replica coordination is required.
+## 项目结构
 
-## Known limitations
+```text
+app/api/          FastAPI 路由、依赖和错误响应
+app/core/         状态机、预算、停止策略、协议和枚举
+app/resolver/     公司身份解析与名称归一化
+app/planner/      研究主题和搜索查询规划
+app/search/       Exa MCP 适配器与并发执行器
+app/evidence/     Source Registry、Claim 校验和证据策略
+app/reflection/   覆盖度评估和后续查询建议
+app/llm/          OpenAI/Anthropic-compatible 客户端
+app/prompts/      可版本化 Prompt 模板
+app/cache/        内存/SQLite TTL 缓存
+app/services/     依赖组装、编排和最终报告
+app/schemas/      Pydantic v2 API 与领域模型
+tests/            单元测试、集成测试和回归 Fixture
+artifacts/        已验证的示例研究输出
+```
 
-- `/health/ready` validates local dependency configuration; the first Exa call performs the live MCP
-  handshake, authentication, and tool-schema check.
-- The USD budget covers configured LLM token pricing. Exa cost metadata is not yet included, so use
-  Exa-side spend controls in addition to this service's query cap.
-- Publisher authority requires curated domain rules. The service intentionally does not infer that an
-  arbitrary company or media domain is reliable.
-- Controlled predicate normalization is conservative and extensible, not a full pharmaceutical
-  ontology. Unrecognized paraphrases may remain separate instead of being merged. Direct-fact
-  validation intentionally rejects complex, multi-statement, speculative, or subject-ambiguous
-  excerpts; this trades recall for citation safety.
-- MCP sessions are short-lived per provider call. This favors isolation and simple cancellation over
-  connection reuse.
-- The shared API key is service-level authentication, not tenant identity, per-tenant quota, or a
-  distributed rate limiter.
-- Search quality and freshness remain bounded by provider coverage and source text returned by Exa;
-  the service does not bypass paywalls or execute page JavaScript.
+Pfizer 修复后的示例输出位于：
+
+```text
+artifacts/pfizer_response_post_fix_final.json
+```
+
+该样例包含 8 个 Source、32 个 supported claims、31 个 verified facts，并能通过项目自身的 `ResearchResponse.model_validate()`。
+
+## Docker
+
+```powershell
+docker compose up --build
+```
+
+容器使用非 root 用户运行，并将 SQLite 缓存保存在配置的数据卷中。生产环境应在可信入口终止 TLS，并使用 Secret Manager 管理 API Key。
+
+## 常见问题
+
+### 浏览器显示 `{"detail":"Not Found"}`
+
+这是访问了未定义的 `/`。请打开 `/docs` 或 `/health/live`。
+
+### 返回 `authentication_required`
+
+请求头中的 `X-API-Key` 必须与 `.env` 中的 `CRA_SERVICE_API_KEY` 完全一致。
+
+### 返回 `research_provider_error`
+
+检查：
+
+1. `CRA_LLM_PROVIDER` 是否与接口格式一致；
+2. `CRA_LLM_MODEL` 是否是提供商支持的模型名称；
+3. `CRA_LLM_BASE_URL` 是否正确；
+4. DeepSeek/LLM 和 Exa Key 是否有效且有可用额度；
+5. Exa MCP URL 是否能暴露 `web_search_advanced_exa` 工具。
+
+### 为什么结果是 `partial_failure`
+
+可能原因包括查询预算已用完、部分 Claim 未通过引用校验、LLM 输出不符合 Schema、搜索提供商临时失败，或部分研究维度仍存在缺口。请结合 `run_trace.stop_reason`、`rejected_claims` 和 `processing_errors` 判断。
+
+## 已知限制
+
+- 搜索质量和实时性取决于 Exa 返回的网页正文。
+- DeepSeek 等模型的结构化输出存在波动，同一公司重复运行可能得到不同数量的有效 Claim。
+- 引用校验有意偏保守，复杂句、截断内容或不明确的主语可能被拒绝。
+- Exa 成本尚未计入项目的 LLM 美元预算。
+- SQLite 缓存适合单机部署；多副本部署需要共享缓存和统一限流。
+- 当前共享 API Key 是服务级认证，不提供租户隔离和租户级配额。
+
+## 安全说明
+
+- 永远不要提交 `.env`、真实 API Key、Cookie 或访问令牌。
+- 生产环境只使用 HTTPS 提供商地址。
+- 不要在 URL 查询参数中放置密钥。
+- 设置合理的查询、Token、成本和并发限制。
+- 对外部署时使用反向代理、TLS、访问日志和速率限制。

@@ -85,6 +85,9 @@ class ObservableStateMachine:
         try:
             pending = action()
             result = await pending if inspect.isawaitable(pending) else pending
+            result_outcome = getattr(result, "transition_outcome", TransitionOutcome.SUCCEEDED)
+            if isinstance(result_outcome, TransitionOutcome):
+                outcome = result_outcome
             self._state = to_state
             return result
         except BaseException as exc:

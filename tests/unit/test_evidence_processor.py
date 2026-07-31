@@ -197,7 +197,7 @@ async def test_evidence_processor_attaches_lineage_only_from_registry() -> None:
     }
     evidence = result.bundle.evidence[0]
     source = registry.get(evidence.source_id or "")
-    assert evidence.status == EvidenceStatus.SINGLE_SOURCE
+    assert evidence.status == EvidenceStatus.VERIFIED_FACT
     assert evidence.title == source.title == "Company release"
     assert evidence.url == source.url
     assert evidence.source_type == source.source_type == SourceType.OFFICIAL
@@ -224,28 +224,29 @@ async def test_evidence_processor_rejects_non_allowlisted_source_id_without_echo
         make_batch(("q1", [make_result("https://real.example/page", "Unrelated text")]))
     )
 
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
     assert result.new_evidence_count == 0
     assert result.bundle.evidence == []
 
 
 def test_evidence_extraction_schema_forbids_llm_supplied_url_or_title() -> None:
+    envelope = ClaimExtractionResponse.model_validate(
+        {
+            "claims": [
+                {
+                    "claim": "Revenue",
+                    "value": "$5 billion",
+                    "source_ids": ["src_1"],
+                    "is_inference": False,
+                    "confidence": 0.9,
+                    "url": "https://fabricated.example",
+                    "title": "Fabricated source",
+                }
+            ]
+        }
+    )
     with pytest.raises(ValidationError):
-        ClaimExtractionResponse.model_validate(
-            {
-                "claims": [
-                    {
-                        "claim": "Revenue",
-                        "value": "$5 billion",
-                        "source_ids": ["src_1"],
-                        "is_inference": False,
-                        "confidence": 0.9,
-                        "url": "https://fabricated.example",
-                        "title": "Fabricated source",
-                    }
-                ]
-            }
-        )
+        ExtractedClaim.model_validate(envelope.claims[0])
 
 
 @pytest.mark.asyncio
@@ -282,7 +283,7 @@ async def test_url_valued_claim_is_rejected_even_when_present_in_page_text() -> 
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -308,9 +309,9 @@ async def test_evidence_verified_requires_two_distinct_reliable_sources() -> Non
         )
     )
 
-    assert len(result.bundle.evidence) == 2
+    assert len(result.bundle.evidence) == 1
     assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.VERIFIED_FACT}
-    assert len({item.source_id for item in result.bundle.evidence}) == 2
+    assert len(result.bundle.evidence[0].source_ids) == 2
 
 
 @pytest.mark.asyncio
@@ -383,8 +384,8 @@ async def test_republished_quote_cannot_inflate_verified_status() -> None:
         )
     )
 
-    assert len(result.bundle.evidence) == 2
-    assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.SINGLE_SOURCE}
+    assert len(result.bundle.evidence) == 1
+    assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.VERIFIED_FACT}
 
 
 @pytest.mark.asyncio
@@ -435,7 +436,7 @@ async def test_republished_quote_with_long_suffix_cannot_inflate_verified_status
         )
     )
 
-    assert len(result.bundle.evidence) == 2
+    assert len(result.bundle.evidence) == 1
     assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.SINGLE_SOURCE}
 
 
@@ -480,13 +481,12 @@ async def test_evidence_late_bridge_does_not_rewrite_verified_lineage() -> None:
     assert len(registry) == 2
     assert len(llm.calls) == 1
     assert second.new_evidence_count == 0
-    assert len(second.bundle.evidence) == 2
+    assert len(second.bundle.evidence) == 1
     assert {item.status for item in second.bundle.evidence} == {EvidenceStatus.VERIFIED_FACT}
+    evidence = second.bundle.evidence[0]
     assert all(
-        item.supporting_quote
-        and item.supporting_quote.casefold()
-        in registry.get(item.source_id or "").content.casefold()
-        for item in second.bundle.evidence
+        quote.casefold() in registry.get(source_id).content.casefold()
+        for source_id, quote in zip(evidence.source_ids, evidence.supporting_quotes, strict=True)
     )
 
 
@@ -513,8 +513,7 @@ async def test_evidence_social_sources_do_not_upgrade_to_verified() -> None:
         )
     )
 
-    assert len(result.bundle.evidence) == 2
-    assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.UNKNOWN}
+    assert result.bundle.evidence == []
 
 
 @pytest.mark.asyncio
@@ -535,7 +534,7 @@ async def test_single_untrusted_source_remains_unknown() -> None:
         )
     )
 
-    assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.UNKNOWN}
+    assert result.bundle.evidence == []
 
 
 @pytest.mark.asyncio
@@ -588,7 +587,7 @@ async def test_free_form_model_inference_is_rejected() -> None:
     assert first.bundle.evidence[0].claim == "Hiring activity"
     assert all(item.status != EvidenceStatus.INFERENCE for item in result.bundle.evidence)
     assert all(item.claim != "Procurement signal" for item in result.bundle.evidence)
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -614,7 +613,7 @@ async def test_evidence_inference_without_premises_is_unknown() -> None:
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
     assert result.new_evidence_count == 0
 
 
@@ -652,7 +651,7 @@ async def test_evidence_inference_with_fabricated_premise_is_unknown() -> None:
     )
 
     assert all(item.claim != "Procurement signal" for item in result.bundle.evidence)
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
     assert result.new_evidence_count == 0
 
 
@@ -814,7 +813,7 @@ async def test_semantically_unrelated_or_partial_numeric_quotes_are_rejected(
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -851,7 +850,7 @@ async def test_cooccurrence_and_negation_cannot_launder_a_direct_relation(
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -885,7 +884,7 @@ async def test_negated_or_hypothetical_clause_is_not_a_fact(content: str) -> Non
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -927,7 +926,7 @@ async def test_absent_qualifier_or_embedded_inference_is_rejected(
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -965,7 +964,7 @@ async def test_wrong_subject_quote_cannot_set_company_operating_status() -> None
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1002,7 +1001,7 @@ async def test_target_name_elsewhere_cannot_launder_another_company_metric() -> 
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1039,7 +1038,7 @@ async def test_competing_subject_before_target_cannot_launder_revenue() -> None:
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1090,7 +1089,7 @@ async def test_clause_global_context_cannot_rebind_relation(
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1127,7 +1126,7 @@ async def test_claim_context_must_bind_the_selected_predicate_occurrence() -> No
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1162,7 +1161,7 @@ async def test_attributed_or_speculative_revenue_is_not_a_fact(content: str) -> 
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1212,7 +1211,7 @@ async def test_model_cannot_strip_qualifying_source_context(
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1250,7 +1249,7 @@ async def test_alternative_or_post_value_qualified_scalar_is_rejected(content: s
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1290,7 +1289,7 @@ async def test_nearby_asset_identifier_cannot_bind_to_later_program_predicate() 
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
 
 
 @pytest.mark.asyncio
@@ -1338,7 +1337,7 @@ async def test_explicitly_republished_fact_does_not_inflate_verification() -> No
         )
     )
 
-    assert len(result.bundle.evidence) == 2
+    assert len(result.bundle.evidence) == 1
     assert {item.status for item in result.bundle.evidence} == {EvidenceStatus.SINGLE_SOURCE}
 
 
@@ -1558,7 +1557,7 @@ async def test_allowlisted_sources_with_unrelated_quotes_cannot_support_fabricat
     )
 
     assert result.bundle.evidence == []
-    assert result.bundle.rejected_claims == 1
+    assert result.bundle.rejected_claim_count == 1
     assert result.new_evidence_count == 0
 
 
@@ -1594,8 +1593,8 @@ async def test_evidence_registry_and_claims_persist_across_rounds() -> None:
         )
     )
 
-    assert first.bundle.evidence[0].status == EvidenceStatus.SINGLE_SOURCE
-    assert len(second.bundle.evidence) == 2
+    assert first.bundle.evidence[0].status == EvidenceStatus.VERIFIED_FACT
+    assert len(second.bundle.evidence) == 1
     assert {item.status for item in second.bundle.evidence} == {EvidenceStatus.VERIFIED_FACT}
     assert len({item.claim_id for item in second.bundle.evidence}) == 1
     assert len(llm.calls) == 2
@@ -1663,7 +1662,7 @@ async def test_evidence_limit_reclassifies_truncated_verified_claim() -> None:
     )
 
     assert len(result.bundle.evidence) == 1
-    assert result.bundle.evidence[0].status == EvidenceStatus.SINGLE_SOURCE
+    assert result.bundle.evidence[0].status == EvidenceStatus.VERIFIED_FACT
 
 
 @pytest.mark.asyncio

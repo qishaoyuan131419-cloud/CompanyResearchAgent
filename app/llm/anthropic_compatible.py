@@ -26,6 +26,27 @@ def _required_usage_token(usage: Mapping[str, Any], key: str) -> int:
     return value
 
 
+def _unwrap_structured_input(input_data: dict[str, Any], schema: JsonObject) -> dict[str, Any]:
+    """Normalize provider envelopes around the requested tool input.
+
+    DeepSeek's Anthropic-compatible endpoint may return the schema object under
+    a single ``output``/``value``-style key. Only unwrap when the nested keys
+    are all valid keys from the requested schema, preserving strict validation
+    for every other response shape.
+    """
+
+    properties = schema.get("properties")
+    if not isinstance(properties, dict):
+        return input_data
+    if set(input_data).issubset(properties):
+        return input_data
+    if len(input_data) == 1:
+        nested = next(iter(input_data.values()))
+        if isinstance(nested, dict) and set(nested).issubset(properties):
+            return nested
+    return input_data
+
+
 class AnthropicCompatibleProvider(BaseHTTPProvider):
     """Strict structured output using the Anthropic-compatible Messages tool API."""
 
@@ -97,6 +118,9 @@ class AnthropicCompatibleProvider(BaseHTTPProvider):
                 "messages": [{"role": "user", "content": user_prompt}],
                 "temperature": self._temperature,
                 "max_tokens": self._max_output_tokens,
+                # DeepSeek V4 enables thinking by default, but its thinking mode
+                # rejects forced tool_choice requests used for structured output.
+                "thinking": {"type": "disabled"},
                 "tools": [
                     {
                         "name": _TOOL_NAME,
@@ -128,6 +152,7 @@ class AnthropicCompatibleProvider(BaseHTTPProvider):
             raise LLMProviderResponseError(
                 "Anthropic-compatible response did not contain one structured output tool call"
             )
+        structured_input = _unwrap_structured_input(tool_blocks[0]["input"], json_schema)
         usage_data = body.get("usage")
         if not isinstance(usage_data, dict):
             raise LLMProviderResponseError("Anthropic-compatible response omitted token usage")
@@ -138,7 +163,7 @@ class AnthropicCompatibleProvider(BaseHTTPProvider):
         returned_model = body.get("model")
         return ProviderResponse(
             json_text=json.dumps(
-                tool_blocks[0]["input"], ensure_ascii=False, allow_nan=False, separators=(",", ":")
+                structured_input, ensure_ascii=False, allow_nan=False, separators=(",", ":")
             ),
             usage=usage,
             model=returned_model if isinstance(returned_model, str) else self._model,

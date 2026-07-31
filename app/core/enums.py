@@ -18,14 +18,78 @@ class AgentState(StrEnum):
 class StopReason(StrEnum):
     SUFFICIENT_INFORMATION = "sufficient_information"
     MAX_ROUNDS_REACHED = "max_rounds_reached"
-    BUDGET_REACHED = "budget_reached"
+    QUERY_BUDGET_REACHED = "query_budget_reached"
+    TOKEN_BUDGET_REACHED = "token_budget_reached"
+    COST_BUDGET_REACHED = "cost_budget_reached"
+    TIME_BUDGET_REACHED = "time_budget_reached"
+    SOURCE_BUDGET_REACHED = "source_budget_reached"
     NO_NEW_EVIDENCE = "no_new_evidence"
-    CONTINUOUS_SEARCH_FAILURE = "continuous_search_failure"
+    SEARCH_UNAVAILABLE = "search_unavailable"
+    EXTRACTION_FAILURE = "extraction_failure"
+    COMPANY_OUTSIDE_SCOPE = "company_outside_scope"
+    # Compatibility aliases serialize to precise values; the obsolete literal
+    # "budget_reached" remains invalid.
+    BUDGET_REACHED = "query_budget_reached"
+    CONTINUOUS_SEARCH_FAILURE = "search_unavailable"
 
 
 class TransitionOutcome(StrEnum):
     SUCCEEDED = "succeeded"
+    SUCCEEDED_WITH_WARNINGS = "succeeded_with_warnings"
+    PARTIAL_FAILURE = "partial_failure"
     FAILED = "failed"
+    SKIPPED = "skipped"
+
+
+class ExecutionStatus(StrEnum):
+    COMPLETED = "completed"
+    COMPLETED_WITH_GAPS = "completed_with_gaps"
+    PARTIAL_FAILURE = "partial_failure"
+    FAILED = "failed"
+
+
+class ExtractionMethod(StrEnum):
+    STRUCTURED_LLM = "structured_llm"
+    REPAIRED_LLM = "repaired_llm"
+    DETERMINISTIC_FALLBACK = "deterministic_fallback"
+    MANUAL_FIXTURE = "manual_fixture"
+
+
+class ProcessingStage(StrEnum):
+    SEARCH = "search"
+    NORMALIZATION = "normalization"
+    CONTENT_RETRIEVAL = "content_retrieval"
+    DEDUPLICATION = "deduplication"
+    EXTRACTION = "extraction"
+    VALIDATION = "validation"
+    ASSESSMENT = "assessment"
+    FINALIZATION = "finalization"
+
+
+class GapReason(StrEnum):
+    NOT_SEARCHED = "not_searched"
+    SEARCH_FAILED = "search_failed"
+    SEARCHED_NO_RESULTS = "searched_no_results"
+    SOURCE_ACCESS_FAILED = "source_access_failed"
+    CONTENT_RETRIEVAL_FAILED = "content_retrieval_failed"
+    EXTRACTION_FAILED = "extraction_failed"
+    INSUFFICIENT_EVIDENCE = "insufficient_evidence"
+    SOURCE_CONFLICT = "source_conflict"
+    BUDGET_INTERRUPTED = "budget_interrupted"
+    NOT_PUBLICLY_DISCLOSED = "not_publicly_disclosed"
+
+
+class DimensionStatus(StrEnum):
+    NOT_SEARCHED = "not_searched"
+    SEARCH_FAILED = "search_failed"
+    SEARCHED_NO_RESULTS = "searched_no_results"
+    SOURCES_FOUND = "sources_found"
+    CONTENT_RETRIEVAL_FAILED = "content_retrieval_failed"
+    EXTRACTION_FAILED = "extraction_failed"
+    INSUFFICIENT_EVIDENCE = "insufficient_evidence"
+    EVIDENCE_AVAILABLE = "evidence_available"
+    CONFLICTING_EVIDENCE = "conflicting_evidence"
+    NOT_APPLICABLE = "not_applicable"
 
 
 class EvidenceStatus(StrEnum):
