@@ -115,13 +115,14 @@ CRA_LLM_MODEL=deepseek-chat
 | 环境变量 | 默认值 | 含义 |
 | --- | ---: | --- |
 | `CRA_MAX_SEARCH_ROUNDS` | `3` | 最大研究轮数 |
-| `CRA_MAX_TOTAL_QUERIES` | `50` | 单次运行查询预算 |
-| `CRA_MAX_QUERIES_PER_ROUND` | `30` | 每轮最大查询数 |
+| `CRA_MAX_TOTAL_QUERIES` | `3` | 单次运行查询预算 |
+| `CRA_MAX_QUERIES_PER_ROUND` | `3` | 每轮最大查询数 |
 | `CRA_TOKEN_BUDGET` | `100000` | 单次运行 Token 上限 |
 | `CRA_COST_BUDGET_USD` | `25` | 估算 LLM 成本上限 |
 | `CRA_EVIDENCE_LIMIT` | `500` | 最大 Evidence 数量 |
 | `CRA_RUN_TIMEOUT_SECONDS` | `900` | 端到端超时时间 |
-| `CRA_SEARCH_MAX_CONCURRENCY` | `8` | Exa 并发搜索数 |
+| `CRA_SEARCH_MAX_CONCURRENCY` | `3` | Exa 并发搜索数 |
+| `CRA_EXTRACTION_BATCH_SIZE` | `1` | 每次 Evidence 提取的来源数；提高前需验证引用准确率 |
 | `CRA_CACHE_ENABLED` | `true` | 是否启用本地缓存 |
 
 来源可信度由应用控制。可在 `.env` 中配置可信域名：
@@ -169,6 +170,30 @@ Invoke-RestMethod `
     -Body $body
 ```
 
+长时间运行或需要显示进度时，推荐使用异步任务接口：
+
+```powershell
+$job = Invoke-RestMethod `
+    -Uri "http://127.0.0.1:8000/v1/research-jobs" `
+    -Method Post `
+    -Headers $headers `
+    -ContentType "application/json" `
+    -Body $body
+
+# 查询任务状态和最终结果
+Invoke-RestMethod -Uri "http://127.0.0.1:8000$($job.status_url)" -Headers $headers
+
+# SSE 进度流；curl.exe 支持持续显示事件
+curl.exe -N `
+    -H "X-API-Key: 你在 CRA_SERVICE_API_KEY 中设置的值" `
+    "http://127.0.0.1:8000$($job.events_url)"
+```
+
+SSE 会发送 `queued`、`running`、`company_resolved`、`search_progress`、
+`evidence_batch_ready`、`completed` 或 `failed`。断线重连时可传 `Last-Event-ID`。
+当前任务队列保存在服务进程内，进程重启后任务记录不会保留；合入生产宿主项目时可在不改变
+HTTP 契约的情况下替换为其持久化队列。
+
 只有 `canonical_name` 是必填字段。`website`、`linkedin`、`country`、`industry` 和 `summary` 都只是待验证提示，不能直接成为研究事实。
 
 响应的主要结构：
@@ -194,6 +219,10 @@ Invoke-RestMethod `
     "processing_errors": []
   },
   "run_trace": {
+    "logical_query_count": 3,
+    "exa_tool_call_count": 3,
+    "llm_provider_call_count": 8,
+    "llm_calls_by_stage": {},
     "rounds": [],
     "transitions": [],
     "stop_reason": "sufficient_information"

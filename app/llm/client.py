@@ -7,6 +7,7 @@ from pydantic import BaseModel
 
 from app.core.budget import BudgetLedger
 from app.core.protocols import AsyncCache, LLMUsage, StructuredLLMResult
+from app.core.telemetry import RunTelemetry
 from app.llm.parsing import parse_structured_output
 from app.llm.types import LLMPricing, StructuredOutputProvider
 from app.utils.hashing import stable_hash
@@ -25,6 +26,7 @@ class BudgetedCachedLLMClient:
         cache: AsyncCache | None = None,
         cache_ttl_seconds: int = 0,
         pricing: LLMPricing | None = None,
+        telemetry: RunTelemetry | None = None,
     ) -> None:
         if cache_ttl_seconds < 0:
             raise ValueError("cache_ttl_seconds cannot be negative")
@@ -33,6 +35,7 @@ class BudgetedCachedLLMClient:
         self._cache = cache
         self._cache_ttl_seconds = cache_ttl_seconds
         self._pricing = pricing or LLMPricing()
+        self._telemetry = telemetry
 
     async def generate_structured(
         self,
@@ -45,6 +48,16 @@ class BudgetedCachedLLMClient:
         if not cache_namespace.strip():
             raise ValueError("cache_namespace cannot be empty")
         json_schema = response_model.model_json_schema(mode="validation")
+        prompt_bytes = (
+            len(system_prompt.encode("utf-8"))
+            + len(user_prompt.encode("utf-8"))
+            + len(json.dumps(json_schema, sort_keys=True).encode("utf-8"))
+        )
+        if self._telemetry is not None:
+            await self._telemetry.record_logical_call(
+                cache_namespace,
+                prompt_bytes=prompt_bytes,
+            )
         cache_key = stable_hash(
             {
                 "version": 1,
@@ -63,6 +76,8 @@ class BudgetedCachedLLMClient:
             response_model=response_model,
         )
         if cached_result is not None:
+            if self._telemetry is not None:
+                await self._telemetry.record_cache_hit(cache_namespace)
             return cached_result
 
         reservation = await self._budget.reserve_llm(
@@ -73,6 +88,8 @@ class BudgetedCachedLLMClient:
             )
         )
         try:
+            if self._telemetry is not None:
+                await self._telemetry.record_provider_started(cache_namespace)
             provider_response = await self._provider.generate_json(
                 system_prompt=system_prompt,
                 user_prompt=user_prompt,
@@ -81,6 +98,8 @@ class BudgetedCachedLLMClient:
             )
         except BaseException:
             await self._budget.commit_llm_reservation(reservation)
+            if self._telemetry is not None:
+                await self._telemetry.record_provider_finished(cache_namespace, failed=True)
             raise
         usage = LLMUsage(
             input_tokens=max(0, provider_response.usage.input_tokens),
@@ -92,7 +111,18 @@ class BudgetedCachedLLMClient:
         )
         # The request has already incurred usage even if validation below fails.
         await self._budget.settle_llm(reservation, usage)
-        value = parse_structured_output(provider_response.json_text, response_model)
+        try:
+            value = parse_structured_output(provider_response.json_text, response_model)
+        except BaseException:
+            if self._telemetry is not None:
+                await self._telemetry.record_provider_finished(
+                    cache_namespace,
+                    usage=usage,
+                    failed=True,
+                )
+            raise
+        if self._telemetry is not None:
+            await self._telemetry.record_provider_finished(cache_namespace, usage=usage)
         await self._write_cache(
             namespace=cache_namespace,
             key=cache_key,
@@ -117,7 +147,12 @@ class BudgetedCachedLLMClient:
         input_bytes += len(
             json.dumps(json_schema, sort_keys=True, separators=(",", ":")).encode("utf-8")
         )
-        conservative_input_tokens = input_bytes + 256
+        # UTF-8 byte length is a safe tokenizer-independent boundary, but treating
+        # every byte as a token over-reserves English-heavy prompts by roughly 4x
+        # and can stop evidence extraction long before the configured run budget.
+        # Two bytes per token remains conservative for mixed English/CJK research
+        # payloads while provider-reported usage is still used for final accounting.
+        conservative_input_tokens = (input_bytes + 1) // 2 + 256
         configured_output = self._provider.cache_identity.get("max_output_tokens", 0)
         max_output_tokens = (
             configured_output if isinstance(configured_output, int) and configured_output > 0 else 0

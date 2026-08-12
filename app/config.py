@@ -118,7 +118,7 @@ class Settings(BaseSettings):
     exa_mcp_url: str | None = None
     exa_api_key: SecretStr | None = None
     exa_search_tool: str = "web_search_advanced_exa"
-    exa_results_per_query: int = Field(default=8, ge=1, le=100)
+    exa_results_per_query: int = Field(default=3, ge=1, le=100)
     exa_max_text_characters: int = Field(default=20_000, ge=1, le=500_000)
     source_type_domain_rules: dict[str, SourceType] = Field(default_factory=dict)
 
@@ -126,12 +126,12 @@ class Settings(BaseSettings):
     search_timeout_seconds: float = Field(default=315.0, gt=0.0)
     search_max_retries: int = Field(default=1, ge=0, le=10)
     search_backoff_base_seconds: float = Field(default=0.5, ge=0.0)
-    search_max_concurrency: int = Field(default=8, ge=1, le=100)
-    max_queries_per_round: int = Field(default=30, ge=1, le=100)
-    max_total_queries: int = Field(default=50, ge=1, le=500)
+    search_max_concurrency: int = Field(default=3, ge=1, le=100)
+    max_queries_per_round: int = Field(default=3, ge=1, le=100)
+    max_total_queries: int = Field(default=3, ge=1, le=500)
     max_consecutive_failed_rounds: int = Field(default=2, ge=1, le=10)
     evidence_limit: int = Field(default=500, ge=1, le=10_000)
-    extraction_batch_size: int = Field(default=8, ge=1, le=100)
+    extraction_batch_size: int = Field(default=1, ge=1, le=100)
     extraction_max_prompt_bytes: int = Field(default=80_000, ge=1, le=2_000_000)
     no_new_evidence_rounds: int = Field(default=1, ge=1, le=5)
     token_budget: int = Field(default=100_000, ge=1)

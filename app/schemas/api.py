@@ -1,3 +1,6 @@
+from datetime import datetime
+from typing import Literal
+
 from pydantic import model_validator
 
 from app.core.enums import ExecutionStatus
@@ -54,6 +57,22 @@ class ResearchResponse(StrictModel):
             if getattr(self.run_trace, name) != getattr(self.evidence, name):
                 raise ValueError(f"run_trace.{name} is inconsistent with evidence.{name}")
         return self
+
+
+class ResearchJobCreated(StrictModel):
+    run_id: str
+    status: Literal["queued"] = "queued"
+    status_url: str
+    events_url: str
+
+
+class ResearchJobSnapshot(StrictModel):
+    run_id: str
+    status: Literal["queued", "running", "completed", "failed", "cancelled"]
+    created_at: datetime
+    updated_at: datetime
+    result: ResearchResponse | None = None
+    error: str | None = None
 
 
 class HealthResponse(StrictModel):

@@ -1,0 +1,42 @@
+{
+  "generated_at": "2026-08-11T20:24:00-05:00",
+  "company": "Pfizer Inc.",
+  "test_mode": "live providers, cache disabled, ResearchResponse schema validated",
+  "configuration": {
+    "max_total_queries": 3,
+    "exa_results_per_query": 3,
+    "extraction_batch_size": 1
+  },
+  "before": {
+    "artifact": "artifacts/pfizer_response_post_fix_final.json",
+    "elapsed_seconds": 144.1,
+    "source_count": 8,
+    "supported_claim_count": 32,
+    "verified_fact_count": 31,
+    "rejected_claim_count": 64,
+    "processing_error_count": 70
+  },
+  "after": {
+    "elapsed_seconds": 133.63,
+    "schema_valid": true,
+    "execution_status": "partial_failure",
+    "stop_reason": "query_budget_reached",
+    "logical_query_count": 3,
+    "exa_tool_call_count": 3,
+    "search_retry_count": 0,
+    "llm_logical_call_count": 13,
+    "llm_provider_call_count": 10,
+    "llm_failed_call_count": 4,
+    "max_llm_prompt_bytes": 54850,
+    "source_count": 9,
+    "supported_claim_count": 43,
+    "verified_fact_count": 43,
+    "rejected_claim_count": 12,
+    "processing_error_count": 18
+  },
+  "notes": [
+    "A three-source extraction batch completed faster but materially reduced quote precision with the configured model, so single-source extraction remains the safe default.",
+    "The async job API is intentionally in-memory; production integration should replace its storage with the host project's durable queue.",
+    "Team relay and biocat-agent integration remain blocked on endpoint documentation and repository access."
+  ]
+}

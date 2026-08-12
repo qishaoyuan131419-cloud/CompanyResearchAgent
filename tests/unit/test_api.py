@@ -84,3 +84,40 @@ def test_blank_llm_key_is_not_ready() -> None:
     assert readiness.status_code == 503
     assert research.status_code == 503
     assert research.json()["error"]["code"] == "service_not_configured"
+
+
+def test_async_research_job_exposes_status_and_sse_terminal_event() -> None:
+    app = create_app(Settings(environment="test", cache_enabled=False))
+    with TestClient(app) as client:
+        created = client.post(
+            "/v1/research-jobs",
+            json={"canonical_name": "Acme Pharma"},
+        )
+        assert created.status_code == 202
+        payload = created.json()
+        snapshot = client.get(payload["status_url"])
+        events = client.get(payload["events_url"])
+
+    assert snapshot.status_code == 200
+    assert snapshot.json()["run_id"] == payload["run_id"]
+    assert snapshot.json()["status"] == "failed"
+    assert "event: queued" in events.text
+    assert "event: running" in events.text
+    assert "event: failed" in events.text
+
+
+def test_async_research_job_requires_service_key() -> None:
+    app = create_app(
+        Settings(
+            environment="test",
+            cache_enabled=False,
+            service_api_key="test-service-secret",
+        )
+    )
+    with TestClient(app) as client:
+        response = client.post(
+            "/v1/research-jobs",
+            json={"canonical_name": "Acme Pharma"},
+        )
+
+    assert response.status_code == 401

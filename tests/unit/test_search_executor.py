@@ -110,6 +110,8 @@ async def test_executor_retries_with_injected_backoff_jitter() -> None:
     assert delays == [0.75]
     assert batch.executions[0].attempts == 2
     assert batch.statistics.retries == 1
+    assert batch.statistics.provider_attempts == 2
+    assert batch.statistics.raw_results == 1
 
 
 class PartialFailureClient:
@@ -272,6 +274,7 @@ async def test_executor_uses_typed_search_cache() -> None:
     assert not first.executions[0].cache_hit
     assert second.executions[0].cache_hit
     assert second.statistics.cache_hits == 1
+    assert second.statistics.provider_attempts == 0
     assert client.calls == 1
 
 

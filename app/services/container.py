@@ -6,6 +6,7 @@ from app.core.budget import BudgetLedger
 from app.core.clock import SystemClock
 from app.core.exceptions import ConfigurationError, RunTimeoutError
 from app.core.protocols import AsyncCache
+from app.core.telemetry import RunTelemetry
 from app.evidence.processor import EvidenceProcessor
 from app.evidence.registry import SourceRegistry
 from app.llm.factory import build_llm_client
@@ -18,6 +19,7 @@ from app.schemas.api import ResearchRequest, ResearchResponse
 from app.search.exa_mcp import ExaMCPSearchClient
 from app.search.executor import SearchExecutor
 from app.services.finalizer import ResearchFinalizer
+from app.services.jobs import ProgressCallback, ResearchJobManager
 from app.services.orchestrator import ResearchOrchestrator
 from app.utils.hashing import stable_hash
 
@@ -34,6 +36,7 @@ class ApplicationContainer:
             SQLiteTTLCache(settings.cache_path) if settings.cache_enabled else NullCache()
         )
         self._run_semaphore = asyncio.Semaphore(settings.max_concurrent_runs)
+        self.jobs = ResearchJobManager(runner=self._run_job, clock=self.clock)
         self._search_executor: SearchExecutor | None = None
         if settings.exa_mcp_url:
             search_client = ExaMCPSearchClient.from_settings(settings)
@@ -79,17 +82,41 @@ class ApplicationContainer:
             and self.settings.llm_base_url
         )
 
-    async def research(self, request: ResearchRequest) -> ResearchResponse:
+    async def research(
+        self,
+        request: ResearchRequest,
+        *,
+        run_id: str | None = None,
+        progress: ProgressCallback | None = None,
+    ) -> ResearchResponse:
         try:
             async with asyncio.timeout(self.settings.run_timeout_seconds):
                 async with self._run_semaphore:
-                    return await self._research_once(request)
+                    return await self._research_once(
+                        request,
+                        run_id=run_id,
+                        progress=progress,
+                    )
         except TimeoutError as exc:
             raise RunTimeoutError(
                 "The research run exceeded the configured end-to-end deadline."
             ) from exc
 
-    async def _research_once(self, request: ResearchRequest) -> ResearchResponse:
+    async def _run_job(
+        self,
+        request: ResearchRequest,
+        run_id: str,
+        progress: ProgressCallback,
+    ) -> ResearchResponse:
+        return await self.research(request, run_id=run_id, progress=progress)
+
+    async def _research_once(
+        self,
+        request: ResearchRequest,
+        *,
+        run_id: str | None = None,
+        progress: ProgressCallback | None = None,
+    ) -> ResearchResponse:
         if self._search_executor is None:
             raise ConfigurationError("CRA_EXA_MCP_URL is required to run research")
         if not self.settings.llm_base_url:
@@ -100,7 +127,13 @@ class ApplicationContainer:
             cost_limit_usd=self.settings.cost_budget_usd,
             query_limit=self.settings.max_total_queries,
         )
-        llm = build_llm_client(self.settings, budget=budget, cache=self.cache)
+        telemetry = RunTelemetry()
+        llm = build_llm_client(
+            self.settings,
+            budget=budget,
+            cache=self.cache,
+            telemetry=telemetry,
+        )
         resolver = CompanyResolver(llm=llm, prompts=self.prompts)
         planner = ResearchPlanner(
             llm=llm,
@@ -135,11 +168,14 @@ class ApplicationContainer:
             budget=budget,
             logger=self.logger,
             clock=self.clock,
+            telemetry=telemetry,
+            progress=progress,
         )
         try:
-            return await orchestrator.run(request)
+            return await orchestrator.run(request, run_id=run_id)
         finally:
             await llm.aclose()
 
     async def close(self) -> None:
+        await self.jobs.close()
         await self.cache.close()

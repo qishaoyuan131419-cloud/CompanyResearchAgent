@@ -5,9 +5,15 @@ from app.core.exceptions import BudgetExceededError, StructuredOutputError
 from app.core.protocols import LLMClient, PromptRepository
 from app.llm.errors import LLMProviderError
 from app.schemas.company import CompanySnapshot, ResolvedCompany
-from app.schemas.planning import QueryPlan, ResearchPlan, ResearchTopic, SearchQuery
+from app.schemas.planning import (
+    QueryPlan,
+    ResearchPlan,
+    ResearchPlanAndQueries,
+    ResearchTopic,
+    SearchQuery,
+)
 from app.utils.hashing import stable_hash
-from app.utils.text import normalized_fingerprint_text
+from app.utils.text import normalized_fingerprint_text, queries_are_near_duplicates
 
 _DEFAULT_TOPICS = (
     ("Company Identity", 5, "Disambiguate the legal and operating entity."),
@@ -38,6 +44,50 @@ class ResearchPlanner:
         self._prompts = prompts
         self._max_queries = max_queries_per_round
 
+    async def build_plan_and_queries(
+        self,
+        company: ResolvedCompany,
+        prior_query_fingerprints: set[str],
+        snapshot: CompanySnapshot | None = None,
+    ) -> tuple[ResearchPlan, QueryPlan]:
+        """Produce the initial plan and distinct high-yield queries in one model call."""
+
+        prompt = self._prompts.render(
+            "planner",
+            {
+                "task": "plan_and_queries",
+                "resolved_company": "Supplied in the structured user JSON payload.",
+                "research_plan": "Produce topics and queries together.",
+                "max_queries": str(self._max_queries),
+            },
+        )
+        payload: dict[str, Any] = {
+            "task": "plan_and_queries",
+            "max_queries": self._max_queries,
+            "resolved_company": company.model_dump(mode="json"),
+            "company_snapshot_hints": snapshot.model_dump(mode="json") if snapshot else None,
+        }
+        try:
+            result = await self._llm.generate_structured(
+                system_prompt=prompt,
+                user_prompt=json.dumps(payload, sort_keys=True, default=str),
+                response_model=ResearchPlanAndQueries,
+                cache_namespace="planner-plan-and-queries",
+            )
+            topics = self._deduplicate_topics(result.value.topics)
+            candidates = result.value.queries
+        except BudgetExceededError:
+            topics = self._default_plan().topics
+            candidates = []
+        except (LLMProviderError, StructuredOutputError):
+            topics = self._default_plan().topics
+            candidates = self._fallback_queries(company, ResearchPlan(topics=topics))
+        if not any(topic.topic.casefold() == "company identity" for topic in topics):
+            topics.insert(0, self._default_plan().topics[0])
+        plan = ResearchPlan(topics=topics)
+        queries = self.prepare_queries(candidates, prior_query_fingerprints)[: self._max_queries]
+        return plan, QueryPlan(queries=queries)
+
     async def build_plan(
         self,
         company: ResolvedCompany,
@@ -49,6 +99,7 @@ class ResearchPlanner:
                 "task": "topics",
                 "resolved_company": "Supplied in the structured user JSON payload.",
                 "research_plan": "Supplied in the structured user JSON payload.",
+                "max_queries": str(self._max_queries),
             },
         )
         payload: dict[str, Any] = {
@@ -87,6 +138,7 @@ class ResearchPlanner:
                 "task": "queries",
                 "resolved_company": "Supplied in the structured user JSON payload.",
                 "research_plan": "Supplied in the structured user JSON payload.",
+                "max_queries": str(self._max_queries),
             },
         )
         payload: dict[str, Any] = {
@@ -107,7 +159,6 @@ class ResearchPlanner:
             candidates = self._fallback_queries(company, plan)
         except (LLMProviderError, StructuredOutputError):
             candidates = self._fallback_queries(company, plan)
-        candidates = self._ensure_multiple_queries_per_topic(company, plan, candidates)
         return QueryPlan(
             queries=self.prepare_queries(candidates, prior_query_fingerprints)[: self._max_queries]
         )
@@ -119,11 +170,19 @@ class ResearchPlanner:
     ) -> list[SearchQuery]:
         prepared: list[SearchQuery] = []
         seen = set(prior_query_fingerprints)
+        seen_intents: set[str] = set()
         for candidate in candidates:
             fingerprint = normalized_fingerprint_text(candidate.query)
-            if not fingerprint or fingerprint in seen:
+            intent = normalized_fingerprint_text(candidate.intent or "")
+            if (
+                not fingerprint
+                or any(queries_are_near_duplicates(fingerprint, previous) for previous in seen)
+                or (intent and intent in seen_intents)
+            ):
                 continue
             seen.add(fingerprint)
+            if intent:
+                seen_intents.add(intent)
             prepared.append(
                 candidate.model_copy(
                     update={
@@ -184,26 +243,3 @@ class ResearchPlanner:
                     )
                 )
         return queries
-
-    @classmethod
-    def _ensure_multiple_queries_per_topic(
-        cls,
-        company: ResolvedCompany,
-        plan: ResearchPlan,
-        candidates: list[SearchQuery],
-    ) -> list[SearchQuery]:
-        counts: dict[str, int] = {}
-        for candidate in candidates:
-            key = normalized_fingerprint_text(candidate.topic)
-            counts[key] = counts.get(key, 0) + 1
-        supplemented = list(candidates)
-        fallbacks_by_topic: dict[str, list[SearchQuery]] = {}
-        for fallback in cls._fallback_queries(company, plan):
-            fallbacks_by_topic.setdefault(normalized_fingerprint_text(fallback.topic), []).append(
-                fallback
-            )
-        for topic in plan.topics:
-            key = normalized_fingerprint_text(topic.topic)
-            needed = max(0, 2 - counts.get(key, 0))
-            supplemented.extend(fallbacks_by_topic.get(key, [])[:needed])
-        return supplemented

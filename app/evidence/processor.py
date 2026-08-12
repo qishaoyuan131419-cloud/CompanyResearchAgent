@@ -112,6 +112,29 @@ class _ClaimRecord:
 class EvidenceProcessor:
     """Maintains evidence state across search rounds for one research run."""
 
+    _RESEARCH_TERMS = frozenset(
+        {
+            "address",
+            "approval",
+            "clinical",
+            "corporation",
+            "financial",
+            "headquarters",
+            "incorporated",
+            "manufacturing",
+            "partnership",
+            "phase",
+            "pipeline",
+            "product",
+            "revenue",
+            "risk",
+            "supplier",
+            "technology",
+            "ticker",
+            "trial",
+        }
+    )
+
     def __init__(
         self,
         *,
@@ -2032,13 +2055,64 @@ class EvidenceProcessor:
             "content_hash": document.content_hash,
         }
         metadata_bytes = len(json.dumps(payload, sort_keys=True, default=str).encode("utf-8"))
+        per_source_budget = max(
+            1_024,
+            (self._extraction_max_prompt_bytes - 4_096) // self._extraction_batch_size,
+        )
         available_content_bytes = max(
             0,
-            self._extraction_max_prompt_bytes - metadata_bytes - 256,
+            per_source_budget - metadata_bytes - 256,
         )
-        encoded_content = document.content.encode("utf-8")[:available_content_bytes]
-        payload["content"] = encoded_content.decode("utf-8", errors="ignore")
+        original_bytes = len(document.content.encode("utf-8"))
+        selected_content = self._select_relevant_content(
+            document.content,
+            max_bytes=available_content_bytes,
+        )
+        selected_bytes = len(selected_content.encode("utf-8"))
+        payload["content"] = selected_content
+        payload["content_original_bytes"] = original_bytes
+        payload["content_selected_bytes"] = selected_bytes
+        payload["content_truncated"] = selected_bytes < original_bytes
         return payload
+
+    def _select_relevant_content(self, content: str, *, max_bytes: int) -> str:
+        """Select quote-ready passages before an LLM call using deterministic rules."""
+
+        if max_bytes <= 0:
+            return ""
+        encoded = content.encode("utf-8")
+        if len(encoded) <= max_bytes:
+            return content
+        raw_passages = re.split(r"\n{2,}|(?<=[.!?])\s+(?=[A-Z0-9])", content)
+        passages = [(index, passage.strip()) for index, passage in enumerate(raw_passages)]
+        passages = [(index, passage) for index, passage in passages if passage]
+        scored: list[tuple[int, int, str]] = []
+        for index, passage in passages:
+            tokens = set(self._tokens(passage))
+            score = 8 * len(tokens & self._subject_tokens)
+            score += 3 * len(tokens & self._RESEARCH_TERMS)
+            score += 2 if re.search(r"\b(?:19|20)\d{2}\b", passage) else 0
+            score += 1 if re.search(r"\b\d+(?:[.,]\d+)?%?\b", passage) else 0
+            score += max(0, 3 - index)
+            scored.append((score, index, passage))
+        selected: list[tuple[int, str]] = []
+        used = 0
+        for _, index, passage in sorted(scored, key=lambda item: (-item[0], item[1])):
+            separator_bytes = 2 if selected else 0
+            passage_bytes = passage.encode("utf-8")
+            remaining = max_bytes - used - separator_bytes
+            if remaining <= 0:
+                break
+            if len(passage_bytes) <= remaining:
+                selected.append((index, passage))
+                used += separator_bytes + len(passage_bytes)
+            elif not selected:
+                truncated = passage_bytes[:remaining].decode("utf-8", errors="ignore")
+                if truncated:
+                    selected.append((index, truncated))
+                    used += len(truncated.encode("utf-8"))
+        selected.sort(key=lambda item: item[0])
+        return "\n\n".join(passage for _, passage in selected)
 
     def resolve_source_id(self, source_id: str) -> str:
         """Resolve a historical registry alias for final trace reconciliation."""

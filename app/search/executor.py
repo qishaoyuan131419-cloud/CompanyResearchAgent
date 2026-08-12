@@ -23,6 +23,7 @@ RetryPredicate: TypeAlias = Callable[[BaseException], bool]
 @dataclass(frozen=True, slots=True)
 class _ExecutionOutcome:
     execution: QueryExecution
+    raw_results: int = 0
     duplicates_removed: int = 0
     permanent_failure: bool = False
 
@@ -147,6 +148,10 @@ class SearchExecutor:
             successful_queries=successful,
             failed_queries=failed,
             cache_hits=sum(execution.cache_hit for execution in executions),
+            provider_attempts=sum(
+                0 if execution.cache_hit else execution.attempts for execution in executions
+            ),
+            raw_results=sum(outcome.raw_results for outcome in outcomes),
             total_results=sum(len(execution.results) for execution in executions),
             deduplicated_results=sum(outcome.duplicates_removed for outcome in outcomes),
             total_duration_ms=max((self._monotonic() - started) * 1_000, 0.0),
@@ -254,6 +259,7 @@ class SearchExecutor:
                         attempts=attempt,
                         results=deduplicated,
                     ),
+                    raw_results=len(results),
                     duplicates_removed=removed,
                 )
             except asyncio.CancelledError:

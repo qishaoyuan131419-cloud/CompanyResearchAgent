@@ -23,7 +23,13 @@ from app.resolver.service import CompanyResolver
 from app.schemas.api import ResearchRequest
 from app.schemas.company import ResolvedCompany
 from app.schemas.evidence import ExtractedClaim, SupportingQuote
-from app.schemas.planning import QueryPlan, ResearchPlan, ResearchTopic, SearchQuery
+from app.schemas.planning import (
+    QueryPlan,
+    ResearchPlan,
+    ResearchPlanAndQueries,
+    ResearchTopic,
+    SearchQuery,
+)
 from app.schemas.reflection import (
     DimensionAssessment,
     FollowupPlan,
@@ -101,6 +107,22 @@ class WorkflowLLM:
                     _query("Acme identity official"),
                     _query("Acme identity regulatory"),
                 ]
+            )
+        elif response_model is ResearchPlanAndQueries:
+            value = ResearchPlanAndQueries(
+                topics=[
+                    ResearchTopic(
+                        topic="Company Identity",
+                        priority=5,
+                        reason="Resolve the entity.",
+                        expected_output="Supported identity information.",
+                        estimated_value=1.0,
+                    )
+                ],
+                queries=[
+                    _query("Acme identity official"),
+                    _query("Acme identity regulatory"),
+                ],
             )
         elif response_model is ClaimExtractionResponse:
             sources = json.loads(user_prompt)["sources"]

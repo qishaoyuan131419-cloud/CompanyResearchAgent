@@ -18,6 +18,7 @@ from app.core.exceptions import BudgetExceededError
 from app.core.protocols import Clock, EventLogger
 from app.core.state_machine import ObservableStateMachine
 from app.core.stop_policy import StopContext, StopPolicy
+from app.core.telemetry import RunTelemetry
 from app.evidence.processor import EvidenceProcessingResult, EvidenceProcessor
 from app.planner.service import ResearchPlanner
 from app.reflection.service import ReflectionService, empty_assessment
@@ -32,10 +33,11 @@ from app.schemas.reflection import (
     ResearchSummary,
 )
 from app.schemas.search import SearchBatch
-from app.schemas.trace import BudgetStatus, RoundTrace, RunTrace
+from app.schemas.trace import BudgetStatus, LLMStageStatistics, RoundTrace, RunTrace
 from app.search.executor import SearchExecutor
 from app.services.finalizer import FinalizedResearch, ResearchFinalizer
-from app.utils.text import normalized_fingerprint_text
+from app.services.jobs import ProgressCallback
+from app.utils.text import normalized_fingerprint_text, queries_are_near_duplicates
 
 
 @dataclass(slots=True)
@@ -71,6 +73,8 @@ class ResearchOrchestrator:
         logger: EventLogger,
         clock: Clock | None = None,
         stop_policy: StopPolicy | None = None,
+        telemetry: RunTelemetry | None = None,
+        progress: ProgressCallback | None = None,
     ) -> None:
         self._settings = settings
         self._resolver = resolver
@@ -83,10 +87,17 @@ class ResearchOrchestrator:
         self._logger = logger
         self._clock = clock or SystemClock()
         self._stop_policy = stop_policy or StopPolicy()
+        self._telemetry = telemetry
+        self._progress = progress
 
-    async def run(self, request: ResearchRequest) -> ResearchResponse:
+    async def run(
+        self,
+        request: ResearchRequest,
+        *,
+        run_id: str | None = None,
+    ) -> ResearchResponse:
         trace = RunTrace(
-            run_id=f"run_{uuid4().hex}",
+            run_id=run_id or f"run_{uuid4().hex}",
             started_at=self._clock.now(),
         )
         machine = ObservableStateMachine(trace=trace, clock=self._clock, logger=self._logger)
@@ -98,30 +109,37 @@ class ResearchOrchestrator:
             action=lambda: self._resolver.resolve(request),
             details={"input_fields": sorted(request.model_fields_set)},
         )
+        await self._emit_progress(
+            "company_resolved",
+            {
+                "status": "running",
+                "company": self._require_company(context).model_dump(mode="json"),
+            },
+        )
         if await self._llm_budget_exhausted():
             return await self._finish(machine, trace, context, await self._budget_stop_reason())
 
-        context.plan = await machine.execute(
+        planning_result: tuple[ResearchPlan, QueryPlan] = await machine.execute(
             AgentState.PLAN_RESEARCH,
             round_number=0,
-            action=lambda: self._planner.build_plan(
-                self._require_company(context), context.request
-            ),
-        )
-        if await self._llm_budget_exhausted():
-            reason = await self._budget_stop_reason()
-            self._record_unsearched_plan(context, trace, reason)
-            return await self._finish(machine, trace, context, reason)
-
-        query_plan: QueryPlan = await machine.execute(
-            AgentState.GENERATE_SEARCH_QUERIES,
-            round_number=0,
-            action=lambda: self._planner.generate_queries(
+            action=lambda: self._planner.build_plan_and_queries(
                 self._require_company(context),
-                self._require_plan(context),
                 context.query_fingerprints,
                 context.request,
             ),
+            details={"combined_query_generation": True},
+        )
+        context.plan, query_plan = planning_result
+        if await self._llm_budget_exhausted():
+            reason = await self._budget_stop_reason()
+            self._record_unsearched_plan(context, trace, reason, queries=query_plan.queries)
+            return await self._finish(machine, trace, context, reason)
+
+        query_plan = await machine.execute(
+            AgentState.GENERATE_SEARCH_QUERIES,
+            round_number=0,
+            action=lambda: query_plan,
+            details={"llm_call_reused_from_plan": True},
         )
         if await self._llm_budget_exhausted():
             self._record_unsearched_plan(
@@ -173,6 +191,14 @@ class ResearchOrchestrator:
                 details={"query_ids": [query.query_id for query in pending_queries]},
             )
             round_trace.search_statistics = batch.statistics
+            await self._emit_progress(
+                "search_progress",
+                {
+                    "status": "running",
+                    "round": context.round_number,
+                    "statistics": batch.statistics.model_dump(mode="json"),
+                },
+            )
             all_failed = (
                 batch.statistics.query_count > 0 and batch.statistics.successful_queries == 0
             )
@@ -217,6 +243,17 @@ class ResearchOrchestrator:
             new_evidence_count = getattr(processing, "new_evidence_count", len(new_evidence_ids))
             round_trace.new_evidence_count = new_evidence_count
             round_trace.evidence_processing_errors = list(processing.extraction_errors)
+            await self._emit_progress(
+                "evidence_batch_ready",
+                {
+                    "status": "running",
+                    "round": context.round_number,
+                    "source_count": processing.bundle.source_count,
+                    "supported_claim_count": processing.bundle.supported_claim_count,
+                    "verified_fact_count": processing.bundle.verified_fact_count,
+                    "rejected_claim_count": processing.bundle.rejected_claim_count,
+                },
+            )
             query_ids = {query.query_id for query in pending_queries}
             round_trace.retrieved_source_ids = [
                 source.source_id
@@ -431,6 +468,47 @@ class ResearchOrchestrator:
             usage = await self._budget.snapshot()
             trace.total_tokens = usage.total_tokens
             trace.estimated_cost_usd = usage.estimated_cost_usd
+            statistics = [
+                round_trace.search_statistics
+                for round_trace in trace.rounds
+                if round_trace.search_statistics is not None
+            ]
+            trace.logical_query_count = sum(item.query_count for item in statistics)
+            trace.exa_tool_call_count = sum(item.provider_attempts for item in statistics)
+            trace.search_retry_count = sum(item.retries for item in statistics)
+            trace.search_cache_hit_count = sum(item.cache_hits for item in statistics)
+            trace.raw_search_result_count = sum(item.raw_results for item in statistics)
+            trace.retained_search_result_count = sum(item.total_results for item in statistics)
+            if self._telemetry is not None:
+                llm_stages = await self._telemetry.snapshot()
+                trace.llm_calls_by_stage = {
+                    stage: LLMStageStatistics(
+                        logical_calls=counters.logical_calls,
+                        provider_calls=counters.provider_calls,
+                        cache_hits=counters.cache_hits,
+                        failed_calls=counters.failed_calls,
+                        input_tokens=counters.input_tokens,
+                        output_tokens=counters.output_tokens,
+                        max_prompt_bytes=counters.max_prompt_bytes,
+                    )
+                    for stage, counters in sorted(llm_stages.items())
+                }
+                trace.llm_logical_call_count = sum(
+                    item.logical_calls for item in trace.llm_calls_by_stage.values()
+                )
+                trace.llm_provider_call_count = sum(
+                    item.provider_calls for item in trace.llm_calls_by_stage.values()
+                )
+                trace.llm_cache_hit_count = sum(
+                    item.cache_hits for item in trace.llm_calls_by_stage.values()
+                )
+                trace.llm_failed_call_count = sum(
+                    item.failed_calls for item in trace.llm_calls_by_stage.values()
+                )
+                trace.max_llm_prompt_bytes = max(
+                    (item.max_prompt_bytes for item in trace.llm_calls_by_stage.values()),
+                    default=0,
+                )
             reached_stage = machine.state.value if machine.state is not None else None
             trace.budget_status = [
                 BudgetStatus(
@@ -489,6 +567,21 @@ class ResearchOrchestrator:
         )
         trace.completed_at = self._clock.now()
         return response
+
+    async def _emit_progress(self, event_type: str, payload: dict[str, object]) -> None:
+        if self._progress is None:
+            return
+        try:
+            await self._progress(event_type, payload)
+        except Exception:
+            try:
+                self._logger.error(
+                    "progress_callback_failed",
+                    event_type=event_type,
+                    error="Progress callback failed.",
+                )
+            except Exception:
+                pass
 
     async def _refine_company(self, context: _RunContext) -> ResolvedCompany:
         company = self._require_company(context)
@@ -585,9 +678,19 @@ class ResearchOrchestrator:
         *,
         round_number: int,
     ) -> list[SearchQuery]:
-        allowed_count = await self._budget.allow_queries(len(queries))
+        distinct: list[SearchQuery] = []
+        fingerprints = set(context.query_fingerprints)
+        for query in queries:
+            fingerprint = normalized_fingerprint_text(query.query)
+            if not fingerprint or any(
+                queries_are_near_duplicates(fingerprint, previous) for previous in fingerprints
+            ):
+                continue
+            distinct.append(query)
+            fingerprints.add(fingerprint)
+        allowed_count = await self._budget.allow_queries(len(distinct))
         selected = [
-            query.model_copy(update={"round": round_number}) for query in queries[:allowed_count]
+            query.model_copy(update={"round": round_number}) for query in distinct[:allowed_count]
         ]
         for query in selected:
             context.prior_queries.append(query.query)

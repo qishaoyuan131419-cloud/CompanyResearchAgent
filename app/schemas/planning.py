@@ -24,6 +24,8 @@ class SearchQuery(StrictModel):
     language: str = Field(default="en", min_length=2, max_length=20)
     source_preference: list[str] = Field(default_factory=list)
     addresses_missing_items: list[str] = Field(default_factory=list)
+    intent: str | None = Field(default=None, min_length=1, max_length=200)
+    coverage_dimensions: list[str] = Field(default_factory=list)
     round: int = Field(default=0, ge=0)
 
     @field_validator("query")
@@ -36,4 +38,9 @@ class SearchQuery(StrictModel):
 
 
 class QueryPlan(StrictModel):
+    queries: list[SearchQuery] = Field(default_factory=list)
+
+
+class ResearchPlanAndQueries(StrictModel):
+    topics: list[ResearchTopic] = Field(min_length=1)
     queries: list[SearchQuery] = Field(default_factory=list)

@@ -15,6 +15,7 @@ from app.core.exceptions import (
     StructuredOutputError,
 )
 from app.core.protocols import LLMUsage
+from app.core.telemetry import RunTelemetry
 from app.llm.client import BudgetedCachedLLMClient
 from app.llm.errors import LLMProviderError
 from app.llm.factory import build_llm_client
@@ -104,12 +105,14 @@ async def test_client_caches_validated_output_and_charges_budget_once() -> None:
     )
     cache = MemoryCache()
     budget = _budget()
+    telemetry = RunTelemetry()
     client = BudgetedCachedLLMClient(
         provider=provider,
         budget=budget,
         cache=cache,
         cache_ttl_seconds=60,
         pricing=LLMPricing(input_cost_per_million=2.0, output_cost_per_million=10.0),
+        telemetry=telemetry,
     )
 
     first = await client.generate_structured(
@@ -135,6 +138,14 @@ async def test_client_caches_validated_output_and_charges_budget_once() -> None:
     assert snapshot.total_tokens == 120
     assert snapshot.estimated_cost_usd == pytest.approx(0.0004)
     assert provider.system_prompts == ["Be accurate."]
+    stage = (await telemetry.snapshot())["extractor"]
+    assert stage.logical_calls == 2
+    assert stage.provider_calls == 1
+    assert stage.cache_hits == 1
+    assert stage.failed_calls == 0
+    assert stage.input_tokens == 100
+    assert stage.output_tokens == 20
+    assert stage.max_prompt_bytes > 0
 
 
 @pytest.mark.asyncio
@@ -216,6 +227,21 @@ async def test_call_is_not_started_when_conservative_reservation_exceeds_budget(
         )
 
     assert provider.calls == 0
+
+
+def test_maximum_usage_estimate_does_not_treat_every_utf8_byte_as_a_token() -> None:
+    provider = FakeProvider(
+        ProviderResponse(json_text='{"fact":"x","source_ids":[]}', usage=LLMUsage(), model="fake")
+    )
+    client = BudgetedCachedLLMClient(provider=provider, budget=_budget())
+
+    estimate = client._estimate_maximum_usage(
+        system_prompt="a" * 1_000,
+        user_prompt="b" * 1_000,
+        json_schema={"type": "object"},
+    )
+
+    assert 1_000 < estimate.input_tokens < 2_000
 
 
 @pytest.mark.asyncio

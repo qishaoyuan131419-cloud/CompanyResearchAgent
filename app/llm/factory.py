@@ -6,6 +6,7 @@ from app.config import Settings
 from app.core.budget import BudgetLedger
 from app.core.exceptions import ConfigurationError
 from app.core.protocols import AsyncCache
+from app.core.telemetry import RunTelemetry
 from app.llm.anthropic_compatible import AnthropicCompatibleProvider
 from app.llm.client import BudgetedCachedLLMClient
 from app.llm.openai_compatible import OpenAICompatibleProvider
@@ -17,6 +18,7 @@ def build_llm_client(
     *,
     budget: BudgetLedger,
     cache: AsyncCache | None = None,
+    telemetry: RunTelemetry | None = None,
     http_client: httpx.AsyncClient | None = None,
     retry_base_delay_seconds: float = 0.5,
     retry_max_delay_seconds: float = 8.0,
@@ -69,4 +71,5 @@ def build_llm_client(
             input_cost_per_million=settings.llm_input_cost_per_million,
             output_cost_per_million=settings.llm_output_cost_per_million,
         ),
+        telemetry=telemetry,
     )

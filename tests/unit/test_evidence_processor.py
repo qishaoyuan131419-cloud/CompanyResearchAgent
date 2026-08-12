@@ -164,6 +164,23 @@ def supporting_claim(
     )
 
 
+def test_context_gateway_keeps_relevant_late_passages_within_budget() -> None:
+    processor, _, _, _ = make_processor(supporting_claim)
+    filler = "Unrelated navigation and generic marketing language. " * 500
+    relevant = (
+        "Acme Pharma is incorporated in Delaware and its common stock trades under ticker ACME."
+    )
+
+    selected = processor._select_relevant_content(
+        filler + "\n\n" + relevant,
+        max_bytes=1_000,
+    )
+
+    assert relevant in selected
+    assert len(selected.encode("utf-8")) <= 1_000
+    assert len(selected) < len(filler)
+
+
 @pytest.mark.asyncio
 async def test_evidence_processor_attaches_lineage_only_from_registry() -> None:
     processor, llm, registry, prompts = make_processor(supporting_claim)

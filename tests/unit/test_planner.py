@@ -36,6 +36,22 @@ def test_failed_query_history_is_still_filtered() -> None:
     assert ResearchPlanner.prepare_queries([query("acme MANUFACTURING")], {previous}) == []
 
 
+def test_query_preparation_filters_trivial_paraphrases_but_preserves_distinct_intents() -> None:
+    prepared = ResearchPlanner.prepare_queries(
+        [
+            query("Pfizer official company pipeline clinical trials"),
+            query("Pfizer clinical trial pipeline official"),
+            query("Pfizer SEC ticker and incorporation", topic="Company Identity"),
+        ],
+        set(),
+    )
+
+    assert [item.query for item in prepared] == [
+        "Pfizer official company pipeline clinical trials",
+        "Pfizer SEC ticker and incorporation",
+    ]
+
+
 def test_search_query_rejects_embedded_url() -> None:
     with pytest.raises(ValidationError, match="must not contain URLs"):
         query("Acme site https://fabricated.example")

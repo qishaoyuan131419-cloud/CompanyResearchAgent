@@ -33,6 +33,8 @@ class SearchStatistics(StrictModel):
     successful_queries: int = Field(ge=0)
     failed_queries: int = Field(ge=0)
     cache_hits: int = Field(ge=0)
+    provider_attempts: int = Field(default=0, ge=0)
+    raw_results: int = Field(default=0, ge=0)
     total_results: int = Field(ge=0)
     deduplicated_results: int = Field(default=0, ge=0)
     total_duration_ms: float = Field(ge=0.0)

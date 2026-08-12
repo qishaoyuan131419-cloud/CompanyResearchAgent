@@ -46,6 +46,16 @@ class BudgetStatus(StrictModel):
     reached_at_stage: str | None = None
 
 
+class LLMStageStatistics(StrictModel):
+    logical_calls: int = Field(default=0, ge=0)
+    provider_calls: int = Field(default=0, ge=0)
+    cache_hits: int = Field(default=0, ge=0)
+    failed_calls: int = Field(default=0, ge=0)
+    input_tokens: int = Field(default=0, ge=0)
+    output_tokens: int = Field(default=0, ge=0)
+    max_prompt_bytes: int = Field(default=0, ge=0)
+
+
 class RunTrace(StrictModel):
     run_id: str
     started_at: datetime
@@ -57,6 +67,18 @@ class RunTrace(StrictModel):
     stop_reason: StopReason | None = None
     total_tokens: int = Field(default=0, ge=0)
     estimated_cost_usd: float = Field(default=0.0, ge=0.0)
+    logical_query_count: int = Field(default=0, ge=0)
+    exa_tool_call_count: int = Field(default=0, ge=0)
+    search_retry_count: int = Field(default=0, ge=0)
+    search_cache_hit_count: int = Field(default=0, ge=0)
+    raw_search_result_count: int = Field(default=0, ge=0)
+    retained_search_result_count: int = Field(default=0, ge=0)
+    llm_logical_call_count: int = Field(default=0, ge=0)
+    llm_provider_call_count: int = Field(default=0, ge=0)
+    llm_cache_hit_count: int = Field(default=0, ge=0)
+    llm_failed_call_count: int = Field(default=0, ge=0)
+    max_llm_prompt_bytes: int = Field(default=0, ge=0)
+    llm_calls_by_stage: dict[str, LLMStageStatistics] = Field(default_factory=dict)
     source_count: int = Field(default=0, ge=0)
     supported_claim_count: int = Field(default=0, ge=0)
     verified_fact_count: int = Field(default=0, ge=0)
