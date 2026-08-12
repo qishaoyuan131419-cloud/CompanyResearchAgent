@@ -1,0 +1,17 @@
+services:
+  company-research-agent:
+    build:
+      context: .
+    init: true
+    env_file:
+      - .env
+    environment:
+      CRA_CACHE_PATH: /data/research-agent.sqlite3
+    ports:
+      - "8000:8000"
+    volumes:
+      - research-cache:/data
+    restart: unless-stopped
+
+volumes:
+  research-cache:
